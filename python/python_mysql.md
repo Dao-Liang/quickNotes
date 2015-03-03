@@ -1,6 +1,8 @@
 ###连接并使用MySQL ###
 
-$install python-mysqldb 
+<p>
+<code>
+install python-mysqldb 
 import MySQLdb 
 db=MySQLdb.connect(host,username,password,dbname); 
 #the handler to execute sql statement 
@@ -13,3 +15,5 @@ for result in cursor:
 do something with result 
 cursor.close() 
 db.close()
+</code>
+</p>
