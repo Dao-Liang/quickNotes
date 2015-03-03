@@ -1,6 +1,5 @@
 ###连接并使用MySQL ###
 
-<p>
 <code>
 >install python-mysqldb 
 >import MySQLdb 
@@ -16,4 +15,3 @@
 >cursor.close() 
 >db.close() 
 </code>
-</p>
