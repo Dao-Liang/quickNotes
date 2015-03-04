@@ -1,0 +1,16 @@
+browse.xhtml:
+	main:
+		<governmentBondSearchFields/>:
+			governmentBondEx
+		<governmentBondList>
+			governmentBondQuery
+
+
+browse-adv.xhtml:
+	edit:
+		<governmentBondAdvSearchFields>	:
+			governmentBondEx
+	main:
+		<governmentBondList>:
+			governmentBondQuery
+			
