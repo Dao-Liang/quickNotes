@@ -1,0 +1,9 @@
+
+variable: typeSignature, varName
+ |--------field: typeSignature, fieldName,fieldType,className
+
+
+
+method-declaration:className, methodName, paramSign[variable's typeSignature list] 
+ |-------method-invocation: expression[field/var/this/super/null],methodName,arguments[literalvlaue/fields/vars]
+
