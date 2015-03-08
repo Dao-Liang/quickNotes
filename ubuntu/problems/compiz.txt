@@ -1,0 +1,19 @@
+compiz problem in ubuntu.
+
+今天想要去掉compiz的运行，结果在使用compizconfig-setting-manager去掉了compiz插件之后，导致整个unity桌面环境崩溃，
+我也弄得崩溃了。
+
+之后还好能够到tty1中通过w3m来浏览网络进行问题原因与解决方案的查找，不然就崩溃不行了。
+
+问题解决方案简单：
+
+打开terminal,输入以下命令：
+dconf reset -f /org/compiz/
+
+setsid unity
+reset unity
+
+这样就解决问题了还是惊险了一下，以后注意。
+
+
+tag: compiz,unity,ubuntu.
