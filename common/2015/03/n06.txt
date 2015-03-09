@@ -1,9 +1,13 @@
 
-variable: typeSignature, varName
- |--------field: typeSignature, fieldName,fieldType,className
+variable: typeSignature[arrayType(type[])/genericType(type<>)/simpleType(type)], varName
+ |  <process in method declaration title and body>
+ |
+ |--------field: typeSignature[arrayType(type[])/genericType(type<>)/simpleType(type)], fieldName,fieldType,className,typeSimpleName
+	<process in field declaration>
 
 
+method-declaration:className, methodName, paramSign[variable's typeSignature list/empty] 
+ |-------method-invocation: expression[field/<var>/this/super/null],methodName,arguments[literalvlaue/staticValue/fields/vars/empty]
+ 	<only process fields' and currentclass's method invocation>
 
-method-declaration:className, methodName, paramSign[variable's typeSignature list] 
- |-------method-invocation: expression[field/var/this/super/null],methodName,arguments[literalvlaue/fields/vars]
 
