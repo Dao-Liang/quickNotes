@@ -17,48 +17,42 @@ JSF技术提供了一系列丰富的、灵活的组件架构：
 简单描述为： 用户组件={状态，行为}
 
 JSF中定义的所有的用户接口组件及其关系如下：
-<pre>
-<code>
-javax.faces.component.UIComponent
---javax.faces.component.UIComponentBase
-----UIColumn：表示了一个UIData组件中的单列数据
-----UICommand：表示在激活时触发某一行为的控制器
-----UIData：用来绑定一个javax.faces.model.DataModel实例表示的数据集合
-----UIForm：表示一个展现给用户的输入表单，其子组件表示在表单提交时包含的输入字段
-----UIGraphic：用来显示一个图片
-----UIInput：用来获取用户的输入
-----UIMessage：用来显示本地化的错误消息
-----UIMessages：用来显示一组本地化的错误消息
-----UIOutcomeTarget：显示表单中的一个链接或按钮的链接信息
-----UIOutput：在页面显示数据输出
-----UIPanel：管理子组件的布局
-----UIParameter：表示参数替换
-----UISelectBoolean：允许用户通过选择或取消来设置一个boolean值
-----UISelectItem：表示一个项目集合中的单个项目
-----UISelectItems：表示一个项目集合实体
-----UISelectMany：允许用户从一组选项集合中选取多个选项
-----UISelectOne：允许用户从一组选项集合中选取单个选项
-----UIViewParameter：表示一个请求中的查询参数
-----UIViewRoot：表示组件树的根
 
-</code>
-</pre>
+>1.  javax.faces.component.UIComponent
+>2. --javax.faces.component.UIComponentBase
+>3. ----UIColumn：表示了一个UIData组件中的单列数据
+>4. ----UICommand：表示在激活时触发某一行为的控制器
+>5. ----UIData：用来绑定一个javax.faces.model.DataModel实例表示的数据集合
+>6. ----UIForm：表示一个展现给用户的输入表单，其子组件表示在表单提交时包含的输入字段
+>7. ----UIGraphic：用来显示一个图片
+>8. ----UIInput：用来获取用户的输入
+>9. ----UIMessage：用来显示本地化的错误消息
+>10. ----UIMessages：用来显示一组本地化的错误消息
+>11. ----UIOutcomeTarget：显示表单中的一个链接或按钮的链接信息
+>12. ----UIOutput：在页面显示数据输出
+>13. ----UIPanel：管理子组件的布局
+>14. ----UIParameter：表示参数替换
+>15. ----UISelectBoolean：允许用户通过选择或取消来设置一个boolean值
+>16. ----UISelectItem：表示一个项目集合中的单个项目
+>17. ----UISelectItems：表示一个项目集合实体
+>18. ----UISelectMany：允许用户从一组选项集合中选取多个选项
+>19. ----UISelectOne：允许用户从一组选项集合中选取单个选项
+>20. ----UIViewParameter：表示一个请求中的查询参数
+>21. ----UIViewRoot：表示组件树的根
+
 
 除了上述的用户接口类之外，组件类同时实现了一些行为接口来定义组件的特定行为。
 通用的行为接口除了以下几个之外，都在javax.faces.component包中进行了定义：
-<pre>
-<code>
-ActionSource:用来说明该组件可以出发一个动作事件，该接口在JSF2中已经过期
-ActionSource2：是对ActionSource的扩展，提供了相同的功能，但是允许组件使用表达式
-EditableValueHolder：对ValueHolder的扩展，并为可编辑组件制定了额外的特性
-NamingContainer:制定当前组件的每个子组件都具有一个唯一的ID值
-StateHolder: 指示一个组件具有必须在不同请求之间要保存的状态。
-ValueHolder: 指示组件在模型层级同时维护一个局部值和访问数据选项
-javax.faces.event.SystemEventListenerHolder： 为类中定义的每种javax.faces.event.Systemevent维护一个javax.faces.event.SystemEventListener实例。
-javax.faces.component.behavior.ClientBehaviorHolder:添加附加javax.facescomponent.behavior.ClientBehavior实例的能力，例如一个重用的脚本。
 
-</code>
-</pre>
+* ActionSource:用来说明该组件可以出发一个动作事件，该接口在JSF2中已经过期
+* ActionSource2：是对ActionSource的扩展，提供了相同的功能，但是允许组件使用表达式
+* EditableValueHolder：对ValueHolder的扩展，并为可编辑组件制定了额外的特性
+* NamingContainer:制定当前组件的每个子组件都具有一个唯一的ID值
+* StateHolder: 指示一个组件具有必须在不同请求之间要保存的状态。
+* ValueHolder: 指示组件在模型层级同时维护一个局部值和访问数据选项
+* javax.faces.event.SystemEventListenerHolder： 为类中定义的每种javax.faces.event.Systemevent维护一个javax.faces.event.SystemEventListener实例。
+* javax.faces.component.behavior.ClientBehaviorHolder:添加附加javax.facescomponent.behavior.ClientBehavior实例的能力，例如一个重用的脚本。
+
 
 * UICommand 实现了ActionSource2和StateHolder
 * UIOutput 及子类实现了StateHolder和ValueHolder
@@ -66,7 +60,7 @@ javax.faces.component.behavior.ClientBehaviorHolder:添加附加javax.facescompo
 * UIComponentBase实现了StateHolder
 ---
 
-#### 1.2 组件渲染模型
+#### 1.2 组件渲染模型 ####
 ---
 
 JSF组件架构被设计模式为：组件的功能通过组件类自定义，但是组件的渲染可以使用不同的渲染器类来进行定义。该设计具有以下几个优点：
@@ -83,13 +77,15 @@ JSF组件架构被设计模式为：组件的功能通过组件类自定义，�
 标准HTML渲染工具集中定义的客制化标签由“组件功能（UIComponent定义）”和“渲染属性（有渲染器类定义）”
 
 
---- 
-#### 1.3 转换模型
+---
+#### 1.3 转换模型 ####
 ---
 一个JSF应用可以选择地将一个组件与服务器端的对象数据进行关联，这个对象可以是一个JavaBean组件，例如一个ManagedBean。应用会通过调用合适的对象数据属性来为获取或设置组件的值。
 
 当一个组件与一个对象进行绑定之后，应用具有该组件数据的两种视图：
+
 >1 模型视图，在此数据表示为数据类型
+
 >2 展示视图，数据表示为用户可以读写的方式。
 
 JSF 实现了两种视图之间组件数据的自动转换，当与组件关联的bean的属性是组件数据支持的类型之一时。
@@ -99,7 +95,7 @@ JSF 实现了两种视图之间组件数据的自动转换，当与组件关联�
 你可使用JSF提供的标准转换器，也可以创建客制化转换器。
 
 ---
-#### 1.4 事件/监听器模型
+#### 1.4 事件/监听器模型 ####
 ---
 JSF 的事件/监听器模型类似于JavaBean事件模型，具有强类型的事件类型和监听器接口，似的应用可以处理组件生成的事件。
 
@@ -128,11 +124,11 @@ JSF支持两种类型的应用事件：**动作事件** 和 **值改变事件**�
 
 * 实现一个managedBean的方法来处理事件，然后通过组件的合适属性通过方法表达式来进行引用
 
-***TODO***
+*** TODO ***
 
 ***动作事件***/***值改变事件*** 的两种处理方法的实现稍后详解。
 ---
-### 1.5 验证模型 ###
+#### 1.5 验证模型 ####
 ---
 JSF支持一种用来验证可编辑组件局部数据的机制，验证过程会在模型数据更新之前处理。
 
@@ -144,34 +140,11 @@ JSF支持一种用来验证可编辑组件局部数据的机制，验证过程�
 
 * 实现Validator接口来执行验证
 * 实现managedBean方法来执行验证
-***如果使用Validator***接口，还需要进行以下处理：
+
+*** 如果使用Validator *** 接口，还需要进行以下处理：
+
 >1 通过应用注册Validator实现
 >2 创建一个客制化标签或者使用f:validator标签在组件中注册验证器。
 
-***TODO***
+*** TODO ***
 Bean验证器
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
