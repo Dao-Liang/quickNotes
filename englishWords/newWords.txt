@@ -1,0 +1,4 @@
+abort: 中止
+principle: 原则
+throughput:吞吐量
+destruction:打乱,摧毁
