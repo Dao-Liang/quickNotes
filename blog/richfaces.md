@@ -3,12 +3,12 @@
 ####如何使用RichFaces####
 
 ####如何发送一个Ajax请求####
-从JSF页面发送Ajax请求的方法有几种方式:例如可以使用<a4j:commandButton>,<a4j:commandLink>,<a4j:poll>,<a4j:support>等标签以及其他的标签.
+从JSF页面发送Ajax请求的方法有几种方式:例如可以使用\<a4j:commandButton\>,\<a4j:commandLink\>,\<a4j:poll\>,\<a4j:support\>等标签以及其他的标签.
 所有的这些标签隐藏了通常需要创建XMLTHHPRequest对象和发送Ajax请求的Javascript活动.同时,它们允许你来决定让JSF页面中的那些组件在Ajax响应结果中重新渲染--通过使用reRender属性.
 
->1. <a4j:commandButton> <a4j:commandLink>标签用来在"onclick"事件时发送一个Ajax请求.
->2. <a4j:poll> 用来通过计时器来周期地发送一个Ajax请求.
->3. <a4j:support> 允许你讲Ajax功能添加到标准的JSF组件上,并发送Ajax请求到一个选择的Javascript事件上,如"onkeyup"等.
+>1. \<a4j:commandButton\> \<a4j:commandLink\>标签用来在"onclick"事件时发送一个Ajax请求.
+>2. \<a4j:poll\> 用来通过计时器来周期地发送一个Ajax请求.
+>3. \<a4j:support\> 允许你讲Ajax功能添加到标准的JSF组件上,并发送Ajax请求到一个选择的Javascript事件上,如"onkeyup"等.
 
 ####确定发送什么####
 你可能想要将页面上描述的一个区域发送到服务器,这样就可以在你想要发送Ajax请求时控制视图的编码区域.
@@ -43,7 +43,7 @@
 >1. 不应该附加或删除任何Ajax框架,只需要在页面进行元素的替换即可.为了保证更新成功,
 在响应页面必须存在与更新ID对应的元素.如果想要在页面中附加任何的代码,
 使用占位符--任何空元素. 类似地,推荐将消息放到AjaxOutput组件中.
->2. 不要使用<f:verbatim>作为自我渲染的容器,因为该组件是暂时的,并且没有保存在树中.
+>2. 不要使用\<f:verbatim\>作为自我渲染的容器,因为该组件是暂时的,并且没有保存在树中.
 >3. Ajax请求是以XML格式通过XMLHTTPRequest函数产生的,但是这个XML绕开了大部分的验证,
 相应的更正工作可能会在浏览器中进行.所以创建一个与标准严格兼容的HTML/XHTML,
 不要忽略任何必须的元素和属性.任何必须的XML修正会在服务器端通过XML过滤器自动实现,
