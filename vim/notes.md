@@ -1,3 +1,3 @@
 ### replace whitespace with newline ###
-:s/ /\r/g
+`:s/ /\r/g`
 
