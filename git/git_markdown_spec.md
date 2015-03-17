@@ -15,6 +15,10 @@ headings
 blockquotes
 
 > everyday a little
+can also contains other headers,lists, and code block
+
+
+--
 
 
 text styling
@@ -39,6 +43,10 @@ unordered list
 - item2
 - item3 
 
++ item1
++ item2
++ item3 
+
 
 ordered list
 
@@ -56,6 +64,11 @@ nested list
 
 code formatting
 
+automatic code block
+<tab>	text
+<tab>	<tag> another line
+------
+
 inline formats
 
 `superproject` : monospace
@@ -71,6 +84,41 @@ print name
 Links
 
 [google](www.google.com)
+
+image
+![Alt text](image url)
+
+or 
+![alt text][url_id]
+[id]:image-url
+
+link automatic
+
+<url_link>
+
+
+blackslash espaces:
+
+1. \
+2. `
+3. *
+4. _
+5. {}
+6. []
+7. ()
+8. #
+9. +
+10. -
+11. .
+12. !
+
+
+emphasis
+
+*single asterisks*
+_single underscores_
+**double asterisks**
+__double underscores__
 
 
 
