@@ -7,7 +7,7 @@ Java EE6中带来了一个新的验证模型 JavaBean 验证,该模型通过对�
 在此先介绍以下标准的内置Bean验证器.
 ```
 ==========================================================================================
-验证约束 			描述					样例
+验证约束             描述                    样例
 ------------------------------------------------------------------------------------------
 @AssertFalse
 ------------------------------------------------------------------------------------------
@@ -33,7 +33,7 @@ Java EE6中带来了一个新的验证模型 JavaBean 验证,该模型通过对�
 ------------------------------------------------------------------------------------------
 @Pattern
 ------------------------------------------------------------------------------------------
-@Size				属性值的长度
+@Size                属性值的长度
 ==========================================================================================
 
 ```
@@ -45,19 +45,19 @@ Java EE6中带来了一个新的验证模型 JavaBean 验证,该模型通过对�
 
 ```
 |-----------------------|-------------------------------|--------------------------------------|
-|   标准验证器类   	|     标准验证器标签		|		功能		       | 
+|   标准验证器类        |     标准验证器标签            |        功能                          |
 |-----------------------|-------------------------------|--------------------------------------|
-|BeanValidator		|validatorBean			|为组件注册一个bean验证器	       | 
+|BeanValidator          |validatorBean                  |为组件注册一个bean验证器              |
 |-----------------------|-------------------------------|--------------------------------------|
-|DoubleRangeValidator	|validateDoubleRange		|检验局部值是否在某个值区间内	       | 
+|DoubleRangeValidator   |validateDoubleRange            |检验局部值是否在某个值区间内          |
 |-----------------------|-------------------------------|--------------------------------------|
-|LengthValidator	|validateLength			|检验组件的值是否在某个长度范围内      | 
+|LengthValidator        |validateLength                 |检验组件的值是否在某个长度范围内      |
 |-----------------------|-------------------------------|--------------------------------------|
-|LongRangeValidator	|validateLongRange 		|检验组件的值是否在某个长度范围内      | 
+|LongRangeValidator     |validateLongRange              |检验组件的值是否在某个长度范围内      |
 |-----------------------|-------------------------------|--------------------------------------|
-|RegexValidator		|validateRegx			|检验组件的值是否匹配某个正则表达式    | 
+|RegexValidator         |validateRegx                   |检验组件的值是否匹配某个正则表达式    |
 |-----------------------|-------------------------------|--------------------------------------|
-|RequiredValidator	|validateRequired		|确保组件的值部位空		       | 
+|RequiredValidator      |validateRequired               |确保组件的值部位空                    |
 |-----------------------|-------------------------------|--------------------------------------|
 
 ```
@@ -69,19 +69,19 @@ Java EE6中带来了一个新的验证模型 JavaBean 验证,该模型通过对�
 
 ```
 public void validateNumberRange(FacesContext context,
-				UIComponent toValidate,
-				Object value) {
-	if (remainingGuesses <= 0) {
-		FacesMessage message = new FacesMessage("No guesses left!");
-		context.addMessage(toValidate.getClientId(context), message);
-		((UIInput) toValidate).setValid(false);
-		return;
-	}
-	int input = (Integer) value;
-	if (input < minimum || input > maximum) {
-		((UIInput) toValidate).setValid(false);
-		FacesMessage message = new FacesMessage("Invalid guess");
-		context.addMessage(toValidate.getClientId(context), message);
-	}
+                UIComponent toValidate,
+                Object value) {
+    if (remainingGuesses <= 0) {
+        FacesMessage message = new FacesMessage("No guesses left!");
+        context.addMessage(toValidate.getClientId(context), message);
+        ((UIInput) toValidate).setValid(false);
+        return;
+    }
+    int input = (Integer) value;
+    if (input < minimum || input > maximum) {
+        ((UIInput) toValidate).setValid(false);
+        FacesMessage message = new FacesMessage("Invalid guess");
+        context.addMessage(toValidate.getClientId(context), message);
+    }
 }
 ```
