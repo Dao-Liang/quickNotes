@@ -6,7 +6,8 @@
 |---------------------- 		| -----------------------------:|
 | f:actionListener			| 为父组件添加动作监听器	|
 | f:phaseListener			| 为页面添加一个PhaseListener	|
-| f:setPropertyActionListener		|				|
+| f:setPropertyActionListener		| 注册一个特殊的监听器,用来在提交表单时,将值推送到一个managedBean				|
+| f:valueChangeListener			| 为父组件添加值改变监听器	|
 
 
 #### 数据转换器 core 标签 ####
