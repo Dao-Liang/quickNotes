@@ -1,4 +1,4 @@
-Hoje ao visualizar um fundo na tela Fundos, aparece **appears** uma tela com a série **series** de cotas **quotas**. Vamos tornar **render** essa tela mais útil **helpful** e mais "apresentável **presentable**" pro usuário.
+Hoje ao visualizar um fundo na tela Fundos, aparece _appears_ uma tela com a série **series** de cotas **quotas**. Vamos tornar **render** essa tela mais útil **helpful** e mais "apresentável **presentable**" pro usuário.
 
 - Tirar **take away** a série de cotas e colocá-la **put it** em outra tela, acessível **available** por um link "Série" no menu superior da tela do fundo.
 
