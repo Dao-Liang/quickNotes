@@ -45,4 +45,4 @@ The tutorial start with python
 
 
 
-[1][https://bootstrap.pypa.io/get-pip.py]
+[1]:https://bootstrap.pypa.io/get-pip.py
