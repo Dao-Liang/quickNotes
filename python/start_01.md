@@ -6,7 +6,7 @@ The tutorial start with python
 
 
 #### pip package manager ####
- **pip included in python2.7.9 or later**
+ *pip included in python2.7.9 or later*
 
 > download [get-pip.py][1]
 
