@@ -6,6 +6,9 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
+Plugin 'Nopik/vim-nerdtree-direnter'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'scrooloose/syntastic'
 Plugin 'javacomplete'
 Plugin 'vim-scripts/taglist.vim'
 Plugin 'vim-scripts/dbext.vim'
@@ -32,8 +35,8 @@ syntax on
 set path+=$PWD/**
 
 map <leader>pyr :!python 
-map <leader>s	 :w<CR>
-map <leader>dp	:!ant deploy-exploded-dev<CR>
+map <leader>s	 <ESC>:w<CR>
+map <leader>dp	:w<CR>:!ant deploy-exploded-dev<CR>
 
 "copy to system clipboard
 map <leader>yc  <Esc>ggvG$"+y
@@ -44,12 +47,19 @@ map <c-j> <c-w>j
 map <c-k> <c-w>k 
 map <leader>cp "+yy
 map <leader>v "+p
-map <leader>f :find 
+map <leader>f :tabfind 
 map <leader>e :e<CR>
 map <leader>c :!
-
+map <leader>x :x<CR>
+"tab navigation configs"
+nnoremap <C-Left> :tabprevious<CR>
+nnoremap <C-Right> :tabnext<CR>
+let g:nerdtree_tabs_open_on_console_startup=0		
+let g:nerdtree_tabs_open_on_gui_startup=0		
 "Config plugins
-map <leader>n :NERDTreeToggle<CR>
+let NERDTreeMapOpenInTab='<Enter>'
+map <leader>n <plug>NERDTreeTabsToggle<CR>
+
 map <leader>tl :TlistToggle<CR>
 let Tlist_Use_Right_Window=1
 
@@ -66,7 +76,6 @@ nnoremap <silent> <buffer> <CR> :JavaSearchContext<CR>
 "autocmd Filetype java color koehler
 "autocmd Filetype java color elflord
 
-color pablo
 "settings for java programming
 
 
@@ -117,3 +126,24 @@ autocmd Filetype java set omnifunc=javacomplete#Complete
 autocmd Filetype java set completefunc=javacomplete#CompleteParamsInfo
 "autocmd Filetype java inoremap <buffer> . .<C-X><C-O><C-P><Down>
 "java programming configurations
+
+
+colorscheme pyte
+
+"--------GUI configurations
+
+"hiden gvim menu bar
+set guioptions-=m 
+
+"hiden gvim toolbar
+set guioptions-=T
+
+"hiden gvim right-hand scroll bar
+"set guioptions-=r
+
+"hiden gvim left-hand scroll bar
+"set guioptions-=L
+
+"GUI font configura
+set guifont=UbuntuMono\ 9
+"---------end GUI configurations
