@@ -1,0 +1,3 @@
+XIM=ibus
+XIM_PROGRAM=/usr/bin/ibus-daemon
+XIM_ARGS="-xim"
