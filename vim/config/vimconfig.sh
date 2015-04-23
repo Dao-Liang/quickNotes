@@ -218,9 +218,9 @@ function! QuoteDelim(char)
 	if line[col - 2] == "\\\\"
 		return a:char
 	elseif line[col - 1] == a:char
-		return "\\<Right>"
+		return "\<Right>"
 	else
-		return a:char.a:char."\\<Esc>i"
+		return a:char.a:char."\<Esc>i"
 	endif
 endfunction
 "----------------"
