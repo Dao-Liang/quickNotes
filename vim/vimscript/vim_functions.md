@@ -69,6 +69,7 @@
 ## vim Conditionals ##
 
 *only {condition} evaluetes to true(non-zero) will the {stament} be executed.*
+
 	```
 	if {condition}
 		{statements}
