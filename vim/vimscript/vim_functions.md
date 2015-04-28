@@ -71,9 +71,9 @@
 *only {condition} evaluetes to true(non-zero) will the {stament} be executed.*
 
 	```
-	if {condition}
+	if 		{condition}
 		{statements}
-	elseif {condition}
+	elseif 	{condition}
 		{statement}
 	else
 		{statement}
