@@ -654,4 +654,72 @@ the form to use while is like following:
 			{commands}
 		endfor
 
+
+	**range()**	when to loop a certain number of times, can use it to create a specific length List.
+
+		:for a in range(3)
+		:  echo a
+		:endfor
+
+	**import example**	
+
+		:for line in getline(1, 20)
+		:  if line =~ "Date: "
+		:    echo matchstr(line, 'Date: \zs.*')
+		:  endif
+		:endfor
+
+
 ## vim Dictionary ##
+
+
+### create a dictionary ###
+	
+	generic form for define a Dictionary:
+
+		{<key>:<value>, ...}
+
+		:let uk2nl = {'one': 'een', 'two': 'twee', 'three': 'drie'}
+
+	empty Dictionary:
+		
+		{}
+
+
+### get the keys of a Dictionary as a list ###
+
+	**keys(dict)**	
+
+	:for key in keys(uk2nl)
+	:  echo key
+	:endfor
+	
+
+
+### sort keys list ###
+
+ 	**sort(keys_list)**	
+
+### retrieve element of dictionary ###
+	
+	:echo uk2nl['two']
+
+	can also use following method:
+
+	uk2nl.two  **note** only work for a key that is made of ASCII letters,digits and underscore.  
+
+
+### vim oop ###
+
+
+## vim exceptions ##
+	
+	exception example in vim as following:
+		
+		:try
+		:   read ~/templates/pascal.tmpl
+		:catch /E484:/
+		:   echo "Sorry, the Pascal template file cannot be found."
+		:endtry
+
+
