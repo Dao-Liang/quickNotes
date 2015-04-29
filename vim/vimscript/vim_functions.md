@@ -43,7 +43,7 @@
 	\<Esc>		<Esc>
 	\<C-W>		CTRL-W
 	
-	the last two are just examples, it's a form to include the special key "name"
+	the last two are just examples, it is a form to include the special key "name"
 
 ================================================================================
 ## vim Expression ##
@@ -66,6 +66,29 @@
 	5. a%b
 
 ================================================================================
+## executing expression ##
+
+	"execute" command allows executing the result of an expression, it is a very
+	powerfull way to build comamnds and execute them
+
+	`:execute "tag ".tag_name`
+
+	"." is used to concatenat the string "tag " with the value of variable tag_name
+
+	"execute" command can only execute colon command.
+
+	"normal" command cna execute <Normal> mode commands, however its argument is 
+	not an expression but a literal command characters, for example:
+
+		:normal gg=G
+
+	to make "normal" work with expression, combine "execute" with it, for example:
+		:execute "normal ". normal_commands
+
+	
+
+
+================================================================================
 ## vim Conditionals ##
 
 *only {condition} evaluetes to true(non-zero) will the {stament} be executed.*
@@ -83,7 +106,49 @@
 
 ### logic operations ###
 	
+	a == b
+	a != b
+	a >  b
+	a >= b
+	a <  b
+	a <= b
 
+	Logic operators work both for numbers and strings, when comparing two strings,
+	the mataematical difference is used. this compares byte values, which may not
+	be right for some languages.
+
+
+	for strings there are two more items:
+	a =~ b 		 matches with
+	a !~ b		 does not match with
+
+	*here be is a regex pattern*
+
+	<ignorecase> option is used when comparing strings,
+	append "#" to match *case*		!~#
+	append "?" to ignore *case*		==?
+	
+
+### vim looping ###
+
+the form to use while is like following:
+
+	while counter <40
+		call do_something()
+		
+		if skip_flag
+			continue
+		endif
+
+		if finished_flag
+			break
+		endif
+		
+		sleep 50m
+	endwhile
+
+
+	
 
 
 
