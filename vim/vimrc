@@ -4,39 +4,60 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
+"================Plugins===================================
 Plugin 'gmarik/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Nopik/vim-nerdtree-direnter'
 Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'scrooloose/syntastic'
+"Plugin 'scrooloose/syntastic'
 Plugin 'javacomplete'
 Plugin 'vim-scripts/taglist.vim'
 Plugin 'vim-scripts/dbext.vim'
 Plugin 'vim-scripts/java_getset.vim'
 Plugin 'rkulla/pydiction'
+"=========================================================="
 call vundle#end()
+
+"=================filetype settings========================"
+"setting filetype 
+"Markdown
+au BufNewFile,BufRead *.md setf markdown
+"------------------"
+
+
+
+"======================common vim configurations=============
 filetype plugin indent on
-
-" set tags file place
-set tags+=./tags,tags
-
 set incsearch
 set nu
 set ruler
 set autoindent
+set tabstop=4
 set hlsearch
 set ignorecase smartcase
 set mouse=a
 set showcmd
+" vim 自身命令行模式智能补全
+set wildmenu
 syntax on
 
 "set working path to find file
 "set path+=/home/local/RISKOFFICE/liang.guisheng/ROWorkspace/**
 set path+=$PWD/**
+" set tags file place
+set tags+=./tags,tags
+"============================================================"
 
+
+"================mappings====================================
 map <leader>pyr :!python 
 map <leader>s	 <ESC>:w<CR>
 map <leader>dp	:w<CR>:!ant deploy-exploded-dev<CR>
+
+"导航映射"
+nmap ,b  0
+nmap ,e  $
+nmap <leader>pa %
 
 "copy to system clipboard
 map <leader>yc  <Esc>ggvG$"+y
@@ -51,12 +72,29 @@ map <leader>f :tabfind
 map <leader>e :e<CR>
 map <leader>c :!
 map <leader>x :x<CR>
+"autocomplete match bracks
+inoremap ( ()<Esc>i
+inoremap [ []<Esc>i
+inoremap { {}<Esc>i
+inoremap < <><Esc>i
+inoremap ) <c-r>=ClosePair(')')<CR>
+inoremap ] <c-r>=ClosePair(']')<CR>
+inoremap > <c-r>=ClosePair('>')<CR>
+inoremap } <c-r>=ClosePair('}')<CR>
+inoremap " <c-r>=QuoteDelim('"')<CR>
+inoremap ' <c-r>=QuoteDelim("'")<CR>
+inoremap ` <c-r>=QuoteDelim("`")<CR>
+inoremap  <Tab> <c-r>=SkipBracket()<CR>
+
+
 "tab navigation configs"
 nnoremap <C-Left> :tabprevious<CR>
 nnoremap <C-Right> :tabnext<CR>
+
 let g:nerdtree_tabs_open_on_console_startup=0		
 let g:nerdtree_tabs_open_on_gui_startup=0		
-"Config plugins
+
+"==================Config plugins===========================
 let NERDTreeMapOpenInTab='<Enter>'
 map <leader>n <plug>NERDTreeTabsToggle<CR>
 
@@ -78,20 +116,23 @@ nnoremap <silent> <buffer> <CR> :JavaSearchContext<CR>
 
 "settings for java programming
 
+"====================user-define functions======================"
+"use <tab> will jump the following chars
+function! SkipBracket()
+	let line=getline('.')
+	let col=col('.')
+	let target=line[col-1]
+	echo target
+	if match(target,"[\\]\\)\\}>'\"`,\\.:]") <0
+		echo target "not matched"
+		return "\<Tab>"
+	else
+		echo target "matching"
+		return "\<Right>"
+	endif 
+endfunction
 
-"autocomplete match bracks
-inoremap ( ()<Esc>i
-inoremap [ []<Esc>i
-inoremap { {}<Esc>i
-inoremap < <><Esc>i
-inoremap ) <c-r>=ClosePair(')')<CR>
-inoremap ] <c-r>=ClosePair(']')<CR>
-inoremap > <c-r>=ClosePair('>')<CR>
-inoremap } <c-r>=ClosePair('}')<CR>
-"inoremap } <c-r>=CloseBracket('}')<CR>
-inoremap " <c-r>=QuoteDelim('"')<CR>
-inoremap ' <c-r>=QuoteDelim("'")<CR>
-
+"to avoid type right bracket
 function! ClosePair(char)
 	if getline('.')[col('.')-1] == a:char
 		return "\<Right>"
@@ -100,15 +141,8 @@ function! ClosePair(char)
 	endif
 endfunction
 
-function CloseBracket(char)
-	if match(getline(line('.')+1),'\s*}')<0
-		return "<CR>}"
-	else
-		return "\<Esc>j0f}a"
-	end if
-endfunction
-
-function QuoteDelim(char)
+"used for quote chars
+function! QuoteDelim(char)
 	let line=getline('.')
 	let col=col('.')
 	if line[col - 2] == "\\"
@@ -120,15 +154,24 @@ function QuoteDelim(char)
 	endif
 endfunction
 
+"autocomplete settings"
 "Setting javacomplete
-setlocal omnifunc=javacomplete#Complete
 autocmd Filetype java set omnifunc=javacomplete#Complete
 autocmd Filetype java set completefunc=javacomplete#CompleteParamsInfo
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 "autocmd Filetype java inoremap <buffer> . .<C-X><C-O><C-P><Down>
 "java programming configurations
 
 
-colorscheme pyte
+if has('gui_running')
+	colorscheme eclipse
+else
+	"colorscheme darkblue
+	colorscheme molokai
+endif
+
 
 "--------GUI configurations
 
@@ -147,3 +190,25 @@ set guioptions-=T
 "GUI font configura
 set guifont=UbuntuMono\ 9
 "---------end GUI configurations
+"
+""vim powerline-status setting"
+set rtp+=/usr/local/lib/python2.7/dist-packages/powerline/bindings/vim
+set t_Co=256
+
+let g:minBufExplForceSyntaxEnable = 1
+python from powerline.vim import setup as powerline_setup
+python powerline_setup()
+python del powerline_setup
+ 
+if ! has('gui_running')
+   set ttimeoutlen=10
+   augroup FastEscape
+      autocmd!
+      au InsertEnter * set timeoutlen=0
+      au InsertLeave * set timeoutlen=1000
+   augroup END
+endif
+
+set laststatus=2 " Always display the statusline in all windows
+set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)
+	
