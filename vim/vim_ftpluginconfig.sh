@@ -17,3 +17,6 @@ source vimftconfig.sh markdown
 #plugin for python filetype
 source vimftconfig.sh python
 
+source vimftconfig.sh sh
+source vimftconfig.sh vim
+

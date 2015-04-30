@@ -14,9 +14,9 @@ if [ -z $(which git) ]; then
 fi
 
 #create $myvimrc file
-if [ -f ~/.vimrc ]; then
+if [ -f ./.vimrc ]; then
 	echo "there is old .vimrc exists, delete it"
-#	rm ~/.vimrc
+	rm ./.vimrc
 fi
 
 #create all configuration file locally and then move them to system
@@ -81,6 +81,10 @@ cat < vim_vundle_plugins.vim >>./.vimrc
 cat < vim_common_config.vim >>./.vimrc
 #run vim in commandline to install 
 vim +PluginInstall +qall
+#============================================
+
+#============================================
+cat < vim_colors_config.vim >>./.vimrc
 #============================================
 
 
