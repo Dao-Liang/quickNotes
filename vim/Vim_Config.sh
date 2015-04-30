@@ -28,46 +28,18 @@ fi
 #	ftplugin
 
 #===========configure vundle plugin manager for vim
-if [ ! -d ~/.vim/bundle ]; then
-	echo "creating bundle dir for Vundle plugin of vim"
-	mkdir -p ~/.vim/bundle;
-fi
-
-#install vundle for vim
-if [ ! -d ~/.vim/bundle/Vundle.vim ];then
-	echo "clone Vundle into current system for vim plugin management"
-	git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim;
-fi
+. ./config/Vundle_Install.sh
 #============================================
 
+#========install colorscheme for vim=========
+. ./config/Color_Install.sh
 
-
-
-
-
-#========confugre self-defined colors for vim
-if [ ! -d ~/.vim/colors ]; then
-	echo "creating colors dir for vim"
-	mkdir -p ~/.vim/colors;
-fi
-
-if [ ! -f ~/.vim/colors/molokai.vim ];then
-	echo "installing molokai colorscheme for vim"
-	git clone https://github.com/tomasr/molokai.git ~/.vim/molokai
-	mv ~/.vim/molokai/colors/molokai.vim ~/.vim/colors
-	rm -rf ~/.vim/molokai
-fi
 #============================================
 
 
 
 #====configure self-defined filetypes for vim
-if [ ! -d ~/.vim/ftplugin ]; then
-	echo "creating ftplugin dir for vim"
-	mkdir -p ~/.vim/ftplugin
-fi
-
-. ./vim_ftpluginconfig.sh
+. ./config/FileTypePlugin_Install.sh
 #============================================
 
 
@@ -75,35 +47,35 @@ fi
 
 #==========configure vundle plugins for vim
 echo "configuaring vundle plugins for vim"
-cat < vim_vundle_plugins.vim >>./.vimrc
+cat < ./config/Vundle_Plugins.vim >>./.vimrc
 
 #config vim common behaviors
-cat < vim_common_config.vim >>./.vimrc
+cat < ./config/Common_config.vim >>./.vimrc
 #run vim in commandline to install 
 vim +PluginInstall +qall
 #============================================
 
 #============================================
-cat < vim_colors_config.vim >>./.vimrc
+cat < ./config/Color_Config.vim >> ./.vimrc
 #============================================
 
 
 #===========configure mappings for .vimrc
-cat < vim_mapping_config.vim >>./.vimrc
+cat < ./config/Mapping_Config.vim >>./.vimrc
 #============================================
 
 #==========configure vundle plugins configuration for vim
-cat < vim_vundle_plugins_config.vim  >>./.vimrc
+cat < ./config/Vundle_Plugins_Cofig.vim >>./.vimrc
 #============================================
 
 
 #==========config vim envirment==============
-cat < vim_environment_config.vim >> ./.vimrc
+cat < ./config/Environment_Config.vim >> ./.vimrc
 #========================================
 
 
 #write gvim config into .vimrc
-cat < gvim_common_config.vim >>./.vimrc
+cat < ./config/Gvim_Config.vim >>./.vimrc
 
 
 #copy current .vimrc to system .vimrc
