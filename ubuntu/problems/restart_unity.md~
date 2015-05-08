@@ -1,0 +1,6 @@
+
+
+You can press ALT+F2 ,then type “unity” ,then click ENTER to restart unity.
+Or you could use sudo service gdm restart.
+On 14.04 and 14.10 use sudo service lightdm restart.
+On 15.04 sudo systemctl restart lightdm.service.
