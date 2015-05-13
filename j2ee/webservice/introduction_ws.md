@@ -105,3 +105,4 @@
     metadata, such as HTTP headers or a different status code, a method can return a
     Response that wraps the entity and that can be built using
     Response.ResponseBuilder.   
+
