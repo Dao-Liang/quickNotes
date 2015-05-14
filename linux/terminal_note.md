@@ -10,3 +10,8 @@
     ALT   + Backspace   - 删除前一个单词
     CTRL  + W           - 剪切光标前一个单词
     Shift + Insert      - 向终端内粘贴文本
+
+
+echo print newline:
+
+    echo -e "\n"
