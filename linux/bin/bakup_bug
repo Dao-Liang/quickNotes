@@ -1,0 +1,26 @@
+#!/bin/bash
+
+cat ~/TODO.md >> ~/bug_history.md
+
+cat <<EO >~/TODO.md
+## bug_no.##
+
+### desciption ###
+
+
+### tasks  ###
+
+
+### problems ###
+
+
+### modifications ###
+
+
+### warnings ###
+
+
+### status ###
+EOF
+
+EO
