@@ -54,7 +54,6 @@
     9. estar as moscas / to be deserted 
 
 
-a <sub>b</sub>
 
 
 
