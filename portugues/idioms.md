@@ -49,8 +49,9 @@
     7. de grao em grao a galinha enche o papo / little by little the bird builds
        its nest
 
-    8.  **_pra burro_**`/ super, mega
 
     9. estar as moscas / to be deserted 
 
+
+8.  **_pra burro_**`/ super, mega
 
