@@ -1,3 +1,11 @@
+0 Vim Modes
+=================================
+    1. Normal Mode
+    2. Insert Mode
+    3. Command Mode
+    4. Visual Mode
+
+
 1 editor basic information display
 ==================================
 set number
