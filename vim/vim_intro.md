@@ -5,6 +5,17 @@
     3. Command Mode
     4. Visual Mode
 
+1 Vim Basic Configurations
+=================================
+ 1. set nocompatible
+ 2. set showmode
+ 3. set number
+ 4. set ruler 
+ 5. set showcmd
+ 6. filetype on
+ 7. syntax on
+
+
 
 1 editor basic information display
 ==================================
