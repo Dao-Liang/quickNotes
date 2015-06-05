@@ -204,31 +204,69 @@ Key bindings may be changed with the bind-key and unbind-key commands.
 
 
 COMMANDS
+命令
+
 This section contains a list of the commands supported by tmux. Most commands accept the optional -t argument with one of target-client, target-session target-window, or target-pane. These specify the client, session, window or pane which a command should affect.
+这部分包含了tmux支持的命令列表，大部分的命令接收可选的-t参数与一个目标客户端，目标会话，目标窗口或者目标面板。
+它们指定了命令会影响到的客户端，会话，窗口或面板
+
 target-client should be the name of the pty(4) file to which the client is connected, for example either of /dev/ttyp1 or ttyp1 for the client attached to /dev/ttyp1. If no client is specified, tmux attempts to work out the client currently in use; if that fails, an error is reported. Clients may be listed with the list-clients command.
+目标客户端应该为客户端链接的pty文件的名称，例如对于附着在/dev/ttyp1的客户端可能为 /dev/ttyp1或
+ttyp1。如果没有指定客户端，tmux会尝试当前使用的客户端;
+如果失败的话，就会报告一个错误。客户端可以通过list-clients命令列出。
+
 target-session is tried as, in order:
+目标会话会按照顺序进行尝试:
+
 A session ID prefixed with a $.
+一个以$作为前缀的会话ID。
+
 An exact name of a session (as listed by the list-sessions command).
+一个精确的会话名称（会在list-sessions命令中列出）。
 The start of a session name, for example ‘mysess’ would match a session named ‘mysession’.
+会话名称的开始部分，例如“mysess”会匹配一个名为"mysession"的会话。
 An fnmatch(3) pattern which is matched against the session name.
+一个与会话名称匹配的fnmatch 模式
+
 If a single session is found, it is used as the target session; multiple matches produce an error. If a session is omitted, the current session is used if available; if no current session is available, the most recently used is chosen.
+如果找到了一个单独的会话，就会将其作为目标会话；如果匹配多个会话就会产生错误。如果忽略一个会话的话，那么就会使用当前的会话-如果可用的话；如果当前会话不可用，那么最近使用的会话就会被选择。
+
 target-window specifies a window in the form session:window. session follows the same rules as for target-session, and window is looked for in order as:
+目标窗口通过session:window的格式来指定一个窗口。 会话按照target-session的规则，而窗口会按照以下的顺序来查找：
+
 A special token, listed below.
+一个下面列表中的特殊标记。
 A window index, for example ‘mysession:1’ is window 1 in session ‘mysession’.
+一个窗口索引，例如'mysession:1'表示会话'mysession'中的第一个窗口。
 A window ID, such as @1.
+一个窗口ID，例如@1。
 An exact window name, such as ‘mysession:mywindow’.
+一个精确的窗口名称，例如'mysession:mywindow'。
 The start of a window name, such as ‘mysession:mywin’.
+一个窗口名称的开始部分，例如'mysession:mywin'。
 As an fnmatch(3) pattern matched against the window name.
+一个于窗口名称相匹配的fnmatch模式。
 An empty window name specifies the next unused index if appropriate (for example the new-window and link-window commands) otherwise the current window in session is chosen.
+一个空窗口名称制定了下一个未使用的索引如果合适的话（例如new-window或link-window命令），否则会话中的当前窗口就被选择。
 The following special tokens are available to indicate particular windows. Each has a single-character alternative form.
+下面的特殊标记可用来指定一个特定的窗口。每个都具有一个可选的单字符格式。
 Token		Meaning
+符号        含义
 {start}	^	The lowest-numbered window
+{start} ^   最小数值的窗口
 {end}	$	The highest-numbered window
+{end}   $   最大数值的窗口
 {last}	!	The last (previously current) window
+{last}  !   最后一个窗口
 {next}	+	The next window by number
+{next}  +   按照数字的下一个窗口
 {previous}	-	The previous window by number
+{previous}  -   按照数字的上一个窗口
 {mouse}	=	The window where the mouse event happened
+{mouse} =   鼠标事件发生的窗口
+
 target-pane may be a pane ID or takes a similar form to target-window but with the optional addition of a period followed by a pane index or pane ID, for example: ‘mysession:mywindow.1’. If the pane index is omitted, the currently active pane in the specified window is used. The following special tokens are available for the pane index:
+目标面板可以是一个面板ID或者是一个于目标窗口相似的形式，但是带有一个额外可选的跟随面板索引或面板ID的
 Token		Meaning
 {last}	!	The last (previously active) pane
 {next}	+	The next pane by number
