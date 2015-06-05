@@ -93,112 +93,116 @@ tmux may be controlled from an attached client by using a key combination of a p
 tmux可以通过一个前缀键与跟随的命令键进行结合的方式从一个附着的客户端进行控制，前缀键默认为'C-b'
 
 The default command key bindings are:
-C-b
-Send the prefix key (C-b) through to the application.
-C-o
-Rotate the panes in the current window forwards.
-C-z
-Suspend the tmux client.
-!
-Break the current pane out of the window.
-"
-Split the current pane into two, top and bottom.
-#
-List all paste buffers.
-$
-Rename the current session.
-%
-Split the current pane into two, left and right.
-&
-Kill the current window.
-'
-Prompt for a window index to select.
-(
-Switch the attached client to the previous session.
-)
-Switch the attached client to the next session.
-,
-Rename the current window.
--
-Delete the most recently copied buffer of text.
-.
-Prompt for an index to move the current window.
-0 to 9
-Select windows 0 to 9.
-:
-Enter the tmux command prompt.
-;
-Move to the previously active pane.
-=
-Choose which buffer to paste interactively from a list.
-?
-List all key bindings.
-D
-Choose a client to detach.
-L
-Switch the attached client back to the last session.
-[
-Enter copy mode to copy text or view the history.
-]
-Paste the most recently copied buffer of text.
-c
-Create a new window.
-d
-Detach the current client.
-f
-Prompt to search for text in open windows.
-i
-Display some information about the current window.
-l
-Move to the previously selected window.
-n
-Change to the next window.
-o
-Select the next pane in the current window.
-p
-Change to the previous window.
-q
-Briefly display pane indexes.
-r
-Force redraw of the attached client.
-s
-Select a new session for the attached client interactively.
-t
-Show the time.
-w
-Choose the current window interactively.
-x
-Kill the current pane.
-z
-Toggle zoom state of the current pane.
-{
-Swap the current pane with the previous pane.
-}
-Swap the current pane with the next pane.
-~
-Show previous messages from tmux, if any.
-Page Up
-Enter copy mode and scroll one page up.
-Up, Down
-Left, Right
-Change to the pane above, below, to the left, or to the right of the current pane.
-M-1 to M-5
-Arrange panes in one of the five preset layouts: even-horizontal, even-vertical, main-horizontal, main-vertical, or tiled.
-Space
-Arrange the current window in the next preset layout.
-M-n
-Move to the next window with a bell or activity marker.
-M-o
-Rotate the panes in the current window backwards.
-M-p
-Move to the previous window with a bell or activity marker.
-C-Up, C-Down
-C-Left, C-Right
-Resize the current pane in steps of one cell.
-M-Up, M-Down
-M-Left, M-Right
-Resize the current pane in steps of five cells.
+默认的命令键绑定为:
+
+C-b:  Send the prefix key (C-b) through to the application.
+C-b: 给应用发送一个前缀键 C-b
+C-o: Rotate the panes in the current window forwards.
+C-o: 将当前窗口中的面板向前切换。
+C-z: Suspend the tmux client.
+C-z: 将tmux客户端挂起
+!: Break the current pane out of the window.
+!: 将当前面板在窗口中突出显示
+": Split the current pane into two, top and bottom.
+": 将当前的面板分割为上下两个面板
+\#: List all paste buffers.
+\#: 列出所有的粘贴缓存
+$:Rename the current session.
+$: 重命名当前会话
+% Split the current pane into two, left and right.
+%: 将当前面板分割为左右两个面板
+& Kill the current window.
+&: 终止当前窗口
+' Prompt for a window index to select.
+': 显示一个窗口索引来进行选择
+( Switch the attached client to the previous session.
+(: 将当前附着的客户端转换到前一个会话
+) Switch the attached client to the next session.
+): 将附着的客户端转换到下一个会话
+\, Rename the current window.
+\,: 重命名当前窗口
+\- Delete the most recently copied buffer of text.
+\-: 删除最近的复制文本缓存
+. Prompt for an index to move the current window.
+.: 提示一个索引来移动当前窗口
+0 to 9: Select windows 0 to 9.
+0-9: 选择0-9个窗口
+: Enter the tmux command prompt.
+: 输入tmux命令提示
+;: Move to the previously active pane.
+;: 移动到前面的活动面板
+
+=: Choose which buffer to paste interactively from a list.
+=: 从一个列表中选择一个缓存来交互式粘贴。
+?: List all key bindings.
+?: 列出所有的键绑定
+D: Choose a client to detach.
+D: 选择一个客户端来脱离其附着
+L: Switch the attached client back to the last session.
+L: 将附着的客户端切换到最后一个会话中
+[: Enter copy mode to copy text or view the history.
+[: 输入赋值模式来复制文本或查看历史
+]: Paste the most recently copied buffer of text.
+]: 粘贴最近复制的文本缓存
+c: Create a new window.
+c: 创建一个新的窗口
+d: Detach the current client.
+d: 脱离当前的客户端
+f: Prompt to search for text in open windows.
+f: 提示在打开的窗口中搜索文本
+i: Display some information about the current window.
+i: 显示关于当前窗口的一些信息
+l: Move to the previously selected window.
+l: 移动到之前选择的窗口
+n: Change to the next window.
+n: 移动到下一个窗口
+o: Select the next pane in the current window.
+o: 移动到当前窗口的下一个面板
+p: Change to the previous window.
+p: 移动到之前的窗口
+q: Briefly display pane indexes.
+q: 简单地显示面板索引
+r: Force redraw of the attached client.
+r: 强制重绘附着的客户端
+s: Select a new session for the attached client interactively.
+s: 为当前附着的客户端交互式地选择一个新的会话
+t: Show the time.
+t: 显示时间
+w: Choose the current window interactively.
+w: 交互式地选择当前的窗口
+x: Kill the current pane.
+x: 终止当前的面板
+z: Toggle zoom state of the current pane.
+z: 切换当前面板的放大状态
+{: Swap the current pane with the previous pane.
+{: 使用之前的面板来替换当前的面板
+}: Swap the current pane with the next pane.
+}: 使用下一个面板来替换当前的面板
+~: Show previous messages from tmux, if any.
+~: 显示tmux之前的消息如果存在的话。
+Page Up: Enter copy mode and scroll one page up.
+PageUp: 进入复制模式并且将页面向上滚动一页。
+Up, Down, Left, Right: Change to the pane above, below, to the left, or to the right of the current pane.
+Up,Down,Left,Right: 转换到当前面板的上, 下，左，右
+M-1 to M-5: Arrange panes in one of the five preset layouts: even-horizontal, even-vertical, main-horizontal, main-vertical, or tiled.
+M-1到M-5（M=Alt）：将面板按照预设的1-5个布局进行安排：偶数水平，偶数垂直，主水平，主垂直或平铺
+Space: Arrange the current window in the next preset layout.
+Space: 将当前窗口按照下一个预设布局进行安排
+M-n: Move to the next window with a bell or activity marker.
+M-n: 移动到下一个窗口并且带有一个响铃或者活动标记
+M-o: Rotate the panes in the current window backwards.
+M-o: 将当前窗口中的面板从前向后反转
+M-p: Move to the previous window with a bell or activity marker.
+M-p: 移动到前一个窗口并且带有响铃或者活动标记
+C-Up, C-Down C-Left, C-Right: Resize the current pane in steps of one cell.
+C-Up, C-Down C-Left, C-Right: 以一个单格的步调调整当前面板的大小
+M-Up, M-Down M-Left, M-Right: Resize the current pane in steps of five cells.
+M-Up, M-Down M-Left, M-Right: 以五个单格的步调调整当前面板的大小
+
 Key bindings may be changed with the bind-key and unbind-key commands.
+键绑定可以通过bind-key和unbind-key命令来改变。
+
+
 COMMANDS
 This section contains a list of the commands supported by tmux. Most commands accept the optional -t argument with one of target-client, target-session target-window, or target-pane. These specify the client, session, window or pane which a command should affect.
 target-client should be the name of the pty(4) file to which the client is connected, for example either of /dev/ttyp1 or ttyp1 for the client attached to /dev/ttyp1. If no client is specified, tmux attempts to work out the client currently in use; if that fails, an error is reported. Clients may be listed with the list-clients command.
