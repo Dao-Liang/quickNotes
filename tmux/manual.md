@@ -311,168 +311,325 @@ select-window -t:+2
 
 Sessions, window and panes are each numbered with a unique ID; session IDs are prefixed with a ‘$’, windows with a ‘@’, and panes with a ‘%’. These are unique and are unchanged for the life of the session, window or pane in the tmux server. The pane ID is passed to the child process of the pane in the TMUX_PANE environment variable. IDs may be displayed using the ‘session_id’, ‘window_id’, or ‘pane_id’ formats (see the FORMATS section) and the display-message, list-sessions, list-windows or list-panes commands.
 会话，窗口和面板都通过一个唯一的ID来进行数字编码；
-会话ID带有一个'$'前缀，窗口ID带有一个'@'前缀，面板ID带有一个'%'前缀。这些在tmux服务器中的会话，窗口或面板生命周期中都是唯一不变的。
+会话ID带有一个'$'前缀，窗口ID带有一个'@'前缀，面板ID带有一个'%'前缀。这些在tmux服务器中的会话，窗口或面板生命周期中都是唯一不变的。面板ID通过TMUX_PANE环境变量传递给面板的子进程，ID可能使用'session_id','window_id'或'pane_id'何display-message,list-sesions,list-windows或list-panes命令的格式进行显示。
 
 
 shell-command arguments are sh(1) commands. This may be a single argument passed to the shell, for example:
-new-window 'vi /etc/passwd'
+shell-command 参数时sh命令，这可能是一个传递给shell的单个参数，例如：
+
+    new-window 'vi /etc/passwd'
+
 Will run:
-/bin/sh -c 'vi /etc/passwd'
+会运行：
+    /bin/sh -c 'vi /etc/passwd'
+
 Additionally, the new-window, new-session, split-window, respawn-window and respawn-pane commands allow shell-command to be given as multiple arguments and executed directly (without ‘sh -c’). This can avoid issues with shell quoting. For example:
-$ tmux new-window vi /etc/passwd
+此外，new-window,new-session,split-window, respawn-window以及respawn-pane命令允许 shell-command
+作为多惨数给定并且可以直接执行（不需要 'sh -C'）。 者可以避免shell引用问题，例如：
+
+    $ tmux new-window vi /etc/passwd
+
 Will run vi(1) directly without invoking the shell.
+会直接运行vi,而不需要调用shell。
+
 command [arguments] refers to a tmux command, passed with the command and arguments separately, for example:
-bind-key F1 set-window-option force-width 81
+命令 [参数] 指向一个tmux命令，命令和参数分别进行传递，例如：
+
+    bind-key F1 set-window-option force-width 81
+
 Or if using sh(1):
-$ tmux bind-key F1 set-window-option force-width 81
+或者，如果使用sh的话：
+
+    $ tmux bind-key F1 set-window-option force-width 81
+
 Multiple commands may be specified together as part of a command sequence. Each command should be separated by spaces and a semicolon; commands are executed sequentially from left to right and lines ending with a backslash continue on to the next line, except when escaped by another backslash. A literal semicolon may be included by escaping it with a backslash (for example, when specifying a command sequence to bind-key).
+多个命令可以作为命令序列的一部分一起指定，每个命令需要使用空格和分号来分隔；命令按照从左至右的顺序执行，并且以反斜线结束的行会继续到下一行，除非被另外一个反斜线转义。
+一个字面量分号可以通过一个反斜线进行转义包含进来（例如，当需要制定一个命令行序列给键绑定时）
 Example tmux commands include:
-refresh-client -t/dev/ttyp2 
+tmux命令包含样例：
+
+    refresh-client -t/dev/ttyp2 
  
-rename-session -tfirst newname 
+    rename-session -tfirst newname 
  
-set-window-option -t:0 monitor-activity on 
+    set-window-option -t:0 monitor-activity on 
  
-new-window ; split-window -d 
+    new-window ; split-window -d 
  
-bind-key R source-file ~/.tmux.conf \; \ 
-	display-message "source-file done"
+    bind-key R source-file ~/.tmux.conf \; \ 
+	    display-message "source-file done"
+
 Or from sh(1):
-$ tmux kill-window -t :1 
+或者从sh中：
+
+    $ tmux kill-window -t :1 
  
-$ tmux new-window \; split-window -d 
+    $ tmux new-window \; split-window -d 
  
-$ tmux new-session -d 'vi /etc/passwd' \; split-window -d \; attach
+    $ tmux new-session -d 'vi /etc/passwd' \; split-window -d \; attach
+
 CLIENTS AND SESSIONS
+客户端和会话：
+
 The tmux server manages clients, sessions, windows and panes. Clients are attached to sessions to interact with them, either when they are created with the new-session command, or later with the attach-session command. Each session has one or more windows linked into it. Windows may be linked to multiple sessions and are made up of one or more panes, each of which contains a pseudo terminal. Commands for creating, linking and otherwise manipulating windows are covered in the WINDOWS AND PANES section.
+tmux服务器管理客户端，会话，窗口和面板。客户端是附着在会话上来与他们交互的，不论他们是通过new-session命令或者之后的attach-session命令创建的。
+每个会话具有一个或多个窗口与其链接。
+窗口可以连接到多个会话上，窗口又是有一个或多个面板组成的，每个面板包含了一个伪终端。
+对于创建、链接或其他窗口操作的命令会在WINDOWS AND PANES部分详解。
+
 The following commands are available to manage clients and sessions:
+下面的命令可以用来管理客户端和会话：
 attach-session [-dr] [-c working-directory] [-t target-session]
 (alias: attach)
+(别名： attach)
+
 If run from outside tmux, create a new client in the current terminal and attach it to target-session. If used from inside, switch the current client. If -d is specified, any other clients attached to the session are detached. -r signifies the client is read-only (only keys bound to the detach-client or switch-client commands have any effect)
+如果从tmux之外来运行，会在当前终端中创建一个新的客户端并且将其附着在一个目标会话上。如果这个命令是在tmux中运行的，就会切换当前的客户端。
+如果指定了 -d 选项， 附着在这个会话上的其他客户端就会脱离，
+-r表示这个客户端时只读的（只有键绑定到detach-client或switch-client命令时具有效果）。
+
 If no server is started, attach-session will attempt to start it; this will fail unless sessions are created in the configuration file.
+如果没有启动服务器， attach-session 会尝试启动服务器；除非在配置文件中创建了会话否则就会失败。
+
 The target-session rules for attach-session are slightly adjusted: if tmux needs to select the most recently used session, it will prefer the most recently used unattached session.
+对于attach-session命令的目标会话规则稍微有一点调整：如果tmux需要选择最近使用的会话，会偏好选择最近使用的脱离附着的会话。
+
 -c will set the session working directory (used for new windows) to working-directory.
+-c 为设置会话的工作目录（为新窗口所使用）为working-directory
+
 detach-client [-P] [-a] [-s target-session] [-t target-client]
 (alias: detach)
+(别名： detach)
+
 Detach the current client if bound to a key, the client specified with -t, or all clients currently attached to the session specified by -s. The -a option kills all but the client given with -t. If -P is given, send SIGHUP to the parent process of the client, typically causing it to exit.
+如果绑定了一个键时会脱离当前客户端，由-t来指定客户端，或者所有附着在由-s指定的会话中的客户端。
+-a选项会终止除-t指定的目标客户端之外的所有客户端。
+如果给定了-P，会发送一个SIGHUP信号给当前客户端的父进程，一般时导致其触发退出动作。
+
 has-session [-t target-session]
 (alias: has)
+(别名: has)
+
 Report an error and exit with 1 if the specified session does not exist. If it does exist, exit with 0.
+如果指定的会话不存在的话，就会报告一个错误并且退出，返回值为1. 如果存在的话，就会退出，返回值为0.
+
 kill-server
+
 Kill the tmux server and clients and destroy all sessions.
+终止tmux服务器和客户端并且销毁所有的会话。
+
 kill-session [-a] [-t target-session]
 Destroy the given session, closing any windows linked to it and no other sessions, and detaching all clients attached to it. If -a is given, all sessions but the specified one is killed.
+销毁指定的会话，关闭连接到会话的任何窗口，并且让所有附着在其上的客户端脱离。
+如果给定了-a选项的话，除了指定的会话之外的会话都被终止。
+
 list-clients [-F format] [-t target-session]
 (alias: lsc)
+(别名： lsc)
+
 List all clients attached to the server. For the meaning of the -F flag, see the FORMATS section. If target-session is specified, list only clients connected to that session.
+列出附着在服务器上的所有客户端。 对于-F标记，可以参考 FORMATS 部分。
+如果给定了目标会话的话，只列出连接到该会话上的客户端。  
+
 list-commands
 (alias: lscm)
+(别名： lscm)
+
 List the syntax of all commands supported by tmux.
+列出所有tmux支持的所有命令语法。
+
 list-sessions [-F format]
 (alias: ls)
+(别名： ls)
+
 List all sessions managed by the server. For the meaning of the -F flag, see the FORMATS section.
+列出服务器管理的所有会话，对于-F标记，参考 FORMATS部分。
+
 lock-client [-t target-client]
 (alias: lockc)
+(别名: lockc)
+
 Lock target-client, see the lock-server command.
+锁定目标客户端， 可以参考 lock-server 命令。
+
 lock-session [-t target-session]
 (alias: locks)
+(别名: locks)
 Lock all clients attached to target-session.
+锁定附着在目标会话上的所有客户端。
+
 new-session [-AdDP] [-c start-directory] [-F format] [-n window-name] [-s session-name] [-t target-session] [-x width] [-y height] [shell-command]
 (alias: new)
+(别名:new)
 Create a new session with name session-name.
+使用session-name 来创建一个新的会话。
+
 The new session is attached to the current terminal unless -d is given. window-name and shell-command are the name of and shell command to execute in the initial window. If -d is used, -x and -y specify the size of the initial window (80 by 24 if not given).
+除非给定-d选项，否则新的会话就会附着在当前的终端上。 window-name和shell-comand
+是在初始化窗口中执行的窗口和shell命令你该名称。
+如果使用了-d选项， -x和-y用来指定初始窗口的大小（默认为80x24）。
+
 If run from a terminal, any termios(4) special characters are saved and used for new windows in the new session.
+如果从终端中运行的恶化，任何的termios特殊字符都被保存并且在新会话中的新窗口中使用。
+
 The -A flag makes new-session behave like attach-session if session-name already exists; in this case, -D behaves like -d to attach-session.
+-A
+标记使得新会话与一个附着会话具有相同的行为，如果会话名称已经存在的话；这种情况下，对于attach-session来说-D具有与-d相同的行为。
+
 If -t is given, the new session is grouped with target-session. This means they share the same set of windows - all windows from target-session are linked to the new session and any subsequent new windows or windows being closed are applied to both sessions. The current and previous window and any session options remain independent and either session may be killed without affecting the other. Giving -n or shell-command are invalid if -t is used.
+如果给定了-t选项，新的会话被分组到目标会话中。
+这就意味着他们共享相同的窗口集合--目标会话中的所有窗口都会连接到新的会话上，并且任何后续的新建窗口或关闭窗口都会被应用在两个会话上。
+当前的窗口和之前的窗口以及任何会话选项保持独立，并且每个会话都会在不影响其他会话的情况下被终止。 -n或
+shell-command只有在使用-t选项时合法。
+
+
 The -P option prints information about the new session after it has been created. By default, it uses the format ‘#{session_name}:’ but a different format may be specified with -F.
+-P选项会在新会话创建之后来打印新会话相关信息。默认情况下，会使用'#{session_name}:'格式，但是可以通过-F来指定一个不同的格式。
+
 refresh-client [-S] [-t target-client]
 (alias: refresh)
+(别名:refresh)
+
 Refresh the current client if bound to a key, or a single client if one is given with -t. If -S is specified, only update the client's status bar.
+如果绑定了一个键的话会刷新当前客户端，如果使用-t指定了一个客户端的话会刷新单独的客户端。如果指定-S，只会更新客户端的状态条。
+
 rename-session [-t target-session] new-name
 (alias: rename)
+(别名：rename)
+
 Rename the session to new-name.
+重命名会话为一个新名称。
+
 show-messages [-IJT] [-t target-client]
 (alias: showmsgs)
+(别名：showmsgs)
 Show client messages or server information. Any messages displayed on the status line are saved in a per-client message log, up to a maximum of the limit set by the message-limit server option. With -t, display the log for target-client. -I, -J and -T show debugging information about the running server, jobs and terminals.
+显示客户端消息或服务器信息。所有显示在状态行的消息都存储在一个客户端独立的消息日志中，具有一个由message-limit选项设置的最大限制。使用-t会显示目标客户端的日志。
+-I，-J 和-T分别显示运行服务器，任务和终端的调试信息。
+
 source-file path
 (alias: source)
+(别名：source)
 Execute commands from path.
+从路径中来执行命令
+
 start-server
 (alias: start)
+(别名：start)
 Start the tmux server, if not already running, without creating any sessions.
+开启tmux服务器，如果还没有运行，不会创建任何会话。
+
 suspend-client [-t target-client]
 (alias: suspendc)
+(别名：suspendc)
 Suspend a client by sending SIGTSTP (tty stop).
+通过发送一个SIGTSTP（tty stop）信号来挂起一个客户端。
+
 switch-client [-lnpr] [-c target-client] [-t target-session] [-T key-table]
 (alias: switchc)
+(别名：switchc)
 Switch the current session for client target-client to target-session. If -l, -n or -p is used, the client is moved to the last, next or previous session respectively. -r toggles whether a client is read-only (see the attach-session command).
+将目标客户端所在的当前会话切换到目标会话中， 如果-l, -n或者-p被使用的话，客户端会被分别移动到最后，下一个或上一个会话中。-r 转换一个客户端的只读（可以参考attach-session命令）
+
 -T sets the client's key table; the next key from the client will be interpreted from key-table. This may be used to configure multiple prefix keys, or to bind commands to sequences of keys. For example, to make typing ‘abc’ run the list-keys command:
+-T
+设置客户端的简表；来自客户端的下一个键会被解释为来自键表。这可能会被用在配置多个前缀键时或者绑定命令到一序列键值时使用。例如，让键入'abc'来运行 list-keys命令：
 bind-key -Ttable2 c list-keys 
 bind-key -Ttable1 b switch-client -Ttable2 
 bind-key -Troot   a switch-client -Ttable1
+
 WINDOWS AND PANES
-A tmux window may be in one of several modes. The default permits direct access to the terminal attached to the window. The other is copy mode, which permits a section of a window or its history to be copied to a paste buffer for later insertion into another window. This mode is entered with the copy-mode command, bound to ‘[’ by default. It is also entered when a command that produces output, such as list-keys, is executed from a key binding.
+窗口和面板
+
+A tmux window may be in one of several modes. The default permits direct access to the terminal attached to the window. The other is copy mode, which permits a section of a window or its history to be copied to a paste buffer for later insertion into another window. This mode is entered with the copy-mode command, bound to ‘\[’ by default. It is also entered when a command that produces output, such as list-keys, is executed from a key binding.
+一个tmux窗口可能会在处在多个模式中的某一个模式。默认的模式时直接访问附着在窗口上的终端。另外一个是复制模式，允许一个窗口的一部分或者其历史能够被复制到一个粘贴缓存中，以便稍候插入到另外的窗口中。
+这个模式时使用 copy-mode命令来进入的，默认绑定到'\['上。也会在一个命令产生输出时进入，例如通过键绑定执行的list-keys。
+
 The keys available depend on whether emacs or vi mode is selected (see the mode-keys option). The following keys are supported as appropriate for the mode:
-Function	vi	emacs
-Append selection	A	
-Back to indentation	^	M-m
-Bottom of history	G	M-<
-Clear selection	Escape	C-g
-Copy selection	Enter	M-w
-Copy to named buffer	"	
-Cursor down	j	Down
-Cursor left	h	Left
-Cursor right	l	Right
-Cursor to bottom line	L	
-Cursor to middle line	M	M-r
-Cursor to top line	H	M-R
-Cursor up	k	Up
-Delete entire line	d	C-u
-Delete/Copy to end of line	D	C-k
-End of line	$	C-e
-Go to line	:	g
-Half page down	C-d	M-Down
-Half page up	C-u	M-Up
-Jump again	;	;
-Jump again in reverse	,	,
-Jump backward	F	F
-Jump forward	f	f
-Jump to backward	T	
-Jump to forward	t	
-Next page	C-f	Page down
-Next space	W	
-Next space, end of word	E	
-Next word	w	
-Next word end	e	M-f
-Other end of selection	o	
-Paste buffer	p	C-y
-Previous page	C-b	Page up
-Previous space	B	
-Previous word	b	M-b
-Quit mode	q	Escape
-Rectangle toggle	v	R
-Scroll down	C-Down or C-e	C-Down
-Scroll up	C-Up or C-y	C-Up
-Search again	n	n
-Search again in reverse	N	N
-Search backward	?	C-r
-Search forward	/	C-s
-Select line	V	
-Start of line	0	C-a
-Start selection	Space	C-Space
-Top of history	g	M->
+可用的键依赖于是选择emacs还是vi模式（参考 mode-keys 选项）。 下面的键对于不同的模式具有合适的支持。
+
+Function	                vi	        emacs
+函数                        vi模式      emacs模式
+Append selection	        A	
+Back to indentation	        ^	        M-m
+Bottom of history	        G	        M-<
+Clear selection	Escape	    C-g
+Copy selection	Enter	    M-w
+Copy to named buffer    	"   	
+Cursor down	                j       	Down
+Cursor left	                h	        Left
+Cursor right	            l	        Right
+Cursor to bottom line	    L	
+Cursor to middle line	    M	        M-r
+Cursor to top line	        H	        M-R
+Cursor up	                k	        Up
+Delete entire line	        d	        C-u
+Delete/Copy to end of line	D	        C-k
+End of line	                $	        C-e
+Go to line              	:           g
+Half page down	            C-d	        M-Down
+Half page up	            C-u	        M-Up
+Jump again	                ;	        ;
+Jump again in reverse   	,	        ,
+Jump backward	            F	        F
+Jump forward	            f       	f
+Jump to backward	        T	
+Jump to forward	            t	
+Next page	                C-f	        Page down
+Next space	                W	
+Next space, end of word	    E	
+Next word	                w	
+Next word end	            e	        M-f
+Other end of selection	    o	
+Paste buffer	            p	        C-y
+Previous page	            C-b	        Page up
+Previous space	            B	
+Previous word	            b	        M-b
+Quit mode	                q	        Escape
+Rectangle toggle	        v	        R
+Scroll down	                C-Down/C-e	C-Down
+Scroll up	                C-Up/C-y	C-Up
+Search again	            n	        n
+Search again in reverse	    N	        N
+Search backward	            ?	        C-r
+Search forward	            /	        C-s
+Select line	                V	
+Start of line	            0	        C-a
+Start selection	            Space	    C-Space
+Top of history	            g	        M->
 Transpose characters		C-t
+
 The next and previous word keys use space and the ‘-’, ‘_’ and ‘@’ characters as word delimiters by default, but this can be adjusted by setting the word-separators session option. Next word moves to the start of the next word, next word end to the end of the next word and previous word to the start of the previous word. The three next and previous space keys work similarly but use a space alone as the word separator.
+下一个和上一个单词简默认使用空格和'-','_'以及'@'字符作为单词分隔符，但是可以通过设置会话的word-separators选项进行调整。下一个单词会移动到下一个单词的开始位置，下一个单词的末尾会移动到下一个单词的末尾位置，
+前一个单词移动到前一个单词的开始位置。 三个下一个和前一个空格键具有相似的作用但是单独使用一个空国作为单词分隔符。
+
 The jump commands enable quick movement within a line. For instance, typing ‘f’ followed by ‘/’ will move the cursor to the next ‘/’ character on the current line. A ‘;’ will then jump to the next occurrence.
+跳转命令允许在一个行中快速移动，例如，输入'f'跟随一个'/'会将光标移动到当前行的下一个'/'字符处。
+一个';'之后会移动到字符下一次出现的地方。
+
 Commands in copy mode may be prefaced by an optional repeat count. With vi key bindings, a prefix is entered using the number keys; with emacs, the Alt (meta) key and a number begins prefix entry. For example, to move the cursor forward by ten words, use ‘M-1 0 M-f’ in emacs mode, and ‘10w’ in vi.
+复制模式中的命令可能由一个可选的重复计数器作为前导，在vi键绑定下，通过数字键来输入前导；使用emacs时，使用Alt(meta)+数字作为前导实体。例如，为了将光标向前移动10个单词使用'M-1 0 M-f'-对于emacs模式，'10w'-对于vi模式。
+
 Mode key bindings are defined in a set of named tables: vi-edit and emacs-edit for keys used when line editing at the command prompt; vi-choice and emacs-choice for keys used when choosing from lists (such as produced by the choose-window command); and vi-copy and emacs-copy used in copy mode. The tables may be viewed with the list-keys command and keys modified or removed with bind-key and unbind-key. If append-selection, copy-selection, or start-named-buffer are given the -x flag, tmux will not exit copy mode after copying. copy-pipe copies the selection and pipes it to a command. For example the following will bind ‘C-w’ not to exit after copying and ‘C-q’ to copy the selection into /tmp as well as the paste buffer:
+模式键绑定是通过一个命名表集合定义的：在命令提示的行编辑时使用vi-edit和emacs-edit键，当从列表中选择时使用vi-choice和emacs-coice键，在复制模式中时使用vi-copy和emacs-copy键。这些表可以通过list-keys命令来查看，另外可以通过bind-key和unbund-key命令来修改或移除键。如果append-selection,copy-selection或者start-named-buffer给定-x标记，tmux将不会在复制之后退出复制模式。
+copy-pipe复制所选内容并且将其管道到一个命令。例如下面的命令会绑定'C-w'在复制之后不会退出，
+'C-q'将所选内容复制到/tmp和粘贴缓冲中。
+
 bind-key -temacs-copy C-w copy-selection -x 
 bind-key -temacs-copy C-q copy-pipe "cat >/tmp/out"
+
 The paste buffer key pastes the first line from the top paste buffer on the stack.
+粘贴缓存键会从栈中顶端的粘贴缓存中粘贴第一行。
+
 The synopsis for the copy-mode command is:
+copy-mode命令的简介为：
+
 copy-mode [-Mu] [-t target-pane]
 Enter copy mode. The -u option scrolls one page up. -M begins a mouse drag (only valid if bound to a mouse key binding, see MOUSE SUPPORT).
+进入复制模式。-u选项向上滚动一页。 -M 开始一个鼠标拖拽（只有在绑定鼠标键绑定时有效，参考MOUSE SUPPORT）
+
 Each window displayed by tmux may be split into one or more panes; each pane takes up a certain area of the display and is a separate terminal. A window may be split into panes using the split-window command. Windows may be split horizontally (with the -h flag) or vertically. Panes may be resized with the resize-pane command (bound to ‘C-up’, ‘C-down’ ‘C-left’ and ‘C-right’ by default), the current pane may be changed with the select-pane command and the rotate-window and swap-pane commands may be used to swap panes without changing their position. Panes are numbered beginning from zero in the order they are created.
+
 A number of preset layouts are available. These may be selected with the select-layout command or cycled with next-layout (bound to ‘Space’ by default); once a layout is chosen, panes within it may be moved and resized as normal.
 The following layouts are supported:
 even-horizontal
