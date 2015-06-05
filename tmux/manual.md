@@ -266,27 +266,54 @@ Token		Meaning
 {mouse} =   鼠标事件发生的窗口
 
 target-pane may be a pane ID or takes a similar form to target-window but with the optional addition of a period followed by a pane index or pane ID, for example: ‘mysession:mywindow.1’. If the pane index is omitted, the currently active pane in the specified window is used. The following special tokens are available for the pane index:
-目标面板可以是一个面板ID或者是一个于目标窗口相似的形式，但是带有一个额外可选的跟随面板索引或面板ID的
+目标面板可以是一个面板ID或者是一个于目标窗口相似的形式，但是带有一个额外可选的跟随面板索引或面板ID的点号“.”。例如：
+"mysession:mywindow.1"。
+如果忽略面板索引的话，那么指定窗口当前的活动面板就会被使用，下面的特殊符合可以作为面板索引使用：
+
 Token		Meaning
+符号        含义
 {last}	!	The last (previously active) pane
+{last}  !   最后一个面板
 {next}	+	The next pane by number
+{next}  +   数字指定的下一个面板
 {previous}	-	The previous pane by number
+{previous}  -   数字指定的前一个面板
 {top}		The top pane
+{top}       顶端面板
 {bottom}		The bottom pane
+{bottom}        底端面板
 {left}		The leftmost pane
+{left}      最左端面板
 {right}		The rightmost pane
+{right}     最右端面板
 {top-left}		The top-left pane
+{top-left}      左顶端面板
 {top-right}		The top-right pane
+{top-right}     右顶端面板
 {bottom-left}		The bottom-left pane
+{bottom-left}       左底端面板
 {bottom-right}		The bottom-right pane
+{bottom-right}      右底端面板
 {up}		The pane above the active pane
+{up}        活动面板上面的面板
 {down}		The pane below the active pane
+{down}      活动面板下面的面板
 {left}		The pane to the left of the active pane
+{left}      活动面板左边的面板
 {right}		The pane to the right of the active pane
+{right}     活动面板右边的面板
 {mouse}	=	The pane where the mouse event happened
+{mouse} =   鼠标事件发生的面板
+
 The tokens ‘+’ and ‘-’ may be followed by an offset, for example:
+符合'+'和'-'可能跟随一个位移，例如:
 select-window -t:+2
+
 Sessions, window and panes are each numbered with a unique ID; session IDs are prefixed with a ‘$’, windows with a ‘@’, and panes with a ‘%’. These are unique and are unchanged for the life of the session, window or pane in the tmux server. The pane ID is passed to the child process of the pane in the TMUX_PANE environment variable. IDs may be displayed using the ‘session_id’, ‘window_id’, or ‘pane_id’ formats (see the FORMATS section) and the display-message, list-sessions, list-windows or list-panes commands.
+会话，窗口和面板都通过一个唯一的ID来进行数字编码；
+会话ID带有一个'$'前缀，窗口ID带有一个'@'前缀，面板ID带有一个'%'前缀。这些在tmux服务器中的会话，窗口或面板生命周期中都是唯一不变的。
+
+
 shell-command arguments are sh(1) commands. This may be a single argument passed to the shell, for example:
 new-window 'vi /etc/passwd'
 Will run:
