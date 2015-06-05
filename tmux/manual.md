@@ -1,4 +1,4 @@
-[OpenBSD]
+[penBSD]
 Manual Page Search Parameters
   	 Show named manual page
   	 Search with apropos query
@@ -8,38 +8,90 @@ SYNOPSIS
 tmux	[-2lCuv] [-c shell-command] [-f file] [-L socket-name] [-S socket-path] [command [flags]]
 DESCRIPTION
 tmux is a terminal multiplexer: it enables a number of terminals to be created, accessed, and controlled from a single screen. tmux may be detached from a screen and continue running in the background, then later reattached.
+tmux是一个终端复用器：它可以在一个单独屏幕中创建，访问以及控制多个终端。tmux也可以从窗口中脱离应且继续在后台运行，以便在之后再回到会话。
+
 When tmux is started it creates a new session with a single window and displays it on screen. A status line at the bottom of the screen shows information on the current session and is used to enter interactive commands.
+当开启tmux之后，它会创建带有一个单独窗口的会话并且在屏幕中进行显示。在屏幕底部的状态行显示当前会话的信息并且用来进入交互式命令。
+
 A session is a single collection of pseudo terminals under the management of tmux. Each session has one or more windows linked to it. A window occupies the entire screen and may be split into rectangular panes, each of which is a separate pseudo terminal (the pty(4) manual page documents the technical details of pseudo terminals). Any number of tmux instances may connect to the same session, and any number of windows may be present in the same session. Once all sessions are killed, tmux exits.
+一个会话是一个在tmux管理下的伪终端集合，每个会话具有一个或多个窗口与其链接。一个窗口占用了整个屏幕，并且可以被分割成长方形的面板，每个面板分别为一个伪终端。多个tmux实例可能连接到同一个会话，并且任何的窗口可能在一个会话中表示。当所有的会话被终止之后，tmux就会退出。
+
 Each session is persistent and will survive accidental disconnection (such as ssh(1) connection timeout) or intentional detaching (with the ‘C-b d’ key strokes). tmux may be reattached using:
-$ tmux attach
+每个会话都是持久的并且可能在意外失联或故意脱离之后生存下来，tumux可能使用以下命令来回到原来的会话：
+
+    $ tmux attach
+
 In tmux, a session is displayed on screen by a client and all sessions are managed by a single server. The server and each client are separate processes which communicate through a socket in /tmp.
+在tmux中，一个会话由一个客户端在整个屏幕中显示，并且所有的会话都是由一个单独的服务器进行管理的.
+这个服务器以及每个客户端时通过一个在/tmp中的socket进行交流的分开的进程。
+
 The options are as follows:
--2
-Force tmux to assume the terminal supports 256 colours.
--C
-Start in control mode (see the CONTROL MODE section). Given twice (-CC) disables echo.
+具有下列的选项:
+
+-2 
+    Force tmux to assume the terminal supports 256 colours.
+-2 
+    强制tmux假设终端支持256颜色。
+-C 
+    Start in control mode (see the CONTROL MODE section). Given twice (-CC) disables echo.
+-C 
+    以控制模式开启，使用-CC来让echo失效
 -c shell-command
+-c shell-命令
 Execute shell-command using the default shell. If necessary, the tmux server will be started to retrieve the default-shell option. This option is for compatibility with sh(1) when tmux is used as a login shell.
+使用默认的shell来执行shell命令。如果有必要的话，tmux服务器会开启来检索默认的shell选项。这个选项用来当tmux作为一个登录shell时与sh进行兼容的。
+
 -f file
+-f 文件
+
 Specify an alternative configuration file. By default, tmux loads the system configuration file from /etc/tmux.conf, if present, then looks for a user configuration file at ~/.tmux.conf.
+制定一个可选的配置文件，默认情况下，tmux会从/etc/tmux.conf中加载系统配置文件，如果这个文件存在的话，
+然后会尝试查找用户的配置文件 ~/.tmux.conf
 The configuration file is a set of tmux commands which are executed in sequence when the server is first started. tmux loads configuration files once when the server process has started. The source-file command may be used to load a file later.
+配置文件是一个tmux命令集合，其中的命令在服务器第一次启动时按顺序执行的。tmux会在服务器进程启动之后加载一次配置文件。
+"source-file"命令可以用来在稍候加载一个文件
+
 tmux shows any error messages from commands in configuration files in the first session created, and continues to process the rest of the configuration file.
+tmux在第一次会话创建时会显示配置文件中的命令出现的任何错误，但是会继续处理配置文件的余下部分。
+
 -L socket-name
+-L socket-名字
 tmux stores the server socket in a directory under TMUX_TMPDIR, TMPDIR if it is unset, or /tmp if both are unset. The default socket is named default. This option allows a different socket name to be specified, allowing several independent tmux servers to be run. Unlike -S a full path is not necessary: the sockets are all created in the same directory.
+tmurx 将服务器socket存储在TMUX_TMPDIR目录下，如果这个变量没有设置的话就会使用TMPDIR替换，
+或者当两者都不存在时，就会存储在/tmp目录下。默认的socket的名称为default.
+这个选项允许指定一个不同的socket名称，允许多个独立的tmux服务器运行。 与
+-S不同的是，不需要使用全路经：所有的sockets文件会创建在一个相同的目录下。
+
 If the socket is accidentally removed, the SIGUSR1 signal may be sent to the tmux server process to recreate it (note that this will fail if any parent directories are missing).
+如果socket被意外地删除了，那么SIGUSR1信号会发送给tmux服务器进程来重新创建socket文件(注意如果当之前描述的任何父目录不存在的话会出错)。
+
 -l
 Behave as a login shell. This flag currently has no effect and is for compatibility with other shells when using tmux as a login shell.
+当作一个登录shell使用，当前这个标记没有什么效果并且是被用来当使用tmux作为登录shell时与其他shell进行兼容的。
 -S socket-path
+-S socket-路径
 Specify a full alternative path to the server socket. If -S is specified, the default socket directory is not used and any -L flag is ignored.
+为服务器的socket指定一个可选的全路经，当这个选项指定之后，那么默认的目录不会被使用,并且-L选项会被忽略。
 -u
 tmux attempts to guess if the terminal is likely to support UTF-8 by checking the first of the LC_ALL, LC_CTYPE and LANG environment variables to be set for the string "UTF-8". This is not always correct: the -u flag explicitly informs tmux that UTF-8 is supported.
+tmux尝试通过第一个LC_ALL,LC_CTYPE和LANG环境变量来猜测终端是否可能支持UTF-8,这可能不会总是正确，这个 -u
+选项显式地告知tmux UTF-8是支持的。
 If the server is started from a client passed -u or where UTF-8 is detected, the utf8 and status-utf8 options are enabled in the global window and session options respectively.
+如果服务器通过客户端传递-u或者检测到UTF-8进行启动的，那么utf8和status-utf8选项会分别在全局窗口和会话选项中生效。
 -v
 Request verbose logging. This option may be specified multiple times for increasing verbosity. Log messages will be saved into tmux-client-PID.log and tmux-server-PID.log files in the current directory, where PID is the PID of the server or client process.
+请求详细登录，这个选项可能由于不断增长的修饰词被多次指定。登录消息会被存储在当前目录下的tmux-客户端PID.log和tmux-服务器PID.log文件中，其中的PID代表服务器或客户端进程ID。
 command [flags]
+
 This specifies one of a set of commands used to control tmux, as described in the following sections. If no commands are specified, the new-session command is assumed.
+这个用来指定命令集合中的一个来控制tmux，如果没有指定任何命令那么假设一个新建会话命令。
+
 KEY BINDINGS
+键绑定
+
 tmux may be controlled from an attached client by using a key combination of a prefix key, ‘C-b’ (Ctrl-b) by default, followed by a command key.
+tmux可以通过一个前缀键与跟随的命令键进行结合的方式从一个附着的客户端进行控制，前缀键默认为'C-b'
+
 The default command key bindings are:
 C-b
 Send the prefix key (C-b) through to the application.
