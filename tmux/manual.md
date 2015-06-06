@@ -843,66 +843,143 @@ next-window [-a] [-t target-session]
 (alias: next)
 (别名：next)
 Move to the next window in the session. If -a is used, move to the next window with an alert.
+移动到会话中的下一个窗口，如果-a指定，在移动到下一个窗口时带有警告。
+
 pipe-pane [-o] [-t target-pane] [shell-command]
 (alias: pipep)
+(别名：pipep)
 Pipe any output sent by the program in target-pane to a shell command. A pane may only be piped to one command at a time, any existing pipe is closed before shell-command is executed. The shell-command string may contain the special character sequences supported by the status-left option. If no shell-command is given, the current pipe (if any) is closed.
+将target-pane中程序的输出通过管道传递给一个shell命令。一个面板可能一次只能管道给一个命令，在shell-command命令执行之前任何存在的管道都会关闭。
+shell-command字符串可能会包含status-left选项所支持的特殊字符序列。 如果没有指定shell-command,那么当前的管道就会被关闭。
+
 The -o option only opens a new pipe if no previous pipe exists, allowing a pipe to be toggled with a single key, for example:
-bind-key C-p pipe-pane -o 'cat >>~/output.#I-#P'
+-o选项只有在没有之前的管道存在时打开一个新管道，允许一个管道通过一个单键进行切换，例如：
+    bind-key C-p pipe-pane -o 'cat >>~/output.#I-#P'
+
+
 previous-layout [-t target-window]
 (alias: prevl)
+(别名：prevl )
 Move to the previous layout in the session.
+移动到会话之前的布局。
+
 previous-window [-a] [-t target-session]
 (alias: prev)
+(别名:prev)
 Move to the previous window in the session. With -a, move to the previous window with an alert.
+移动到会话之前的窗口，使用-a选项会带有一个警告。
+
 rename-window [-t target-window] new-name
 (alias: renamew)
+(别名: renamew)
 Rename the current window, or the window at target-window if specified, to new-name.
+重命名当前窗口或者由-t指定的target-window窗口为new-name
+
 resize-pane [-DLMRUZ] [-t target-pane] [-x width] [-y height] [adjustment]
 (alias: resizep)
+(别名：resizep)
 Resize a pane, up, down, left or right by adjustment with -U, -D, -L or -R, or to an absolute size with -x or -y. The adjustment is given in lines or cells (the default is 1).
+重新定义面板的大小，通过-U, -D, -L或-R来调整上下左右，或者通过-x/-y指定绝对值大小。
+调整是通过行或单元格来给定的（默认为1）。
+
 With -Z, the active pane is toggled between zoomed (occupying the whole of the window) and unzoomed (its normal position in the layout).
+使用-Z时，活动面板会在放大（占用整个窗口）或未放大（在布局中的正常位置）之间进行切换。
+
 -M begins mouse resizing (only valid if bound to a mouse key binding, see MOUSE SUPPORT).
+-M 开始鼠标重定义大小（只有在鼠标键绑定时有效，参考MOUSE SUPPORT部分）
+
 respawn-pane [-k] [-t target-pane] [shell-command]
 (alias: respawnp)
+(别名：respawnp)
 Reactivate a pane in which the command has exited (see the remain-on-exit window option). If shell-command is not given, the command used when the pane was created is executed. The pane must be already inactive, unless -k is given, in which case any existing command is killed.
+在shell-comman退出之后重新激活面板（可以参考remain-on-exit 窗口选项）。如果没有给定shell-comman,
+那么面板创建时所使用的命令会被执行。面板必须是已经激活的状态，如果给定-k,任何存在的命令都会被终止。
+
 respawn-window [-k] [-t target-window] [shell-command]
 (alias: respawnw)
+(别名：respawnw)
 Reactivate a window in which the command has exited (see the remain-on-exit window option). If shell-command is not given, the command used when the window was created is executed. The window must be already inactive, unless -k is given, in which case any existing command is killed.
+在shell-command退出之后重新激活窗口（可以参考remain-on-exit窗口选项）。 如果没有指定shell-comman,
+那么窗口创建时所使用的命令会被执行。 窗口必须是已经激活的状态，如果指定-k任何存在的命令都会被终止。
+
 rotate-window [-DU] [-t target-window]
 (alias: rotatew)
+(别名：rotatew)
 Rotate the positions of the panes within a window, either upward (numerically lower) with -U or downward (numerically higher).
+轮换窗口中面板的位置，或者通过-U向前或者向后。
+
 select-layout [-nop] [-t target-window] [layout-name]
 (alias: selectl)
+(别名：selectl)
 Choose a specific layout for a window. If layout-name is not given, the last preset layout used (if any) is reapplied. -n and -p are equivalent to the next-layout and previous-layout commands. -o applies the last set layout if possible (undoes the most recent layout change).
+为窗口选择一个特定的布局，如果没有指定布局名称，就会使用最后使用的预设布局并且重新布局。
 select-pane [-DdegLlRU] [-P style] [-t target-pane]
 (alias: selectp)
+(别名：selectp)
 Make pane target-pane the active pane in window target-window, or set its style (with -P). If one of -D, -L, -R, or -U is used, respectively the pane below, to the left, to the right, or above the target pane is used. -l is the same as using the last-pane command. -e enables or -d disables input to the pane.
+将target-pane面板作为target-window窗口中的活动面板，或者设置其风格（使用-P）。如果使用了-D,-L,-R或者-U的话，就会分别使用target-pane面板的下面，左边，右边或上面的面板。-l与使用last-pane命令效果一样。
+-e使得输入到面板生效，-d使得输入到面板失效。
+
 Each pane has a style: by default the window-style and window-active-style options are used, select-pane -P sets the style for a single pane. For example, to set the pane 1 background to red:
-select-pane -t:.1 -P 'bg=red'
+每个面板具有一个风格：默认使用window-style和window-active-style选项。select-pane -P 为单个面板设置风格。
+例如将第一个面板的北京设置为红色red:
+    select-pane -t:.1 -P 'bg=red'
+
 -g shows the current pane style.
+-g 显示当前面板的风格。
+
 select-window [-lnpT] [-t target-window]
 (alias: selectw)
+(别名：selectw)
 Select the window at target-window. -l, -n and -p are equivalent to the last-window, next-window and previous-window commands. If -T is given and the selected window is already the current window, the command behaves like last-window.
+选择目标窗口。-l,-n和-p等价于last-window,next-window和previous-window命令。
+如果给定-T,而且选择的窗口已经是当前窗口，那么命令表现为last-windown命令。
+
 split-window [-bdhvP] [-c start-directory] [-l size | -p percentage] [-t target-pane] [shell-command] [-F format]
 (alias: splitw)
+(别名：splitw)
 Create a new pane by splitting target-pane: -h does a horizontal split and -v a vertical split; if neither is specified, -v is assumed. The -l and -p options specify the size of the new pane in lines (for vertical split) or in cells (for horizontal split), or as a percentage, respectively. The -b option causes the new pane to be created to the left of or above target-pane. All other options have the same meaning as for the new-window command.
+通过分割target-pane窗口来创建一个新面板: -h为水平分割，-v为垂直分割; 默认为垂直分割。
+-l和-p选项指定新面板的行（对于垂直分割）或单元格（水平分割）,或者作为百分比。-b选项使得新建面板在target-pane的左边或上边。其他的任何选项的含义于new-window命令一样。
+
 swap-pane [-dDU] [-s src-pane] [-t dst-pane]
 (alias: swapp)
+(别名：swapp)
 Swap two panes. If -U is used and no source pane is specified with -s, dst-pane is swapped with the previous pane (before it numerically); -D swaps with the next pane (after it numerically). -d instructs tmux not to change the active pane.
+转换两个面板。如果使用-U并且没有通过-s来指定源面板的话，dst-pane会与之前的面板进行转换;-D与下一个面板进行转换。
+-d用来指示tmux不要改变活动面板。
+
 swap-window [-d] [-s src-window] [-t dst-window]
 (alias: swapw)
+(别名：swapw)
 This is similar to link-window, except the source and destination windows are swapped. It is an error if no window exists at src-window.
+这个与link-window类似，除了源面板与目标面板相互转换之外。如果在src-window没有窗口的话会出错。
+
 unlink-window [-k] [-t target-window]
 (alias: unlinkw)
+(别名：unlinkw)
 Unlink target-window. Unless -k is given, a window may be unlinked only if it is linked to multiple sessions - windows may not be linked to no sessions; if -k is specified and the window is linked to only one session, it is unlinked and destroyed.
+取消target-window的链接。除非给定-k选项，否则只有当一个窗口链接到多个会话时才会被取消链接-窗口不能链接到空会话;如果指定-k选项，而且窗口只有与一个会话相关联，那么窗口会被取消该链接并且被销毁。
+
 KEY BINDINGS
+键绑定：
+
 tmux allows a command to be bound to most keys, with or without a prefix key. When specifying keys, most represent themselves (for example ‘A’ to ‘Z’). Ctrl keys may be prefixed with ‘C-’ or ‘^’, and Alt (meta) with ‘M-’. In addition, the following special key names are accepted: Up, Down, Left, Right, BSpace, BTab, DC (Delete), End, Enter, Escape, F1 to F12, Home, IC (Insert), NPage/PageDown/PgDn, PPage/PageUp/PgUp, Space, and Tab. Note that to bind the ‘"’ or ‘'’ keys, quotation marks are necessary, for example:
-bind-key '"' split-window 
-bind-key "'" new-window
+tmux允许一个命令被绑定到大多数键上-无论时候带有前导键。当指定键时，大部分键代表其本身字面量含义（例如'A-Z'）。
+Control键可能表示为'C-'或'^'前导，而Alt(meta)表示为'M-'.此外，特殊的键名称也是被接受的：Up,Down,Left,Right,BSpace,BTab,DC(delete),End,Enter,Escape,F1-F12,Home,IC(insert), NPage/PageDown/PgDn, PPage/PageUp/PgUp,Space,和Tab。注意为了绑定双引号或单引号键，引号标记是必需的，例如：
+    bind-key '"' split-window 
+    bind-key "'" new-window
+
 Commands related to key bindings are as follows:
+与键绑定相关的命令如下：
+
 bind-key [-cnr] [-t mode-table] [-T key-table] key command [arguments]
 (alias: bind)
+(别名:bind)
 Bind key key to command. Keys are bound in a key table. By default (without -T), the key is bound in the prefix key table. This table is used for keys pressed after the prefix key (for example, by default ‘c’ is bound to new-window in the prefix table, so ‘C-b c’ creates a new window). The root table is used for keys pressed without the prefix key: binding ‘c’ to new-window in the root table (not recommended) means a plain ‘c’ will create a new window. -n is an alias for -T root. Keys may also be bound in custom key tables and the switch-client -T command used to switch to them from a key binding. The -r flag indicates this key may repeat, see the repeat-time option.
+将键绑定到命令。键被绑定到一个键表中。
+默认情况（没有-T)时，键被绑定到前导键表中。这个表被用在前导键键入之后再键入的键（例如，'c'默认绑定为前导键表中的新建窗口命令，所以'C-b c'会创建一个新窗口）。根键表被用在不需要前导键的键输入：将'c'在根键表中绑定为新建窗口命令时意味着一个普通的'c'键就会创建一个新窗口。
+
 If -t is present, key is bound in mode-table: the binding for command mode with -c or for normal mode without. See the WINDOWS AND PANES section and the list-keys command for information on mode key bindings.
 To view the default bindings and possible commands, see the list-keys command.
 list-keys [-t mode-table] [-T key-table]
