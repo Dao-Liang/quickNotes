@@ -629,37 +629,79 @@ Enter copy mode. The -u option scrolls one page up. -M begins a mouse drag (only
 进入复制模式。-u选项向上滚动一页。 -M 开始一个鼠标拖拽（只有在绑定鼠标键绑定时有效，参考MOUSE SUPPORT）
 
 Each window displayed by tmux may be split into one or more panes; each pane takes up a certain area of the display and is a separate terminal. A window may be split into panes using the split-window command. Windows may be split horizontally (with the -h flag) or vertically. Panes may be resized with the resize-pane command (bound to ‘C-up’, ‘C-down’ ‘C-left’ and ‘C-right’ by default), the current pane may be changed with the select-pane command and the rotate-window and swap-pane commands may be used to swap panes without changing their position. Panes are numbered beginning from zero in the order they are created.
+tmux显示的每个窗口可能会被分割为一个或多个面板；每个面板占用一个特定的区域进行显示并且具有一个单独的终端。一个窗口可以通过split-window名令分割为多个面板。窗口可以被水平分割（使用-h标记）或者垂直分割。面板可以通过resize-pane命令改变大小（默认绑定为'C-up','C-down','C-left','C-right'）, 当前的面板可能会通过select-panel命令改变，而rotate-window和swap-panel命令可以在不改变面板位置的情况下切换面板。 面板被从0开始的数字按顺序计数。
 
 A number of preset layouts are available. These may be selected with the select-layout command or cycled with next-layout (bound to ‘Space’ by default); once a layout is chosen, panes within it may be moved and resized as normal.
+有一些默认的预设布局可用，这可以通过select-layout命令来选择或者使用next-layout命令循环选择（默认绑定为'Space'布局）；一旦布局被选定，其中的面板会被移动以及重新改变大小。
+
 The following layouts are supported:
-even-horizontal
+支持以下的布局：
+
+even-horizontal:
 Panes are spread out evenly from left to right across the window.
-even-vertical
+面板按照偶数地从左到右来分布在窗口中。
+
+even-vertical:
 Panes are spread evenly from top to bottom.
+面板按照偶数地从上到下来分布在窗口中
+
 main-horizontal
 A large (main) pane is shown at the top of the window and the remaining panes are spread from left to right in the leftover space at the bottom. Use the main-pane-height window option to specify the height of the top pane.
+在窗口的顶端会显示一个大的面板，其余的面板按照从左到右的方式在底部左端的空间分布，可以使用main-pane-height窗口选项来指定顶部面板的高度。
+
 main-vertical
 Similar to main-horizontal but the large pane is placed on the left and the others spread from top to bottom along the right. See the main-pane-width window option.
+类似于main-horizontal，但是最大的面板会放置在窗口左边而其他的面板按照从上往下的方式在右边进行分布。
+可以参考main-pane-width窗口选项。
+
 tiled
 Panes are spread out as evenly as possible over the window in both rows and columns.
+面板会尽量将面板在窗口中在行列上以偶数地方式分布。
+
 In addition, select-layout may be used to apply a previously used layout - the list-windows command displays the layout of each window in a form suitable for use with select-layout. For example:
-$ tmux list-windows 
+此外，select-layout可以用来应用一个之前使用的布局，list-windows命令会以一个合适的格式显示每个窗口的布局来于select-layout命令结合使用，例如：
+
+    $ tmux list-windows 
+
 0: ksh [159x48] 
     layout: bb62,159x48,0,0{79x48,0,0,79x48,80,0} 
 $ tmux select-layout bb62,159x48,0,0{79x48,0,0,79x48,80,0}
+
 tmux automatically adjusts the size of the layout for the current window size. Note that a layout cannot be applied to a window with more panes than that from which the layout was originally defined.
+tmux自动地调整当前窗口大小中的布局大小。 注意，一个布局不能应用在多于布局默认定义的面板数量。
+
 Commands related to windows and panes are as follows:
+与窗口和面板相关的命令如下：
+
 break-pane [-dP] [-F format] [-t target-pane]
 (alias: breakp)
+(别名：breakp)
 Break target-pane off from its containing window to make it the only pane in a new window. If -d is given, the new window does not become the current window. The -P option prints information about the new window after it has been created. By default, it uses the format ‘#{session_name}:#{window_index}’ but a different format may be specified with -F.
+将目标面板从其所在的窗口中终止，并将其作为一个新窗口中的唯一的面板。 如果指定-d,新的窗口不会称为当前的窗口。
+-P选项会在新窗口创建之后显示其信息。 默认会使用
+'#{session_name}:#{window_index}'的显示格式，但是可以通过-f来指定一个不同的格式。
+
 capture-pane [-aepPq] [-b buffer-name] [-E end-line] [-S start-line] [-t target-pane]
 (alias: capturep)
+(别名：capturep)
 Capture the contents of a pane. If -p is given, the output goes to stdout, otherwise to the buffer specified with -b or a new buffer if omitted. If -a is given, the alternate screen is used, and the history is not accessible. If no alternate screen exists, an error will be returned unless -q is given. If -e is given, the output includes escape sequences for text and background attributes. -C also escapes non-printable characters as octal \xxx. -J joins wrapped lines and preserves trailing spaces at each line's end. -P captures only any output that the pane has received that is the beginning of an as-yet incomplete escape sequence.
+捕获一个面板的内容，如果指定-p，那么输出会到达stdou，否则会到达有-b指定的缓冲区（如果没有指定-b缓冲区的话就会指定一个新的缓冲区）。
+如果指定-a, 会使用备用屏幕，并且历史是不可以访问的。如果没有备用的屏幕，在没有指定-q的情况下会返回一个错误。
+如果指定-e,那么输出会包含文本转义序列和后台属性。 -C 也会转义非打印字符为八进制 \\xxx。 -J
+会链接包裹的多行并且保留每行末尾尾随的空格。 -P 只会面板接受到的捕获开头是一个非完整转义序列的任意输出。
+
 -S and -E specify the starting and ending line numbers, zero is the first line of the visible pane and negative numbers are lines in the history. ‘-’ to -S is the start of the history and to -E the end of the visible pane. The default is to capture only the visible contents of the pane.
+-S 和 -E 指定开始和结束行的行数，0是可视面板的第一行，而负数时历史行。 '-'到 -S是历史的开始，而
+'-'到-E是可视面板的结尾。 默认情况下只会捕获面板的可视内容。
+
 choose-client [-F format] [-t target-window] [template]
 Put a window into client choice mode, allowing a client to be selected interactively from a list. After a client is chosen, ‘%%’ is replaced by the client pty(4) path in template and the result executed as a command. If template is not given, "detach-client -t '%%'" is used. For the meaning of the -F flag, see the FORMATS section. This command works only if at least one client is attached.
+将一个窗口置于客户端选择模式，允许从一个列表中交互地选择一个客户端。
+在一个客户端被选择之后'%%'会由模板中的客户端pty路径替换，之后的结果会作为一个命令被执行。如果模板没有给定，会使用"detach-client
+-t '%%'"。 对于-F标记，可以参考FORMATS部分。 这个命令只有在至少一个客户端被附着之后才工作。
 choose-session [-F format] [-t target-window] [template]
 Put a window into session choice mode, where a session may be selected interactively from a list. When one is chosen, ‘%%’ is replaced by the session name in template and the result executed as a command. If template is not given, "switch-client -t '%%'" is used. For the meaning of the -F flag, see the FORMATS section. This command works only if at least one client is attached.
+将一个窗口置于会话选择模式中，可以从一个列表中交互式地选择一个会话。当一个会话被选择时，'%%'会由模板中的会话名称替换，之后的结果会作为一个命令被执行。如果模板没有给定，
 choose-tree [-suw] [-b session-template] [-c window-template] [-S format] [-W format] [-t target-window]
 Put a window into tree choice mode, where either sessions or windows may be selected interactively from a list. By default, windows belonging to a session are indented to show their relationship to a session.
 Note that the choose-window and choose-session commands are wrappers around choose-tree.
