@@ -978,65 +978,152 @@ bind-key [-cnr] [-t mode-table] [-T key-table] key command [arguments]
 (别名:bind)
 Bind key key to command. Keys are bound in a key table. By default (without -T), the key is bound in the prefix key table. This table is used for keys pressed after the prefix key (for example, by default ‘c’ is bound to new-window in the prefix table, so ‘C-b c’ creates a new window). The root table is used for keys pressed without the prefix key: binding ‘c’ to new-window in the root table (not recommended) means a plain ‘c’ will create a new window. -n is an alias for -T root. Keys may also be bound in custom key tables and the switch-client -T command used to switch to them from a key binding. The -r flag indicates this key may repeat, see the repeat-time option.
 将键绑定到命令。键被绑定到一个键表中。
-默认情况（没有-T)时，键被绑定到前导键表中。这个表被用在前导键键入之后再键入的键（例如，'c'默认绑定为前导键表中的新建窗口命令，所以'C-b c'会创建一个新窗口）。根键表被用在不需要前导键的键输入：将'c'在根键表中绑定为新建窗口命令时意味着一个普通的'c'键就会创建一个新窗口。
+默认情况（没有-T)时，键被绑定到前导键表中。这个表被用在前导键键入之后再键入的键（例如，'c'默认绑定为前导键表中的新建窗口命令，所以'C-b c'会创建一个新窗口）。根键表被用在不需要前导键的键输入：将'c'在根键表中绑定为新建窗口命令时意味着一个普通的'c'键就会创建一个新窗口。-n 是 -T root的别名。键同样可以绑定到客制化的键表中，switch-client -T command 用来从一个键绑定中切换到相应的键。 -r标记指定这个键可以重复，参考repeat-time选项。
 
 If -t is present, key is bound in mode-table: the binding for command mode with -c or for normal mode without. See the WINDOWS AND PANES section and the list-keys command for information on mode key bindings.
+如果出现-t选项，那么键会绑定到一个mode-table(模式表): 使用-c来绑定到命令模式，缺省时绑定为普通模式。 可以参考WINDOWS AND
+PANES部分，并且 list-keys命令可以查看模式键绑定。
+
 To view the default bindings and possible commands, see the list-keys command.
+为了查看默认的绑定和可用的命令可以参考list-keys 命令：
+
 list-keys [-t mode-table] [-T key-table]
 (alias: lsk)
+(别名：lsk)
 List all key bindings. Without -T all key tables are printed. With -T only key-table.
+列出所有的键绑定。 没有指定-T时会打印所有的键表，指定-T时只会打印key-table.
+
 With -t, the key bindings in mode-table are listed; this may be one of: vi-edit, emacs-edit, vi-choice, emacs-choice, vi-copy or emacs-copy.
+带-t时，在模式表中的键绑定会被列出来; 模式可能为以下之一：vi-edit,emacs-edit,vi-choice,emacs-choice,
+vi-copy或emcas-copy。
+
 send-keys [-lMR] [-t target-pane] key ...
 (alias: send)
+(别名:send)
 Send a key or keys to a window. Each argument key is the name of the key (such as ‘C-a’ or ‘npage’ ) to send; if the string is not recognised as a key, it is sent as a series of characters. The -l flag disables key name lookup and sends the keys literally. All arguments are sent sequentially from first to last. The -R flag causes the terminal state to be reset.
+发送一个或多个键到一个窗口中，其中的每个参数key是发送的键的名称（例如'C-a'或者'npage'）；如果字符串不能作为键来识别，就会作为一系列字符串发送。
+-l标记让键名查找失效并且发送键的字面量值。所有的参数被按照先后顺序序列地发送。 -R标记导致终端状态被重置。
+
 -M passes through a mouse event (only valid if bound to a mouse key binding, see MOUSE SUPPORT).
+-M 通过一个鼠标时间传递（只有当绑定一个鼠标键绑定时有效，参考MOUSE SUPPORT）。
+
 send-prefix [-2] [-t target-pane]
 Send the prefix key, or with -2 the secondary prefix key, to a window as if it was pressed.
+发送前导键-或者发送二级前导键如果与-2一起使用时-到一个窗口就像该键被按下一样。
+
 unbind-key [-acn] [-t mode-table] [-T key-table] key
 (alias: unbind)
+(别名：unbind)
 Unbind the command bound to key. -c, -n, -T and -t are the same as for bind-key. If -a is present, all key bindings are removed.
+取消命令到键的绑定，-c,-n,-T 和-t与bind-key命令的含义一样。 如果-a存在，所有的键绑定都会被移除。
+
 OPTIONS
+选项
 The appearance and behaviour of tmux may be modified by changing the value of various options. There are three types of option: server options, session options and window options.
+tmux的外观和行为可以通过修改各个选项的值来进行改变，具有三种选项：服务器选项，会话选项和窗口选项。
+
 The tmux server has a set of global options which do not apply to any particular window or session. These are altered with the set-option -s command, or displayed with the show-options -s command.
+tmux服务器具有一个全局选项集合-这个选项集合不会应用到任何特定的窗口或会话中。 这些选项通过set-option -s
+命令进行修改，或者通过show-options -s 命令进行显示。
+
 In addition, each individual session may have a set of session options, and there is a separate set of global session options. Sessions which do not have a particular option configured inherit the value from the global session options. Session options are set or unset with the set-option command and may be listed with the show-options command. The available server and session options are listed under the set-option command.
+此外，每个单独的会话可能具有一个会话选项集合，同时具有一个分开全局会话选项集合。
+没有特定选项配置的会话会从全局会话选项中继承其值。会话选项可以通过set-option命令进行设置或重置，
+可以通过show-options命令来列出会话选项。可用的服务器和会话选项会在set-option命令下列出。
+
 Similarly, a set of window options is attached to each window, and there is a set of global window options from which any unset options are inherited. Window options are altered with the set-window-option command and can be listed with the show-window-options command. All window options are documented with the set-window-option command.
+类似地，每个窗口都附着了一个窗口选项集合，并且具有一个全局窗口集合来继承所有的重置选项。
+窗口选项使用set-window-option命令来进行修改，并且可以通过show-window-options命令来列出。
+所有的窗口选项使用set-window-option命令归档。
+
 tmux also supports user options which are prefixed with a ‘@’. User options may have any name, so long as they are prefixed with ‘@’, and be set to any string. For example:
-$ tmux setw -q @foo "abc123" 
-$ tmux showw -v @foo 
-abc123
+tmux也支持以'@'作为前导的用户选项， 用户选项可以具有任何名称，可以被设置为任何字符串，只要具有'@'作为前导，例如：
+
+    $ tmux setw -q @foo "abc123" 
+    $ tmux showw -v @foo 
+    abc123
+
 Commands which set options are as follows:
+设置选项的命令如下：
+
 set-option [-agoqsuw] [-t target-session | target-window] option value
 (alias: set)
+(别名：set)
 Set a window option with -w (equivalent to the set-window-option command), a server option with -s, otherwise a session option.
+通过-w来设置窗口选项(与set-window-option命令等价)，-s设置服务器选项，否则设置会话选项。
+
 If -g is specified, the global session or window option is set. The -u flag unsets an option, so a session inherits the option from the global options. It is not possible to unset a global option.
+如果指定-g，那么全局会话或窗口选项就会被设置。 -u标记用来重置选项，所以一个会话从全局选项中来继承。
+不能重置一个全局选项。
+
 The -o flag prevents setting an option that is already set.
+-o标记阻止设置一个已经存在的选项。
+
 The -q flag suppresses errors about unknown options.
+-q标记会取消位置选项发生的错误。
+
 With -a, and if the option expects a string or a style, value is appended to the existing setting. For example:
-set -g status-left "foo" 
-set -ag status-left "bar"
+带有-a时，如果选项期待一个字符串或者一个样式，那么只会被附加在已经设置的值后面，例如：
+
+    set -g status-left "foo" 
+    set -ag status-left "bar"
+
 Will result in ‘foobar’. And:
-set -g status-style "bg=red" 
-set -ag status-style "fg=blue"
+会得到'foobar'结果，而：
+
+    set -g status-style "bg=red" 
+    set -ag status-style "fg=blue"
+
 Will result in a red background and blue foreground. Without -a, the result would be the default background and a blue foreground.
+会得到一个红所背景和蓝色前景的结果。 没有-a时，这个值会使用默认的背景和一个蓝色前景。
+
 Available window options are listed under set-window-option.
+可用的窗口选项在set-window-option下列出。
+
 value depends on the option and may be a number, a string, or a flag (on, off, or omitted to toggle).
+选项的值依赖于选项，可以为数字，字符串，或者一个标记（on/off/省略）。
+
 Available server options are:
+可选的服务器选项有：
+
 buffer-limit number
 Set the number of buffers; as new buffers are added to the top of the stack, old ones are removed from the bottom if necessary to maintain this maximum length.
+设置缓冲器数量; 新的缓冲器被放置在栈顶端，旧的缓冲器在维护最大长度时有必要时从栈底端移除。
+
 default-terminal terminal
 Set the default terminal for new windows created in this session - the default value of the TERM environment variable. For tmux to work correctly, this must be set to ‘screen’, ‘tmux’ or a derivative of them.
+为会话中新创键的窗口设置一个默认的终端-默认值为TERM环境变量。为了让tmux正确工作，这个值必须设置为'screen','tmux'或者来自他们的一个派生值。
+
 escape-time time
 Set the time in milliseconds for which tmux waits after an escape is input to determine if it is part of a function or meta key sequences. The default is 500 milliseconds.
+设置一个tmux用来在接受到一个转义字符输入时的等待毫秒数，以此让tmux来判断该字符时函数的一部分还是一个meta键序列的一部分。
+默认为500毫秒。
+设置一个tmux用来在接受到一个转义字符输入时的等待毫秒数，以此让tmux来判断该字符时函数的一部分还是一个meta键序列的一部分。
+默认为500毫秒。
+
 exit-unattached [on | off]
 If enabled, the server will exit when there are no attached clients.
+如果生效，服务器会在没有任何附着的客户端时退出。
+
+
 focus-events [on | off]
 When enabled, focus events are requested from the terminal if supported and passed through to applications running in tmux. Attached clients should be detached and attached again after changing this option.
+如果生效，在终端支持的情况下会从终端获取聚焦事件请求，然后通过tmux中运行的应用来传递。
+附着的客户端应该被脱离附着状态然后在选项修改之后重新进行附着。
+
 message-limit number
 Set the number of error or information messages to save in the message log for each client. The default is 100.
+设置每个客户端保存到消息日志中的错误或信息消息的数量，默认为100。
+
 set-clipboard [on | off]
 Attempt to set the terminal clipboard content using the \e]52;...\007 xterm(1) escape sequences. This option is on by default if there is an Ms entry in the terminfo(5) description for the client terminal. Note that this feature needs to be enabled in xterm(1) by setting the resource:
-disallowedWindowOps: 20,21,SetXprop
+尝试使用\e]52;...\007 xterm转义序列来设置终端的剪切版。
+如果在客户终端的terminfo描述中存在一个Ms实体，那么这个选项默认为on. 注意在xterm中需要设置以下资源来让这个特性生效：
+    disallowedWindowOps: 20,21,SetXprop
+
 Or changing this property from the xterm(1) interactive menu when required.
+或者在需要的时候从xterm交互中改变这个属性值
+
 terminal-overrides string
 Contains a list of entries which override terminal descriptions read using terminfo(5). string is a comma-separated list of items each a colon-separated string made up of a terminal type pattern (matched using fnmatch(3)) and a set of name=value entries.
 For example, to set the ‘clear’ terminfo(5) entry to ‘\e[H\e[2J’ for all terminal types and the ‘dch1’ entry to ‘\e[P’ for the ‘rxvt’ terminal type, the option could be set to the string:
