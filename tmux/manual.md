@@ -701,65 +701,147 @@ Put a window into client choice mode, allowing a client to be selected interacti
 -t '%%'"。 对于-F标记，可以参考FORMATS部分。 这个命令只有在至少一个客户端被附着之后才工作。
 choose-session [-F format] [-t target-window] [template]
 Put a window into session choice mode, where a session may be selected interactively from a list. When one is chosen, ‘%%’ is replaced by the session name in template and the result executed as a command. If template is not given, "switch-client -t '%%'" is used. For the meaning of the -F flag, see the FORMATS section. This command works only if at least one client is attached.
-将一个窗口置于会话选择模式中，可以从一个列表中交互式地选择一个会话。当一个会话被选择时，'%%'会由模板中的会话名称替换，之后的结果会作为一个命令被执行。如果模板没有给定，
+将一个窗口置于会话选择模式中，可以从一个列表中交互式地选择一个会话。当一个会话被选择时，'%%'会由模板中的会话名称替换，之后的结果会作为一个命令被执行。如果模板没有给定，会使用"switch-client -t '%%'"。对于-F标记，可以参考FORMATS部分.这个命令只有在至少有一个客户端附着时工作。
+
 choose-tree [-suw] [-b session-template] [-c window-template] [-S format] [-W format] [-t target-window]
 Put a window into tree choice mode, where either sessions or windows may be selected interactively from a list. By default, windows belonging to a session are indented to show their relationship to a session.
+将窗口置于一个树选择模式，其中的会话或窗口可能是从一个列表中交互地选择的。
+默认情况下，窗口属于一个会话主要为了显示他们与一个会话的关系。
+
 Note that the choose-window and choose-session commands are wrappers around choose-tree.
+注意choose-window和choose-session命令被包裹在choose-tree中。
+
 If -s is given, will show sessions. If -w is given, will show windows.
+如果给定-s会显示会话，如果给定-w会显示窗口。
+
 By default, the tree is collapsed and sessions must be expanded to windows with the right arrow key. The -u option will start with all sessions expanded instead.
+默认情形下，树是被折叠起来的，会话必须通过右箭头简将其展开为窗口。 -u选项会将所有的会话展开。
+
 If -b is given, will override the default session command. Note that ‘%%’ can be used and will be replaced with the session name. The default option if not specified is "switch-client -t '%%'". If -c is given, will override the default window command. Like -b, ‘%%’ can be used and will be replaced with the session name and window index. When a window is chosen from the list, the session command is run before the window command.
+如果给定-b，会重载默认的会话命令。 注意 '%%'可以被使用而且会被会话名称替换。如果没有指定的话，默认为"switch-client -t
+'%%'"。 如果给定-c，会重载默认的窗口命令，与-b类似，'%%'可以被使用而且会被会话名与窗口索引替换。
+当一个窗口从列表中被选择时，会话命令会在窗口命令运行之前运行。
+
 If -S is given will display the specified format instead of the default session format. If -W is given will display the specified format instead of the default window format. For the meaning of the -s and -w options, see the FORMATS section.
+如果给定-S，会显示指定的格式而不是默认的会话格式。如果给定-W，会显示指定的格式而不是默认的窗口格式。
+对于-s和-w选项的含义可以参考FORMATS部分。
+
 This command works only if at least one client is attached.
+这个命令只有当至少有一个客户端附着时工作。
+
 choose-window [-F format] [-t target-window] [template]
 Put a window into window choice mode, where a window may be chosen interactively from a list. After a window is selected, ‘%%’ is replaced by the session name and window index in template and the result executed as a command. If template is not given, "select-window -t '%%'" is used. For the meaning of the -F flag, see the FORMATS section. This command works only if at least one client is attached.
+将一个窗口置于一个选择模式，其中的窗口可以从一个列表中交互地选择。当选择一个窗口之后，'%%'会被模板中的会话名称和窗括索引替换，之后的结果作为一个命令被执行。如果没有给定模板，"select-window -t '%%'"被使用。 对于-F的含义可以参考FORMATS部分。 这个命令只有在至少一个客户端附着之后才会工作。
+
 display-panes [-t target-client]
 (alias: displayp)
+(别名：displayp)
 Display a visible indicator of each pane shown by target-client. See the display-panes-time, display-panes-colour, and display-panes-active-colour session options. While the indicator is on screen, a pane may be selected with the ‘0’ to ‘9’ keys.
+由一个客户端来显示每个面板的可视化指示器，可以参考 display-panes-time, display-panes-colour和
+display-panes-active-colour会话选项。由于指示器在屏幕上，一个面板可以通过'0-9'键来选择。
+
 find-window [-CNT] [-F format] [-t target-window] match-string
 (alias: findw)
+(别名:findw)
 Search for the fnmatch(3) pattern match-string in window names, titles, and visible content (but not history). The flags control matching behavior: -C matches only visible window contents, -N matches only the window name and -T matches only the window title. The default is -CNT. If only one window is matched, it'll be automatically selected, otherwise a choice list is shown. For the meaning of the -F flag, see the FORMATS section. This command works only if at least one client is attached.
+在窗口名称，标题和可见的内容中搜索fnmatch模式的匹配字符串。标记被用来控制匹配行为： -C只匹配可见窗口内容，
+-N只匹配窗口名称，-T匹配窗口标题。
+默认为-CNT。如果只有一个窗口匹配，就会被自动选择，否则就会显示一个选项列表。对于-F标记可以参考FORMATS部分。这个命令只有在至少一个客户端被附着时会工作。
+
 join-pane [-bdhv] [-l size | -p percentage] [-s src-pane] [-t dst-pane]
 (alias: joinp)
+(别名：joinp)
 Like split-window, but instead of splitting dst-pane and creating a new pane, split it and move src-pane into the space. This can be used to reverse break-pane. The -b option causes src-pane to be joined to left of or above dst-pane.
+与split-window相似，但是取代分割dst-panel并创建一个新面板而代之的是，将其分割并将src-panel移动到空间中。
+这个可以用来逆转break-pane动作。-b选项使得src-pane被联接到dst-pane的左边或上边。
+
 kill-pane [-a] [-t target-pane]
 (alias: killp)
+(别名：killp)
 Destroy the given pane. If no panes remain in the containing window, it is also destroyed. The -a option kills all but the pane given with -t.
+销毁给定的pane。如果所在窗口中没有剩余的面板，该窗口也会被销毁。 -a选项会销毁除由-t指定面板之外的所有面板。
+
 kill-window [-a] [-t target-window]
 (alias: killw)
+(别名：killw)
 Kill the current window or the window at target-window, removing it from any sessions to which it is linked. The -a option kills all but the window given with -t.
+终止当前窗口或目标窗口，将其从所链接的任意会话中移除。 -a选项终止除-t指定窗口之外的所有窗口。
+
 last-pane [-de] [-t target-window]
 (alias: lastp)
+(别名：lastp)
 Select the last (previously selected) pane. -e enables or -d disables input to the pane.
+选择最后一个面板，-e 使得输入到面板生效，-d使得输入到面板失效。
+
 last-window [-t target-session]
 (alias: last)
+(别名:last)
 Select the last (previously selected) window. If no target-session is specified, select the last window of the current session.
+选择最后一个窗口，如果没有目标窗口指定，选择当前会话中的最后一个窗口。
+
 link-window [-dk] [-s src-window] [-t dst-window]
 (alias: linkw)
+(别名:linkw)
 Link the window at src-window to the specified dst-window. If dst-window is specified and no such window exists, the src-window is linked there. If -k is given and dst-window exists, it is killed, otherwise an error is generated. If -d is given, the newly linked window is not selected.
+将在src-window的窗口链接到指定的dst-window。如果dst-window被指定但是不存在的话，那么src-window会被链接导那儿。
+如果给定-k并且dst-window存在，那么就会将其终止，否则就会生成一个错误。如果给定-d，新链接的窗口不会被选择。
+
 list-panes [-as] [-F format] [-t target]
 (alias: lsp)
+(别名：lsp)
 If -a is given, target is ignored and all panes on the server are listed. If -s is given, target is a session (or the current session). If neither is given, target is a window (or the current window). For the meaning of the -F flag, see the FORMATS section.
+如果给定-a, 会湖绿target并且会列出服务器上的所有面板。
+如果给定-s，target就是一个会话（或者当前会话）。如果都没有指定，target就是一个窗口（或者当前窗口）。对于-F标记可以参考FORMATS部分。
+
 list-windows [-a] [-F format] [-t target-session]
 (alias: lsw)
+(别名：lsw)
 If -a is given, list all windows on the server. Otherwise, list windows in the current session or in target-session. For the meaning of the -F flag, see the FORMATS section.
+如果给定-a,会列出服务器上的所有窗口。 否则会列出当前会话或target-session中的窗口。对于-F标记可以参考FORMATS部分。
+
 move-pane [-bdhv] [-l size | -p percentage] [-s src-pane] [-t dst-pane]
 (alias: movep)
+(别名：movep)
 Like join-pane, but src-pane and dst-pane may belong to the same window.
+与join-pane类似，但是src-pane和dst-pane可以属于相同的窗口。
+
 move-window [-rdk] [-s src-window] [-t dst-window]
 (alias: movew)
+(别名: movew)
 This is similar to link-window, except the window at src-window is moved to dst-window. With -r, all windows in the session are renumbered in sequential order, respecting the base-index option.
+这个于link-window相似，除了src-window中的窗口被移动到dst-window。给定-r会话中的所有窗口都会在遵照base-index选项下按照序列顺序重新编号。
+
 new-window [-adkP] [-c start-directory] [-F format] [-n window-name] [-t target-window] [shell-command]
 (alias: neww)
+(别名：neww)
 Create a new window. With -a, the new window is inserted at the next index up from the specified target-window, moving windows up if necessary, otherwise target-window is the new window location.
+创建一个新的窗口，给定-a，新建的窗口会被插入到指定target-window的下一个索引上，必要的话会将窗口向上移，否则target-window就是这个新建的窗口。
+
 If -d is given, the session does not make the new window the current window. target-window represents the window to be created; if the target already exists an error is shown, unless the -k flag is used, in which case it is destroyed. shell-command is the command to execute. If shell-command is not specified, the value of the default-command option is used. -c specifies the working directory in which the new window is created.
+如果给定-d,
+会话不会将新建窗口作为当前窗口。target-window表示将会创建的窗口；如果目标窗口已经存在会显示一个错误，如果使用-k标记就会销毁。
+shell-command是将要执行的命令。如果没有指定shell-command,
+default-command选项的值被默认使用。-c选项指定了新窗口创建的工作目录。
+
 When the shell command completes, the window closes. See the remain-on-exit option to change this behaviour.
+当shell命令完成时，窗口关闭。 参考remain-on-exit选项来改变这个行为。
+
 The TERM environment variable must be set to “screen” for all programs running inside tmux. New windows will automatically have “TERM=screen” added to their environment, but care must be taken not to reset this in shell start-up files.
+对于运行在tmux中的所有程序需要将TERM环境变量设置为"screen"。新的窗口会自动将"TERM=screen"加到他们的环境中，但是必须注意不要在shell启动文件中重置这个变量。
+
 The -P option prints information about the new window after it has been created. By default, it uses the format ‘#{session_name}:#{window_index}’ but a different format may be specified with -F.
+-P
+选项在新窗口创建后会打印与之相关的信息。默认情况下，使用'#{session_name}:#{window_index}'的格式，但是可以通过使用-F来指定一个不同的格式。
+
 next-layout [-t target-window]
 (alias: nextl)
+(别名：nextl)
 Move a window to the next layout and rearrange the panes to fit.
+将窗口移动到下一个布局模式并且重新安排面板来使之适应。
+
 next-window [-a] [-t target-session]
 (alias: next)
+(别名：next)
 Move to the next window in the session. If -a is used, move to the next window with an alert.
 pipe-pane [-o] [-t target-pane] [shell-command]
 (alias: pipep)
