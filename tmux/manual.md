@@ -1353,19 +1353,23 @@ o
 当tmux启动时运行的命令可能放置在 ~/.tmux.conf配置文件中，常见样例包括：
 
 改变默认的前导键：
+
     set-option -g prefix C-a 
     unbind-key C-b 
     bind-key C-a send-prefix
 
 关闭状态行或者改变其颜色：
+
     set-option -g status off 
     set-option -g status-style bg=blue
 
 设置其他选项，例如默认命令或者在30分钟不活动之后锁定：
+
     set-option -g default-command "exec /bin/ksh" 
     set-option -g lock-after-time 1800
 
 创建新的键绑定：
+
     bind-key b set-option status 
     bind-key / command-prompt "split-window 'exec man %%'" 
     bind-key S command-prompt "new-window -n %1 'ssh %1'"
