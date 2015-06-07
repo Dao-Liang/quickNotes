@@ -1219,13 +1219,14 @@ tmux包含了一个可选的状态行会显示在每个终端的底端行。默�
 The status line is made of three parts: configurable left and right sections (which may contain dynamic content such as the time or output from a shell command, see the status-left, status-left-length, status-right, and status-right-length options below), and a central window list. By default, the window list shows the index, name and (if any) flag of the windows present in the current session in ascending numerical order. It may be customised with the window-status-format and window-status-current-format options. The flag is one of the following symbols appended to the window name:
 状态行由三部分组成：可配置的左边和右边部分（可以包含shell命令输出的动态的内容，例如时间和日期，参考status-left,status-left-length,status-right,status-right-length选项），以及中间的窗口列表。默认窗口列表显示当前会话中按照数字升序排列窗口的索引，名称和标记（如果存在的话）。 可以通过window-status-format和window-status-current-format选项客制化。 附加在窗口名称后面的标记可以是以下符号之一：
 
-    符号    含义
-    *	    表示当前窗口
-    -	    最有一个选择的窗口。
-    #	    窗口被监控并且活动会被检测。
-    !	    会在窗口中出现一个响铃。
-    ~	    窗口会在monitor-silence时间间隔中保持沉默。
-    Z	    窗口的活动面板被放大了。
+    符号 |  含义
+---------|-----------
+    *	 |   表示当前窗口
+    -	 |   最有一个选择的窗口。
+    #	 |   窗口被监控并且活动会被检测。
+    !	 |   会在窗口中出现一个响铃。
+    ~	 |   窗口会在monitor-silence时间间隔中保持沉默。
+    Z	 |   窗口的活动面板被放大了。
 
 The # symbol relates to the monitor-activity window option. The window name is printed in inverted colours if an alert (bell, activity or silence) is present.
 
