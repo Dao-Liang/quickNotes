@@ -1194,20 +1194,35 @@ The following variables are available, where appropriate:
 ##名称和标题：(NAMES AND TITLES)
 
 tmux distinguishes between names and titles. Windows and sessions have names, which may be used to specify them in targets and are displayed in the status line and various lists: the name is the tmux identifier for a window or session. Only panes have titles. A pane's title is typically set by the program running inside the pane and is not modified by tmux. It is the same mechanism used to set for example the xterm(1) window title in an X(7) window manager. Windows themselves do not have titles - a window's title is the title of its active pane. tmux itself may set the title of the terminal in which the client is running, see the set-titles option.
+tmux区分名称和标题，窗口和会话具有名称用来作为目标标识，并且在状态行和不同的列表中显示：名称是tmux对于一个窗口或会话的标识符。只有pane面板有标题，面板的标题是由在其中运行的程序设置的并且不能由tmux改变。 与X窗口管理器中的xterm窗口标题的设置所使用的机制相同。窗口本身没有标题-一个窗口的标题就是其活动面板的标题。tmux本身会设置客户端所在终端的标题，参考set-title选项。
+
 A session's name is set with the new-session and rename-session commands. A window's name is set with one of:
-A command argument (such as -n for new-window or new-session).
-An escape sequence:
-$ printf '\033kWINDOW_NAME\033\\'
-Automatic renaming, which sets the name to the active command in the window's active pane. See the automatic-rename option.
-When a pane is first created, its title is the hostname. A pane's title can be set via the OSC title setting sequence, for example:
-$ printf '\033]2;My Title\033\\'
-ENVIRONMENT
+一个会话的名称通过new-session和rename-session命令来设置的，一个窗口的名称可以通过以下方式设置：
+
+    1. 一个命令的参数（如new-window和new-session的-n参数）
+    2. 一个转义序列： $ printf '\033kWINDOW_NAME\033\\'
+
+自动重命名会将名称设置为窗口活动面板中的活动程序，参考automatic-rename选项。
+
+当一个面板第一次创建时，其标题为主机名hostname。一个面板的标题可以通过OSC标题设置序列进行设置，例如：
+    $ printf '\033]2;My Title\033\\'
+
+##环境
 When the server is started, tmux copies the environment into the global environment; in addition, each session has a session environment. When a window is created, the session and global environments are merged. If a variable exists in both, the value from the session environment is used. The result is the initial environment passed to the new process.
+当tmux服务器启动时，tmux会将环境复制到全局环境中，此外每个会话具有一个会话环境。
+当一个窗口被创建时，会将会话环境和全局环境合并。
+如果一个变量存在两个环境中，会使用会话环境中的变量。结果就是初始环境传递给新进程。
+
 The update-environment session option may be used to update the session environment from the client when a new session is created or an old reattached. tmux also initialises the TMUX variable with some internal information to allow commands to be executed from inside, and the TERM variable with the correct terminal setting of ‘screen’.
+当一个新会话创建或者一个就会话重新附着时，update-environment会话选项可以用来从一个客户端来更新会话环境。tmux也会使用一些内部信息来初始化TMUX变量以便允许命令在内部执行，TERM变量会设置为正确的终端'screen'。
+
 Commands to alter and view the environment are:
+修改和查看环境的命令有：
 set-environment [-gru] [-t target-session] name [value]
 (alias: setenv)
+(别名:setenv)
 Set or unset an environment variable. If -g is used, the change is made in the global environment; otherwise, it is applied to the session environment for target-session. The -u flag unsets a variable. -r indicates the variable is to be removed from the environment before starting a new process.
+设置或重置
 show-environment [-g] [-t target-session] [variable]
 (alias: showenv)
 Display the environment for target-session or the global environment with -g. If variable is omitted, all variables are shown. Variables removed from the environment are prefixed with ‘-’.
