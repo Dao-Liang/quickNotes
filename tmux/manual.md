@@ -813,170 +813,126 @@ For example, to set the ‘clear’ terminfo(5) entry to ‘\e[H\e[2J’ for all
 
     "*:clear=\e[H\e[2J,rxvt:dch1=\e[P"
 
-The terminal entry value is passed through strunvis(3) before interpretation. The default value forcibly corrects the ‘colors’ entry for terminals which support 256 colours:
 终端实体值会在解释之前通过strunvis传递，默认的值会强制地更新支持256colors的终端的'colors'实体：
 
     "*256col*:colors=256,xterm*:XT"
 
-Available session options are:
 可用的会话选项有：
 
-    assume-paste-time milliseconds
-If keys are entered faster than one in milliseconds, they are assumed to have been pasted rather than typed and tmux key bindings are not processed. The default is one millisecond and zero disables.
+assume-paste-time milliseconds
 如果被键入的键快于用毫秒指定的值，那么这些键会被假设为粘贴而不是键入，而且tmux键绑定不会被执行。默认为一毫秒，0用来让选项失效。
 
 base-index index
-Set the base index from which an unused index should be searched when a new window is created. The default is zero.
 设置在创建一个新窗口时应该搜索的未使用索引的基索引，默认为0。
 
 bell-action [any | none | current]
-Set action on window bell. any means a bell in any window linked to a session causes a bell in the current window of that session, none means all bells are ignored and current means only bells in windows other than the current window are ignored.
 窗口响铃动作，any表示连接到一个会话的任何窗口中的响铃会导致这个会话中的当前窗口中的一个响铃，none表示所有的响铃被忽略，current表示除了当前窗口之外的窗口中的响铃将会被忽略。
 
 bell-on-alert [on | off]
-If on, ring the terminal bell when an alert occurs.
 如果为on，在出现一个警告时，终端会响铃。
 
 default-command shell-command
-Set the command used for new windows (if not specified when the window is created) to shell-command, which may be any sh(1) command. The default is an empty string, which instructs tmux to create a login shell using the value of the default-shell option.
 设置新窗口所使用的命令（如果没有指定就是窗口创建时的命令）为shell-command, 可能为任何sh命令。
 默认是一个空字符串，用来指示tmux使用默认shell选项来创建一个登录shell。
 
 default-shell path
-Specify the default shell. This is used as the login shell for new windows when the default-command option is set to empty, and must be the full path of the executable. When started tmux tries to set a default value from the first suitable of the SHELL environment variable, the shell returned by getpwuid(3), or /bin/sh. This option should be configured when tmux is used as a login shell.
 指定默认的shell，
 当default-command为空时，这个会作为新建窗口的登录shell，这个path值必须为完整的路径名。在启动之后，tmux会尝试从第一个合适的SHELL环境变量中来设置为默认值，shell由getpwuid或者 /bin/sh。 这个选项在将tmux作为一个登录shell使用时应该被配置。
 
 destroy-unattached [on | off]
-If enabled and the session is no longer attached to any clients, it is destroyed.
 如果生效的话，当会话不再附着在任何客户端时就会被销毁。
 
 detach-on-destroy [on | off]
-If on (the default), the client is detached when the session it is attached to is destroyed. If off, the client is switched to the most recently active of the remaining sessions.
 如果为on(默认值), 当附着的会话被销毁时，客户端会脱离附着。 如果off,客户端会被切换为剩余会话中的最近活动的会话。
 
 display-panes-active-colour colour
-Set the colour used by the display-panes command to show the indicator for the active pane.
 设置为活动面板显示指令的display-panes命令所使用的colour。
 
 display-panes-colour colour
-Set the colour used by the display-panes command to show the indicators for inactive panes.
 设置为不活动面板显示指令的display-panes命令所使用的colour。
 
 display-panes-time time
-Set the time in milliseconds for which the indicators shown by the display-panes command appear.
 以毫秒为淡灰来设置display-panes命令显示指令出现的时间。
 
 display-time time
-Set the amount of time for which status line messages and other on-screen indicators are displayed. time is in milliseconds.
 设置状态行消息和其他屏幕指令显示的时间总和，时间是以毫秒指定的。
 
 history-limit lines
-Set the maximum number of lines held in window history. This setting applies only to new windows - existing window histories are not resized and retain the limit at the point they were created.
 设置窗口历史持有的最大行数，这个设置只会应用在新窗口上--退出时窗口历史不会重写大小并且会保留在其创建时段的限制。
 
 lock-after-time number
-Lock the session (like the lock-session command) after number seconds of inactivity, or the entire server (all sessions) if the lock-server option is set. The default is not to lock (set to 0).
 在number秒时间不活动后会锁定会话（与lock-session命令类似），如果lock-server选项被设置的话，那么整个服务器（所有会话）都会被锁定。默认为不锁定（number为0)。
 
 lock-command shell-command
-Command to run when locking each client. The default is to run lock(1) with -np.
 锁定每个客户端时运行的命令，默认为lock -np 命令。
 
 lock-server [on | off]
-If this option is on (the default), instead of each session locking individually as each has been idle for lock-after-time, the entire server will lock after all sessions would have locked. This has no effect as a session option; it must be set as a global option.
 如果选项为on(默认值), 与每个会话单独锁定不同的是，整个服务器会在所有会话被锁定时锁定。
 作为一个会话选项这个没有什么影响，这个必须时一个全局选项。
 
 message-command-style style
-Set status line message command style, where style is a comma-separated list of characteristics to be specified.
 设置状态行命令样式，样式是一个由逗号分割的字符列表来指定的。
-
-These may be ‘bg=colour’ to set the background colour, ‘fg=colour’ to set the foreground colour, and a list of attributes as specified below.
 这些样式可能时'bg=colour'来设置背景颜色，'fg=colour'来设置前景颜色，另外有下面指定的属性列表：
-
-The colour is one of: black, red, green, yellow, blue, magenta, cyan, white, aixterm bright variants (if supported: brightred, brightgreen, and so on), colour0 to colour255 from the 256-colour set, default, or a hexadecimal RGB string such as ‘#ffffff’, which chooses the closest match from the default 256-colour set.
 颜色值可以为这些颜色中的一个：black,red,green, yellow, blue, magenta,cyan,white,aixterm bright
 variants(如果支持的话,会有:brightred,breightgreen，等)，
 256-colour集合中从colour0到colour255为默认值，或者一个十六进制的RGB字符串，例如'#ffffff'-会从默认的256-colour集合中选择最匹配的颜色。
-
-The attributes is either none or a comma-delimited list of one or more of: bright (or bold), dim, underscore, blink, reverse, hidden, or italics, to turn an attribute on, or an attribute prefixed with ‘no’ to turn one off.
 属性既可以为none或者一个逗号分割一个或多个包含(bright(或bold),dim，underscore,blink,reverse,
 hidden或者italics)的列表来开启属性，或者带有'no'前缀的属性来关闭属性。
-Examples are:
 样例有:
 
     fg=yellow,bold,underscore,blink 
     bg=black,fg=default,noreverse
     
-With the -a flag to the set-option command the new style is added otherwise the existing style is replaced.
 如果set-option命令具有一个 -a标记的话，新的样式会添加进来，否则已经存在的样式被替换。
 
 message-style style
-Set status line message style. For how to specify style, see the message-command-style option.
 设置状态行消息样式，对于如何指定样式，可以参考message-command-style选项。
 
 mouse [on | off]
-If on, tmux captures the mouse and allows mouse events to be bound as key bindings. See the MOUSE SUPPORT section for details.
 如果为on,tmux会捕获鼠标并且允许鼠标时间作为键绑定进行结合。 可以参考MOUSE SUPPORT 部分详解。
 
 mouse-utf8 [on | off]
-If enabled, request mouse input as UTF-8 on UTF-8 terminals.
 如果生效，在UTF-8终端请求鼠标输入作为UTF-8。
 
 prefix key
-Set the key accepted as a prefix key.
 设置接收到的key作为前导键
 
 prefix2 key
-Set a secondary key accepted as a prefix key.
 设置接收到的键作为二级前导键。
 
 renumber-windows [on | off]
-If on, when a window is closed in a session, automatically renumber the other windows in numerical order. This respects the base-index option if it has been set. If off, do not renumber the windows.
 如果为on,
 当一个窗口在会话中关闭时，自动地将其他窗口按照数字顺序重新编序。这回参考base-index选项如果设置了这个选项的话。如果为off,不会对窗口进行重新排序。
 
 repeat-time time
-Allow multiple commands to be entered without pressing the prefix-key again in the specified time milliseconds (the default is 500). Whether a key repeats may be set when it is bound using the -r flag to bind-key. Repeat is enabled for the default keys bound to the resize-pane command.
 允许指定的时间内（默认为500毫秒）在不重新输入前导键时输入多个命令。一个键是否可以重复可以在使用bind-key命令结合时使用-r选项进行设置。
 对于与resize-pane命令结合的默认键的重复是开启的。
 
 set-remain-on-exit [on | off]
-Set the remain-on-exit window option for any windows first created in this session. When this option is true, windows in which the running program has exited do not close, instead remaining open but inactivate. Use the respawn-window command to reactivate such a window, or the kill-window command to destroy it.
 为在这个会话中任何第一次创建的窗口设置remain-on-exit窗口选项。当这个选项为true时，运行程序所在的窗口在程序退出时不会关闭，而是保持打开但是不活动。
 可以使用respawn-window命令来重新激活这个窗口，或者使用kill-window来销毁窗口。
 
-set-titles [on | off]
-Attempt to set the client terminal title using the tsl and fsl terminfo(5) entries if they exist. tmux automatically sets these to the \e]2;...\007 sequence if the terminal appears to be an xterm. This option is off by default. Note that elinks will only attempt to set the window title if the STY environment variable is set.
 如果tsl和fslterminfo实体存在的话，会尝试用其来设置客户终端的标题。 如果终端显示为一个xterm的话tmux自动将其设置为\e]2;...\007序列。这个选项默认为off。注意elinks只会在设置了STY环境变量时才尝试设置窗口标题。
 
 set-titles-string string
-String used to set the window title if set-titles is on. Formats are expanded, see the FORMATS section.
 如果set-titles为on，那么字符串string就会用来设置窗口标题。 格式被扩展，参考FORMATS部分。
 
 status [on | off]
-Show or hide the status line.
 显示或隐藏状态行。
 
 status-interval interval
-Update the status bar every interval seconds. By default, updates will occur every 15 seconds. A setting of zero disables redrawing at interval.
 在每个间隔时间段更新状态栏。 默认时没15秒更新。如果为0会让时间间隔重绘状态失效。
 
 status-justify [left | centre | right]
-Set the position of the window list component of the status line: left, centre or right justified.
 设置状态行窗口列表组件的位置：left，center,或者right对齐。
 
 status-keys [vi | emacs]
-Use vi or emacs-style key bindings in the status line, for example at the command prompt. The default is emacs, unless the VISUAL or EDITOR environment variables are set and contain the string ‘vi’.
 在状态栏使用vi或者emacs-样式的键绑定，例如在命令提示时。默认为emacs, 除非VISUAL
 或者EDITOR环境变量被设置并且包含字符串'vi'。
 
 status-left string
-Display string (by default the session name) to the left of the status bar. string will be passed through strftime(3) and formats (see FORMATS) will be expanded. It may also contain any of the following special character sequences:
 将字符串（默认为会话名称）显示在状态栏的左边。字符串会通过strftime传递并且格式会被扩展，也可能会包含下面特殊字符序列的任意字符：
 
-    Character pair	Replaced with
     字符对          替换为
     #(shell-command)	First line of the command's output
     #(shell-command)	命令输出的首行。
@@ -985,80 +941,59 @@ Display string (by default the session name) to the left of the status bar. stri
     ##	A literal ‘#’
     ##	一个'#'字面量值。
 
-The #(shell-command) form executes ‘shell-command’ and inserts the first line of its output. Note that shell commands are only executed once at the interval specified by the status-interval option: if the status line is redrawn in the meantime, the previous result is used. Shell commands are executed with the tmux global environment set (see the ENVIRONMENT section).
 \#(shell-command)形式执行'shell-command'然后插入其输出的首行。
 注意shell命令只会在由status-interval选项指定的时间间隔内执行一次：如果同时重绘状态的话，会使用之前输出结果。
 shell命令的执行会带有tmux的全局变量集合（参考 ENVIRONMENT部分）。
-
-For details on how the names and titles can be set see the NAMES AND TITLES section. For a list of allowed attributes see the message-command-style option.
 对于如何设置名字和标题的细节可以参考NAMES AND TITLES 部分。 对于允许设定的属性可以参考message-command-style选项。
 
-Examples are:
 样例有：
 
     #(sysctl vm.loadavg) 
     #[fg=yellow,bold]#(apm -l)%%#[default] [#S]
 
-By default, UTF-8 in string is not interpreted, to enable UTF-8, use the status-utf8 option.
 默认字符串中的UTF-8不会被解释，需要使用status-utf8选项来开启UTF-8。
-
-The default is ‘[#S] ’.
 默认值为'[#s]'。
 
 status-left-length length
-Set the maximum length of the left component of the status bar. The default is 10.
 设置状态栏左边组件的最大长度，默认为10。
 
 status-left-style style
-Set the style of the left part of the status line. For how to specify style, see the message-command-style option.
 设置状态行左边部分的样式，参考message-style-style选项来指定样式。
 
 status-position [top | bottom]
-Set the position of the status line.
 设置状态行的位置。
 
 status-right string
-Display string to the right of the status bar. By default, the current window title in double quotes, the date and the time are shown. As with status-left, string will be passed to strftime(3), character pairs are replaced, and UTF-8 is dependent on the status-utf8 option.
 显示字符串在状态栏的右边，默认为带双引号的当前窗口标题以及日期时间会被显示。与status-left类似，字符串也会传递给strftime,字符对会被替换而且UTF-8也依赖于status-utf8选项。
 
 status-right-length length
-Set the maximum length of the right component of the status bar. The default is 40.
 设置状态栏右边组件的最大长度，默认为10。
 
 status-right-style style
-Set the style of the right part of the status line. For how to specify style, see the message-command-style option.
 设置状态行右边部分的样式，参考message-command-style选项设置样式。
 
 status-style style
-Set status line style. For how to specify style, see the message-command-style option.
 设置状态行样式，参考message-command-style选项设置样式。
 
 status-utf8 [on | off]
-Instruct tmux to treat top-bit-set characters in the status-left and status-right strings as UTF-8; notably, this is important for wide characters. This option defaults to off.
 指示tmux将status-left和status-right中的字符串中的top-bit-set当作UTF-8处理;值得注意的时，这对于宽字符很重要。默认为off。
 
 update-environment variables
-Set a space-separated string containing a list of environment variables to be copied into the session environment when a new session is created or an existing session is attached. Any variables that do not exist in the source environment are set to be removed from the session environment (as if -r was given to the set-environment command). The default is "DISPLAY SSH_ASKPASS SSH_AUTH_SOCK SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY".
 设置一个包含由空格分开的环境变量列表字符串--这些环境变量会在新会话创建时或一个已存在的会话被附着时复制到会话环境中。任何在源环境中不存在的变量会从会话环境中设置为移除（类似于将-r传递给set-environment命令）。 默认值为"DISPLAY SSH_ASKPASS SSH_AUTH_SOCK SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY"。
 
 visual-activity [on | off]
-If on, display a status line message when activity occurs in a window for which the monitor-activity window option is enabled.
 如果为on, 当活动出现在一个由monitor-activity窗口选项生效的窗口中时显示一个状态行。
 
 visual-bell [on | off]
-If this option is on, a message is shown on a bell instead of it being passed through to the terminal (which normally makes a sound). Also see the bell-action option.
 如果为on,响铃时会显示一个消息而不是将其传递到终端（会产生一个声音）。可以参考bell-action选项。
 
 visual-silence [on | off]
-If monitor-silence is enabled, prints a message after the interval has expired on a given window.
 如果monitor-silence生效的话，那么当时间间隔在一个指定窗口中过期时会打印一个消息。
 
 word-separators string
-Sets the session's conception of what characters are considered word separators, for the purposes of the next and previous word commands in copy mode. The default is ‘ -_@’.
 设置会话关于单词分隔符字符的概念，主要是为了复制模式中的下一个或前一个单词命令的目的。默认为'-_@'。
 
 set-window-option [-agoqu] [-t target-window] option value
-(alias: setw)
 (别名：setw)
 Set a window option. The -a, -g, -o, -q and -u flags work similarly to the set-option command.
 
@@ -1250,8 +1185,8 @@ The following variables are available, where appropriate:
     window_zoomed_flag		                1 if window is zoomed
     wrap_flag		                        Pane wrap flag
 
-NAMES AND TITLES
-名称和标题：
+
+##名称和标题：(NAMES AND TITLES)
 
 tmux distinguishes between names and titles. Windows and sessions have names, which may be used to specify them in targets and are displayed in the status line and various lists: the name is the tmux identifier for a window or session. Only panes have titles. A pane's title is typically set by the program running inside the pane and is not modified by tmux. It is the same mechanism used to set for example the xterm(1) window title in an X(7) window manager. Windows themselves do not have titles - a window's title is the title of its active pane. tmux itself may set the title of the terminal in which the client is running, see the set-titles option.
 A session's name is set with the new-session and rename-session commands. A window's name is set with one of:
@@ -1272,8 +1207,7 @@ show-environment [-g] [-t target-session] [variable]
 (alias: showenv)
 Display the environment for target-session or the global environment with -g. If variable is omitted, all variables are shown. Variables removed from the environment are prefixed with ‘-’.
 
-STATUS LINE
-状态行：
+##状态行：
 tmux includes an optional status line which is displayed in the bottom line of each terminal. By default, the status line is enabled (it may be disabled with the status session option) and contains, from left-to-right: the name of the current session in square brackets; the window list; the title of the active pane in double quotes; and the time and date.
 The status line is made of three parts: configurable left and right sections (which may contain dynamic content such as the time or output from a shell command, see the status-left, status-left-length, status-right, and status-right-length options below), and a central window list. By default, the window list shows the index, name and (if any) flag of the windows present in the current session in ascending numerical order. It may be customised with the window-status-format and window-status-current-format options. The flag is one of the following symbols appended to the window name:
 
@@ -1389,68 +1323,51 @@ The window with ID window-id closed.
 %window-renamed window-id name
 The window with ID window-id was renamed to name.
 
-FILES
-文件：
-~/.tmux.conf
-Default tmux configuration file.
-默认的tmux配置文件。
+##文件：
+o
+    ~/.tmux.conf : 默认的tmux配置文件。
+    /etc/tmux.conf : 系统范围的配置文件。
 
-/etc/tmux.conf
-System-wide configuration file.
-系统范围的配置文件。
+##样例：
 
-EXAMPLES
-样例：
-
-To create a new tmux session running vi(1):
 创建一个运行vi的新的tmux会话：
     $ tmux new-session vi
 
-Most commands have a shorter form, known as an alias. For new-session, this is new:
 大部分命令具有一个简短形式，也成为别名。例如new-session的别名为new:
     $ tmux new vi
 
-Alternatively, the shortest unambiguous form of a command is accepted. If there are several options, they are listed:
 可选地，一个命令最短的不混淆的简短格式是被接受的，如果有多个选项，会被列出：
+
     $ tmux n 
     ambiguous command: n, could be: new-session, new-window, next-window
 
-Within an active session, a new window may be created by typing ‘C-b c’ (Ctrl followed by the ‘b’ key followed by the ‘c’ key).
 在一个活动会话中，一个新的窗口可以通过键入'C-b c'来创建（ctrl 跟随b 然后跟随c键）。
 
-Windows may be navigated with: ‘C-b 0’ (to select window 0), ‘C-b 1’ (to select window 1), and so on; ‘C-b n’ to select the next window; and ‘C-b p’ to select the previous window.
 窗口可以使用'C-b 0-9'来在窗口0-9中导航，也可以通过'C-b n'选择下一个窗口，'C-b p'选择上一个窗口。
 
-A session may be detached using ‘C-b d’ (or by an external event such as ssh(1) disconnection) and reattached with:
 一个会话可以通过使用'C-b d'来脱离附着，也可以通过以下命令来重新附着：
     $ tmux attach-session
 
-Typing ‘C-b ?’ lists the current key bindings in the current window; up and down may be used to navigate the list or ‘q’ to exit from it.
 键入'C-b ?' 列出当前窗口中的当前键绑定; 使用上下箭头可以导航列表，'q'从其中退出。
 
-Commands to be run when the tmux server is started may be placed in the ~/.tmux.conf configuration file. Common examples include:
 当tmux启动时运行的命令可能放置在 ~/.tmux.conf配置文件中，常见样例包括：
 
-changing the default prefix key:
 改变默认的前导键：
 
     set-option -g prefix C-a 
     unbind-key C-b 
     bind-key C-a send-prefix
 
-Turning the status line off, or changing its colour:
 关闭状态行或者改变其颜色：
 
     set-option -g status off 
     set-option -g status-style bg=blue
 
-Setting other options, such as the default command, or locking after 30 minutes of inactivity:
 设置其他选项，例如默认命令或者在30分钟不活动之后锁定：
 
     set-option -g default-command "exec /bin/ksh" 
     set-option -g lock-after-time 1800
 
-Creating new key bindings:
 创建新的键绑定：
 
     bind-key b set-option status 
