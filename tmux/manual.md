@@ -1335,21 +1335,38 @@ Display the contents of the specified buffer.
 
 ##杂项
 Miscellaneous commands are as follows:
+其他杂项命令有：
 clock-mode [-t target-pane]
 Display a large clock.
+显示一个大的时钟。
+
 if-shell [-bF] [-t target-pane] shell-command command [command]
 (alias: if)
+(别名：if)
 Execute the first command if shell-command returns success or the second command otherwise. Before being executed, shell-command is expanded using the rules specified in the FORMATS section, including those relevant to target-pane. With -b, shell-command is run in the background.
+如果shell-command返回成功的话执行第一个命令，否则执行第二个命令。
+在执行之前，shell-command会使用FORMATS部分指定的规则进行扩展，包括相关的target-pane。-b指示shell-command在后台运行。
 If -F is given, shell-command is not executed but considered success if neither empty nor zero (after formats are expanded).
+如果给定-F,shell-command不会被执行而是认为时成功的（如果既不是空的也不是0的话-在格式扩展之后）。
+
 lock-server
 (alias: lock)
+(别名:lock)
 Lock each client individually by running the command specified by the lock-command option.
+通过运行lock-command选项指定的命令来分别锁定每个客户端。
+
 run-shell [-b] [-t target-pane] shell-command
 (alias: run)
+（别名:run）
 Execute shell-command in the background without creating a window. Before being executed, shell-command is expanded using the rules specified in the FORMATS section. With -b, the command is run in the background. After it finishes, any output to stdout is displayed in copy mode (in the pane specified by -t or the current pane if omitted). If the command doesn't return success, the exit status is also displayed.
+再不创建一个窗口的前提下在后台中运行一个shell-command。执行之前，shell-command使用FORMATS部分指定的规则进行扩展。-b指示在后台运行。在完成之后，任何到标准输出的输出会在copy模式中显示（在由-t指定的pane或当前pane-如果缺省的话）。如果命令没有成功返回，退出状态也会被显示。
+
 wait-for [-L | -S | -U] channel
 (alias: wait)
+(别名:wait)
 When used without options, prevents the client from exiting until woken using wait-for -S with the same channel. When -L is used, the channel is locked and any clients that try to lock the same channel are made to wait until the channel is unlocked with wait-for -U. This command only works from outside tmux.
+当不带选项使用时，在使用相同的channel的wait-for -S唤醒之前阻止客户端退出。
+-L会锁定channel，任何尝试锁定相同channel的客户端会一直等待直到使用wait-for -U 解锁。 这个命令只有在tmux外部工作。
 
 ##TERMINFO EXTENSIONS
 
