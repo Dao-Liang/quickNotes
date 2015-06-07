@@ -8,11 +8,8 @@ tmux	[-2lCuv] [-c shell-command] [-f file] [-L socket-name] [-S socket-path] [co
 
 ##描述
 tmux是一个终端复用器：它可以在一个单独屏幕中创建，访问以及控制多个终端。tmux也可以从窗口中脱离应且继续在后台运行，以便在之后再回到会话。
-
 当开启tmux之后，它会创建带有一个单独窗口的会话并且在屏幕中进行显示。在屏幕底部的状态行显示当前会话的信息并且用来进入交互式命令。
-
 一个会话是一个在tmux管理下的伪终端集合，每个会话具有一个或多个窗口与其链接。一个窗口占用了整个屏幕，并且可以被分割成长方形的面板，每个面板分别为一个伪终端。多个tmux实例可能连接到同一个会话，并且任何的窗口可能在一个会话中表示。当所有的会话被终止之后，tmux就会退出。
-
 每个会话都是持久的并且可能在意外失联或故意脱离之后生存下来，tumux可能使用以下命令来回到原来的会话：
 
     $ tmux attach
@@ -22,9 +19,9 @@ tmux是一个终端复用器：它可以在一个单独屏幕中创建，访问�
 
 具有下列的选项:
 
--2 强制tmux假设终端支持256颜色。
--C 以控制模式开启，使用-CC来让echo失效
--c shell-命令
+    -2 强制tmux假设终端支持256颜色。
+    -C 以控制模式开启，使用-CC来让echo失效
+    -c shell-命令
 
 使用默认的shell来执行shell命令。如果有必要的话，tmux服务器会开启来检索默认的shell选项。这个选项用来当tmux作为一个登录shell时与sh进行兼容的。
 
@@ -38,7 +35,7 @@ tmux是一个终端复用器：它可以在一个单独屏幕中创建，访问�
 tmux在第一次会话创建时会显示配置文件中的命令出现的任何错误，但是会继续处理配置文件的余下部分。
 
 -L socket-名字
-tmux stores the server socket in a directory under TMUX_TMPDIR, TMPDIR if it is unset, or /tmp if both are unset. The default socket is named default. This option allows a different socket name to be specified, allowing several independent tmux servers to be run. Unlike -S a full path is not necessary: the sockets are all created in the same directory.
+
 tmurx 将服务器socket存储在TMUX_TMPDIR目录下，如果这个变量没有设置的话就会使用TMPDIR替换，
 或者当两者都不存在时，就会存储在/tmp目录下。默认的socket的名称为default.
 这个选项允许指定一个不同的socket名称，允许多个独立的tmux服务器运行。 与
