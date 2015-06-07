@@ -1288,45 +1288,73 @@ Execute shell-command in the background without creating a window. Before being 
 wait-for [-L | -S | -U] channel
 (alias: wait)
 When used without options, prevents the client from exiting until woken using wait-for -S with the same channel. When -L is used, the channel is locked and any clients that try to lock the same channel are made to wait until the channel is unlocked with wait-for -U. This command only works from outside tmux.
-TERMINFO EXTENSIONS
-tmux understands some extensions to terminfo(5):
+
+##TERMINFO EXTENSIONS
+
+tmux可以理解terminfo的一些扩展：
 Cs, Cr
-Set the cursor colour. The first takes a single string argument and is used to set the colour; the second takes no arguments and restores the default cursor colour. If set, a sequence such as this may be used to change the cursor colour from inside tmux:
-$ printf '\033]12;red\033\\'
+设置光标颜色，第一个使用一个单个字符串参数来设置颜色;第二个没有参数来恢复默认的光标颜色。如果设置的话一系列这样的值会被用来在tmux中改变光标颜色：
+
+    $ printf '\033]12;red\033\\'
+
 Ss, Se
-Set or reset the cursor style. If set, a sequence such as this may be used to change the cursor to an underline:
-$ printf '\033[4 q'
-If Se is not set, Ss with argument 0 will be used to reset the cursor style instead.
+设置或重置光标样式。 如果设置以下的序列可能会用来将光标变为一个下划线：
+
+    $ printf '\033[4 q'
+
+如果没有设置Se，Ss和参数0会被用来重新设置光标样式。
+
 Ms
-This sequence can be used by tmux to store the current buffer in the host terminal's selection (clipboard). See the set-clipboard option above and the xterm(1) man page.
-CONTROL MODE
-tmux offers a textual interface called control mode. This allows applications to communicate with tmux using a simple text-only protocol.
-In control mode, a client sends tmux commands or command sequences terminated by newlines on standard input. Each command will produce one block of output on standard output. An output block consists of a %begin line followed by the output (which may be empty). The output block ends with a %end or %error. %begin and matching %end or %error have two arguments: an integer time (as seconds from epoch) and command number. For example:
-%begin 1363006971 2 
-0: ksh* (1 panes) [80x24] [layout b25f,80x24,0,0,2] @2 (active) 
-%end 1363006971 2
-In control mode, tmux outputs notifications. A notification will never occur inside an output block.
-The following notifications are defined:
-%exit [reason]
-The tmux client is exiting immediately, either because it is not attached to any session or an error occurred. If present, reason describes why the client exited.
-%layout-change window-id window-layout
-The layout of a window with ID window-id changed. The new layout is window-layout.
-%output pane-id value
-A window pane produced output. value escapes non-printable characters and backslash as octal \xxx.
-%session-changed session-id name
-The client is now attached to the session with ID session-id, which is named name.
-%session-renamed name
-The current session was renamed to name.
-%sessions-changed
-A session was created or destroyed.
-%unlinked-window-add window-id
-The window with ID window-id was created but is not linked to the current session.
-%window-add window-id
-The window with ID window-id was linked to the current session.
-%window-close window-id
-The window with ID window-id closed.
-%window-renamed window-id name
-The window with ID window-id was renamed to name.
+这个序列可以被tmux用来存储当前缓冲区到主机终端剪贴板中。可以参考set-clipboad选项和xterm的man页面。
+
+##CONTROL MODE
+tmux提供了一个成为control（控制）模式的文本界面。这使得应用程序可以通过一个简单的文本协议与tmux进行交流。
+
+在控制模式中，一个客户端发送tmux命令或以新行结束的命令序列到标准输入中。每个命令将会在标准输出中产生一个输出块。一个输出块包含了一个%begin行与跟随的输出（可能为空）。
+输出块会以一个%end或%error作为结尾。%begin和匹配的%end/%error具有两个参数：一个整数时间和命令编号，例如：
+
+    %begin 1363006971 2 
+    0: ksh* (1 panes) [80x24] [layout b25f,80x24,0,0,2] @2 (active) 
+    %end 1363006971 2
+
+在控制模式中，tmux输出通知，一个通知不会出现在输出块中。
+
+下面是通知的定义：
+
+    %exit [reason]
+
+当tmux客户端没有附着在任何会话中或者出现错误时，tmux客户端会立即退出。如果存在的话，reason描述了客户端退出的原因。
+
+    %layout-change window-id window-layout
+
+一个带有window-id的窗口布局被改变，新的布局为window-layout。
+
+    %output pane-id value
+    
+一个窗口面板产生的输出。 值会转义非打印字符而且饭斜线作为八进制\xxx。
+
+    %session-changed session-id name
+客户端现在被附着在ID为session-id的会话上，并且使用name命名。
+
+    %session-renamed name
+当前会话被重命名为name。
+
+    %sessions-changed
+
+一个会话被创建或销毁。
+
+    %unlinked-window-add window-id
+
+ID为window-id的窗口被创建，但是没有连接到当前会话。
+
+    %window-add window-id
+ID为window-id的窗口被连接到当前会话。
+
+    %window-close window-id
+ID为window-id的窗口被关闭。
+
+    %window-renamed window-id name
+ID为window-id的窗口重命名为name。
 
 ##文件：
 o
@@ -1379,8 +1407,7 @@ o
     bind-key / command-prompt "split-window 'exec man %%'" 
     bind-key S command-prompt "new-window -n %1 'ssh %1'"
 
-SEE ALSO
-pty(4)
+参考： pty(4)
 
 作者: Nicholas Marriott <nicm@users.sourceforge.net>
 
