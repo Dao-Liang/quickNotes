@@ -1220,8 +1220,8 @@ The status line is made of three parts: configurable left and right sections (wh
 状态行由三部分组成：可配置的左边和右边部分（可以包含shell命令输出的动态的内容，例如时间和日期，参考status-left,status-left-length,status-right,status-right-length选项），以及中间的窗口列表。默认窗口列表显示当前会话中按照数字升序排列窗口的索引，名称和标记（如果存在的话）。 可以通过window-status-format和window-status-current-format选项客制化。 附加在窗口名称后面的标记可以是以下符号之一：
 
     符号    含义
-    \*	    表示当前窗口
-    \-	    最有一个选择的窗口。
+    *	    表示当前窗口
+    -	    最有一个选择的窗口。
     #	    窗口被监控并且活动会被检测。
     !	    会在窗口中出现一个响铃。
     ~	    窗口会在monitor-silence时间间隔中保持沉默。
