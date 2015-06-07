@@ -227,7 +227,8 @@ tmux服务器管理客户端，会话，窗口和面板。客户端是附着在�
 对于创建、链接或其他窗口操作的命令会在WINDOWS AND PANES部分详解。
 
 下面的命令可以用来管理客户端和会话：
-attach-session [-dr] [-c working-directory] [-t target-session]
+
+    attach-session [-dr] [-c working-directory] [-t target-session]
 (别名： attach)
 如果从tmux之外来运行，会在当前终端中创建一个新的客户端并且将其附着在一个目标会话上。如果这个命令是在tmux中运行的，就会切换当前的客户端。
 如果指定了 -d 选项， 附着在这个会话上的其他客户端就会脱离，
