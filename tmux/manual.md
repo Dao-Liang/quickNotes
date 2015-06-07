@@ -1213,10 +1213,8 @@ show-environment [-g] [-t target-session] [variable]
 Display the environment for target-session or the global environment with -g. If variable is omitted, all variables are shown. Variables removed from the environment are prefixed with ‘-’.
 
 ##状态行：
-tmux includes an optional status line which is displayed in the bottom line of each terminal. By default, the status line is enabled (it may be disabled with the status session option) and contains, from left-to-right: the name of the current session in square brackets; the window list; the title of the active pane in double quotes; and the time and date.
 tmux包含了一个可选的状态行会显示在每个终端的底端行。默认状态行时有效的（可以通过status会话选项失效）并且被包含的，从左到右分别有：包含在方括号中的当前会话名称;窗口列表;双引号包含的活动面板;以及时间和日期。
 
-The status line is made of three parts: configurable left and right sections (which may contain dynamic content such as the time or output from a shell command, see the status-left, status-left-length, status-right, and status-right-length options below), and a central window list. By default, the window list shows the index, name and (if any) flag of the windows present in the current session in ascending numerical order. It may be customised with the window-status-format and window-status-current-format options. The flag is one of the following symbols appended to the window name:
 状态行由三部分组成：可配置的左边和右边部分（可以包含shell命令输出的动态的内容，例如时间和日期，参考status-left,status-left-length,status-right,status-right-length选项），以及中间的窗口列表。默认窗口列表显示当前会话中按照数字升序排列窗口的索引，名称和标记（如果存在的话）。 可以通过window-status-format和window-status-current-format选项客制化。 附加在窗口名称后面的标记可以是以下符号之一：
 
     符号 |  含义
@@ -1228,29 +1226,19 @@ The status line is made of three parts: configurable left and right sections (wh
     ~	 |   窗口会在monitor-silence时间间隔中保持沉默。
     Z	 |   窗口的活动面板被放大了。
 
-The # symbol relates to the monitor-activity window option. The window name is printed in inverted colours if an alert (bell, activity or silence) is present.
 符号#与monitor-activity窗口选项相关。窗口名称会在有警告（响铃，活动或沉默）出现的时候以反转的颜色打印
 
-The colour and attributes of the status line may be configured, the entire status line using the status-style session option and individual windows using the window-status-style window option.
 状态行的颜色和属性是可以配置的，整个状态行使用status-style会话选项，单个的窗口使用window=status-style窗口选项配置。
 
-The status line is automatically refreshed at interval if it has changed, the interval may be controlled with the status-interval session option.
 状态行会自动地刷新如果当其在时间间隔内被改变的话，时间间隔可以通过status-interval会话选项控制。
 
-Commands related to the status line are as follows:
 与状态行相关的命令有：
 command-prompt [-I inputs] [-p prompts] [-t target-client] [template]
-Open the command prompt in a client. This may be used from inside tmux to execute commands interactively.
 在客户端打开一个命令提示，可以在tmux内用用来执行交互式命令。
 
-If template is specified, it is used as the command. If present, -I is a comma-separated list of the initial text for each prompt. If -p is given, prompts is a comma-separated list of prompts which are displayed in order; otherwise a single prompt is displayed, constructed from template if it is present, or ‘:’ if not.
 如果指定了template的话，其会被作为命令使用。-I是每个提示初始化文本列表-由逗号分割的。
 如果指定-p，那么提示是一个按照顺序显示的逗号分割的提示列表;否则只显示一个单独的构造于template（如果提供了的话）提示，否则使用':'。
-
-Both inputs and prompts may contain the special character sequences supported by the status-left option.
 inputs和prompts都可能包含由status-left选项支持的特殊字符序列。
-
-Before the command is executed, the first occurrence of the string ‘%%’ and all occurrences of ‘%1’ are replaced by the response to the first prompt, the second ‘%%’ and all ‘%2’ are replaced with the response to the second prompt, and so on for further prompts. Up to nine prompt responses may be replaced (‘%1’ to ‘%9’).
 在命令被执行之前，第一个出现的字符串'%%'和出现的所有'%1'都会被第一个提示的响应替换，第二个'%%'和所有的'%2'会被第二个提示的响应替换，以此类推。直到第九个提示可以被替换。
 
 confirm-before [-p prompt] [-t target-client] command
@@ -1261,59 +1249,43 @@ confirm-before [-p prompt] [-t target-client] command
 
 display-message [-p] [-c target-client] [-t target-pane] [message]
 (别名：display)
-Display a message. If -p is given, the output is printed to stdout, otherwise it is displayed in the target-client status line. The format of message is described in the FORMATS section; information is taken from target-pane if -t is given, otherwise the active pane for the session attached to target-client.
 显示一个消息， 如果没有给定-p,
 那么输出会被打印到标准输出中，否则会显示在target-client的状态行上。消息的格式在FORMTS部分描述。
 如果给第-t就会从target-pane中获取信息，否则就会从附着在target-client的会话中的活动窗口中获取。
 
 ##缓冲区
-tmux maintains a set of named paste buffers. Each buffer may be either explicitly or automatically named. Explicitly named buffers are named when created with the set-buffer or load-buffer commands, or by renaming an automatically named buffer with set-buffer -n. Automatically named buffers are given a name such as ‘buffer0001’, ‘buffer0002’ and so on. When the buffer-limit option is reached, the oldest automatically named buffer is deleted. Explicitly named are not subject to buffer-limit and may be deleted with delete-buffer command.
 tmux维护了一个命名的粘贴缓冲区集合，每个可能显式地或自动地命名。显式地命名的缓冲区实在通过set-buffer或load-buffer命令创建时命名的，或者是通过set-buffer
 -n 来重命名一个自动命名的缓冲区。
 自动命名的缓冲区的名称会类似于'buffer0001','buffer0002'等。当达到buffer-limit选项的限制时，最旧的自动命名的缓冲区被删除。
 显示命名的缓冲区不会收到buffer-limit的限制，可以通过delete-buffer命令删除。
 
-Buffers may be added using copy-mode or the set-buffer and load-buffer commands, and pasted into a window using the paste-buffer command. If a buffer command is used and no buffer is specified, the most recently added automatically named buffer is assumed.
 缓冲区可以使用copy-mode或set-buffer以及load-buffer命令来添加，并且通过paste-buffer命令来将其粘贴到一个窗口。
 如果一个缓冲区命令没有指定缓冲区时，就会假设使用最近添加的自动命名的缓冲区。
 
-A configurable history buffer is also maintained for each window. By default, up to 2000 lines are kept; this can be altered with the history-limit option (see the set-option command above).
 每个窗口也会维护一个可配值的历史缓冲区，默认会保留到2000行;这个可以通过history-limit选项修改（参考set-option命令）。
 
-The buffer commands are as follows:
 缓冲区命令有：
 choose-buffer [-F format] [-t target-window] [template]
-Put a window into buffer choice mode, where a buffer may be chosen interactively from a list. After a buffer is selected, ‘%%’ is replaced by the buffer name in template and the result executed as a command. If template is not given, "paste-buffer -b '%%'" is used. For the meaning of the -F flag, see the FORMATS section. This command works only if at least one client is attached.
 将窗口置于缓冲区选择模式，一个缓冲区可以从一个列表中交互地选择。在选择一个缓冲区之后,'%%'会被template中的缓冲区名称替换，之后的结果会作为一个命令被执行。如果没有给定template，会使用"paste-buffer -b '%%'"来替换。 对于-F标记参考FORMATS部分。这个命令只有在至少有一个客户端附着时工作。
 
 clear-history [-t target-pane]
-(alias: clearhist)
 (别名:clearhist)
-Remove and free the history for the specified pane.
 对指定的pane删除并释放history。
 
 delete-buffer [-b buffer-name]
-(alias: deleteb)
 (别名：deleteb)
-Delete the buffer named buffer-name, or the most recently added automatically named buffer if not specified.
 删除名为buffer-name的缓冲区，在没有指定buffer-name时删除最佳男自动命名添加的缓冲区。
 
 list-buffers [-F format]
-(alias: lsb)
 (别名:lsb)
-List the global buffers. For the meaning of the -F flag, see the FORMATS section.
 列出全局缓冲区，对于-F可以参考FORMATS部分。
 
 load-buffer [-b buffer-name] path
-(alias: loadb)
 (别名:loadb)
-Load the contents of the specified paste buffer from path.
 从path中加载指定粘贴缓冲区的内容。
 
 paste-buffer [-dpr] [-b buffer-name] [-s separator] [-t target-pane]
-(alias: pasteb)
 (别名:pasteb)
-Insert the contents of a paste buffer into the specified pane. If not specified, paste into the current one. With -d, also delete the paste buffer. When output, any linefeed (LF) characters in the paste buffer are replaced with a separator, by default carriage return (CR). A custom separator may be specified using the -s flag. The -r flag means to do no replacement (equivalent to a separator of LF). If -p is specified, paste bracket control codes are inserted around the buffer if the application has requested bracketed paste mode.
 将一个粘贴缓冲却中的内容插入到一个指定的pane中。如果没有指定target-pane,会被粘贴到当前的一个。指定-d时也会删除粘贴缓冲区。当输出时，任何粘贴缓冲区中的换行符会使用一个分隔符替换（默认为回车符）。可以通过-s指定客制化分隔符。-r标记意味着不做换行符的替换。 指定-p时，当应用程序请求大括号粘贴模式的话，粘贴的大括号控制代码会被插入到缓冲区中。
 
 save-buffer [-a] [-b buffer-name] path
@@ -1321,50 +1293,36 @@ save-buffer [-a] [-b buffer-name] path
 将指定的粘贴缓冲区中的内容保存到一个路径path. -a选项用来指示附加模式而不是直接重写文件。
 
 set-buffer [-a] [-b buffer-name] [-n new-buffer-name] data
-(alias: setb)
 (别名：setb)
-Set the contents of the specified buffer to data. The -a option appends to rather than overwriting the buffer. The -n option renames the buffer to new-buffer-name.
 将指定缓冲区的内容设置为data.
 使用-a选项来将data附加到缓冲区而不是直接重写缓冲区。-n用来重命名缓冲区到一个new-buffer-name。
 
 show-buffer [-b buffer-name]
-(alias: showb)
 (别名：showb)
-Display the contents of the specified buffer.
 显示指定缓冲区的内容。
 
 ##杂项
-Miscellaneous commands are as follows:
 其他杂项命令有：
 clock-mode [-t target-pane]
-Display a large clock.
 显示一个大的时钟。
 
 if-shell [-bF] [-t target-pane] shell-command command [command]
-(alias: if)
 (别名：if)
-Execute the first command if shell-command returns success or the second command otherwise. Before being executed, shell-command is expanded using the rules specified in the FORMATS section, including those relevant to target-pane. With -b, shell-command is run in the background.
 如果shell-command返回成功的话执行第一个命令，否则执行第二个命令。
 在执行之前，shell-command会使用FORMATS部分指定的规则进行扩展，包括相关的target-pane。-b指示shell-command在后台运行。
 If -F is given, shell-command is not executed but considered success if neither empty nor zero (after formats are expanded).
 如果给定-F,shell-command不会被执行而是认为时成功的（如果既不是空的也不是0的话-在格式扩展之后）。
 
 lock-server
-(alias: lock)
 (别名:lock)
-Lock each client individually by running the command specified by the lock-command option.
 通过运行lock-command选项指定的命令来分别锁定每个客户端。
 
 run-shell [-b] [-t target-pane] shell-command
-(alias: run)
 （别名:run）
-Execute shell-command in the background without creating a window. Before being executed, shell-command is expanded using the rules specified in the FORMATS section. With -b, the command is run in the background. After it finishes, any output to stdout is displayed in copy mode (in the pane specified by -t or the current pane if omitted). If the command doesn't return success, the exit status is also displayed.
 再不创建一个窗口的前提下在后台中运行一个shell-command。执行之前，shell-command使用FORMATS部分指定的规则进行扩展。-b指示在后台运行。在完成之后，任何到标准输出的输出会在copy模式中显示（在由-t指定的pane或当前pane-如果缺省的话）。如果命令没有成功返回，退出状态也会被显示。
 
 wait-for [-L | -S | -U] channel
-(alias: wait)
 (别名:wait)
-When used without options, prevents the client from exiting until woken using wait-for -S with the same channel. When -L is used, the channel is locked and any clients that try to lock the same channel are made to wait until the channel is unlocked with wait-for -U. This command only works from outside tmux.
 当不带选项使用时，在使用相同的channel的wait-for -S唤醒之前阻止客户端退出。
 -L会锁定channel，任何尝试锁定相同channel的客户端会一直等待直到使用wait-for -U 解锁。 这个命令只有在tmux外部工作。
 
