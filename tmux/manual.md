@@ -1378,5 +1378,6 @@ SEE ALSO
 pty(4)
 AUTHORS
 Nicholas Marriott <nicm@users.sourceforge.net>
+
 译者
-Liang Guisheng <theol.liang@gmail.com>
+Liang Guisheng <https://github.com/theo-l>
