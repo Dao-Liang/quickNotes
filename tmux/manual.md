@@ -1377,7 +1377,7 @@ o
 SEE ALSO
 pty(4)
 AUTHORS
-Nicholas Marriott <nicm@users.sourceforge.net>
 
-译者
-Liang Guisheng <https://github.com/theo-l>
+作者: Nicholas Marriott <nicm@users.sourceforge.net>
+
+译者: Liang Guisheng <https://github.com/theo-l>
