@@ -1208,24 +1208,22 @@ A session's name is set with the new-session and rename-session commands. A wind
     $ printf '\033]2;My Title\033\\'
 
 ##环境
-When the server is started, tmux copies the environment into the global environment; in addition, each session has a session environment. When a window is created, the session and global environments are merged. If a variable exists in both, the value from the session environment is used. The result is the initial environment passed to the new process.
 当tmux服务器启动时，tmux会将环境复制到全局环境中，此外每个会话具有一个会话环境。
 当一个窗口被创建时，会将会话环境和全局环境合并。
 如果一个变量存在两个环境中，会使用会话环境中的变量。结果就是初始环境传递给新进程。
 
-The update-environment session option may be used to update the session environment from the client when a new session is created or an old reattached. tmux also initialises the TMUX variable with some internal information to allow commands to be executed from inside, and the TERM variable with the correct terminal setting of ‘screen’.
 当一个新会话创建或者一个就会话重新附着时，update-environment会话选项可以用来从一个客户端来更新会话环境。tmux也会使用一些内部信息来初始化TMUX变量以便允许命令在内部执行，TERM变量会设置为正确的终端'screen'。
 
-Commands to alter and view the environment are:
 修改和查看环境的命令有：
 set-environment [-gru] [-t target-session] name [value]
-(alias: setenv)
 (别名:setenv)
-Set or unset an environment variable. If -g is used, the change is made in the global environment; otherwise, it is applied to the session environment for target-session. The -u flag unsets a variable. -r indicates the variable is to be removed from the environment before starting a new process.
-设置或重置
+设置或重置一个环境变量，如果使用-g，会在全局变量中进行改变;否则只会改变target-session的会话环境。
+-u标记用来重置一个变量。 -r用来指示在开起一个新进程时从环境中移除该变量。
+
 show-environment [-g] [-t target-session] [variable]
-(alias: showenv)
-Display the environment for target-session or the global environment with -g. If variable is omitted, all variables are shown. Variables removed from the environment are prefixed with ‘-’.
+(别名：showenv)
+显示目标会话target-session或者全局环境（使用-g时）变量。
+如果忽略变量，会显示所有的变量。从环境中移除的变量会用'-'作为前导。
 
 ##状态行：
 tmux包含了一个可选的状态行会显示在每个终端的底端行。默认状态行时有效的（可以通过status会话选项失效）并且被包含的，从左到右分别有：包含在方括号中的当前会话名称;窗口列表;双引号包含的活动面板;以及时间和日期。
