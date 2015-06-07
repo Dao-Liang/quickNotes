@@ -1214,7 +1214,10 @@ Display the environment for target-session or the global environment with -g. If
 
 ##状态行：
 tmux includes an optional status line which is displayed in the bottom line of each terminal. By default, the status line is enabled (it may be disabled with the status session option) and contains, from left-to-right: the name of the current session in square brackets; the window list; the title of the active pane in double quotes; and the time and date.
+tmux包含了一个可选的状态行会显示在每个终端的底端行。默认状态行时有效的（可以通过status会话选项失效）并且被包含的，从左到右分别有：包含在方括号中的当前会话名称;窗口列表;双引号包含的活动面板;以及时间和日期。
+
 The status line is made of three parts: configurable left and right sections (which may contain dynamic content such as the time or output from a shell command, see the status-left, status-left-length, status-right, and status-right-length options below), and a central window list. By default, the window list shows the index, name and (if any) flag of the windows present in the current session in ascending numerical order. It may be customised with the window-status-format and window-status-current-format options. The flag is one of the following symbols appended to the window name:
+
 
     Symbol	Meaning
     *	    Denotes the current window.
