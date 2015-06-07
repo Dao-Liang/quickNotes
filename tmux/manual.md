@@ -1,60 +1,42 @@
-[penBSD]
-Manual Page Search Parameters
-  	 Show named manual page
-  	 Search with apropos query
-NAME
+[openBSD]
+
+##名称
 tmux — terminal multiplexer
-SYNOPSIS
+
+##用法：
 tmux	[-2lCuv] [-c shell-command] [-f file] [-L socket-name] [-S socket-path] [command [flags]]
-DESCRIPTION
-tmux is a terminal multiplexer: it enables a number of terminals to be created, accessed, and controlled from a single screen. tmux may be detached from a screen and continue running in the background, then later reattached.
+
+##描述
 tmux是一个终端复用器：它可以在一个单独屏幕中创建，访问以及控制多个终端。tmux也可以从窗口中脱离应且继续在后台运行，以便在之后再回到会话。
 
-When tmux is started it creates a new session with a single window and displays it on screen. A status line at the bottom of the screen shows information on the current session and is used to enter interactive commands.
 当开启tmux之后，它会创建带有一个单独窗口的会话并且在屏幕中进行显示。在屏幕底部的状态行显示当前会话的信息并且用来进入交互式命令。
 
-A session is a single collection of pseudo terminals under the management of tmux. Each session has one or more windows linked to it. A window occupies the entire screen and may be split into rectangular panes, each of which is a separate pseudo terminal (the pty(4) manual page documents the technical details of pseudo terminals). Any number of tmux instances may connect to the same session, and any number of windows may be present in the same session. Once all sessions are killed, tmux exits.
 一个会话是一个在tmux管理下的伪终端集合，每个会话具有一个或多个窗口与其链接。一个窗口占用了整个屏幕，并且可以被分割成长方形的面板，每个面板分别为一个伪终端。多个tmux实例可能连接到同一个会话，并且任何的窗口可能在一个会话中表示。当所有的会话被终止之后，tmux就会退出。
 
-Each session is persistent and will survive accidental disconnection (such as ssh(1) connection timeout) or intentional detaching (with the ‘C-b d’ key strokes). tmux may be reattached using:
 每个会话都是持久的并且可能在意外失联或故意脱离之后生存下来，tumux可能使用以下命令来回到原来的会话：
 
     $ tmux attach
 
-In tmux, a session is displayed on screen by a client and all sessions are managed by a single server. The server and each client are separate processes which communicate through a socket in /tmp.
 在tmux中，一个会话由一个客户端在整个屏幕中显示，并且所有的会话都是由一个单独的服务器进行管理的.
 这个服务器以及每个客户端时通过一个在/tmp中的socket进行交流的分开的进程。
 
-The options are as follows:
 具有下列的选项:
 
--2 
-    Force tmux to assume the terminal supports 256 colours.
--2 
-    强制tmux假设终端支持256颜色。
--C 
-    Start in control mode (see the CONTROL MODE section). Given twice (-CC) disables echo.
--C 
-    以控制模式开启，使用-CC来让echo失效
--c shell-command
+-2 强制tmux假设终端支持256颜色。
+-C 以控制模式开启，使用-CC来让echo失效
 -c shell-命令
-Execute shell-command using the default shell. If necessary, the tmux server will be started to retrieve the default-shell option. This option is for compatibility with sh(1) when tmux is used as a login shell.
+
 使用默认的shell来执行shell命令。如果有必要的话，tmux服务器会开启来检索默认的shell选项。这个选项用来当tmux作为一个登录shell时与sh进行兼容的。
 
--f file
 -f 文件
 
-Specify an alternative configuration file. By default, tmux loads the system configuration file from /etc/tmux.conf, if present, then looks for a user configuration file at ~/.tmux.conf.
 制定一个可选的配置文件，默认情况下，tmux会从/etc/tmux.conf中加载系统配置文件，如果这个文件存在的话，
 然后会尝试查找用户的配置文件 ~/.tmux.conf
-The configuration file is a set of tmux commands which are executed in sequence when the server is first started. tmux loads configuration files once when the server process has started. The source-file command may be used to load a file later.
 配置文件是一个tmux命令集合，其中的命令在服务器第一次启动时按顺序执行的。tmux会在服务器进程启动之后加载一次配置文件。
 "source-file"命令可以用来在稍候加载一个文件
 
-tmux shows any error messages from commands in configuration files in the first session created, and continues to process the rest of the configuration file.
 tmux在第一次会话创建时会显示配置文件中的命令出现的任何错误，但是会继续处理配置文件的余下部分。
 
--L socket-name
 -L socket-名字
 tmux stores the server socket in a directory under TMUX_TMPDIR, TMPDIR if it is unset, or /tmp if both are unset. The default socket is named default. This option allows a different socket name to be specified, allowing several independent tmux servers to be run. Unlike -S a full path is not necessary: the sockets are all created in the same directory.
 tmurx 将服务器socket存储在TMUX_TMPDIR目录下，如果这个变量没有设置的话就会使用TMPDIR替换，
@@ -62,290 +44,177 @@ tmurx 将服务器socket存储在TMUX_TMPDIR目录下，如果这个变量没有
 这个选项允许指定一个不同的socket名称，允许多个独立的tmux服务器运行。 与
 -S不同的是，不需要使用全路经：所有的sockets文件会创建在一个相同的目录下。
 
-If the socket is accidentally removed, the SIGUSR1 signal may be sent to the tmux server process to recreate it (note that this will fail if any parent directories are missing).
 如果socket被意外地删除了，那么SIGUSR1信号会发送给tmux服务器进程来重新创建socket文件(注意如果当之前描述的任何父目录不存在的话会出错)。
 
 -l
-Behave as a login shell. This flag currently has no effect and is for compatibility with other shells when using tmux as a login shell.
 当作一个登录shell使用，当前这个标记没有什么效果并且是被用来当使用tmux作为登录shell时与其他shell进行兼容的。
--S socket-path
 -S socket-路径
-Specify a full alternative path to the server socket. If -S is specified, the default socket directory is not used and any -L flag is ignored.
 为服务器的socket指定一个可选的全路经，当这个选项指定之后，那么默认的目录不会被使用,并且-L选项会被忽略。
 -u
-tmux attempts to guess if the terminal is likely to support UTF-8 by checking the first of the LC_ALL, LC_CTYPE and LANG environment variables to be set for the string "UTF-8". This is not always correct: the -u flag explicitly informs tmux that UTF-8 is supported.
 tmux尝试通过第一个LC_ALL,LC_CTYPE和LANG环境变量来猜测终端是否可能支持UTF-8,这可能不会总是正确，这个 -u
 选项显式地告知tmux UTF-8是支持的。
-If the server is started from a client passed -u or where UTF-8 is detected, the utf8 and status-utf8 options are enabled in the global window and session options respectively.
 如果服务器通过客户端传递-u或者检测到UTF-8进行启动的，那么utf8和status-utf8选项会分别在全局窗口和会话选项中生效。
 -v
-Request verbose logging. This option may be specified multiple times for increasing verbosity. Log messages will be saved into tmux-client-PID.log and tmux-server-PID.log files in the current directory, where PID is the PID of the server or client process.
 请求详细登录，这个选项可能由于不断增长的修饰词被多次指定。登录消息会被存储在当前目录下的tmux-客户端PID.log和tmux-服务器PID.log文件中，其中的PID代表服务器或客户端进程ID。
-command [flags]
 
-This specifies one of a set of commands used to control tmux, as described in the following sections. If no commands are specified, the new-session command is assumed.
+command [flags]
 这个用来指定命令集合中的一个来控制tmux，如果没有指定任何命令那么假设一个新建会话命令。
 
-KEY BINDINGS
-键绑定
+##键绑定
 
-tmux may be controlled from an attached client by using a key combination of a prefix key, ‘C-b’ (Ctrl-b) by default, followed by a command key.
 tmux可以通过一个前缀键与跟随的命令键进行结合的方式从一个附着的客户端进行控制，前缀键默认为'C-b'
 
-The default command key bindings are:
 默认的命令键绑定为:
 
-C-b:  Send the prefix key (C-b) through to the application.
-C-b: 给应用发送一个前缀键 C-b
-C-o: Rotate the panes in the current window forwards.
-C-o: 将当前窗口中的面板向前切换。
-C-z: Suspend the tmux client.
-C-z: 将tmux客户端挂起
-!: Break the current pane out of the window.
-!: 将当前面板在窗口中突出显示
-": Split the current pane into two, top and bottom.
-": 将当前的面板分割为上下两个面板
-\#: List all paste buffers.
-\#: 列出所有的粘贴缓存
-$:Rename the current session.
-$: 重命名当前会话
-% Split the current pane into two, left and right.
-%: 将当前面板分割为左右两个面板
-& Kill the current window.
-&: 终止当前窗口
-' Prompt for a window index to select.
-': 显示一个窗口索引来进行选择
-( Switch the attached client to the previous session.
-(: 将当前附着的客户端转换到前一个会话
-) Switch the attached client to the next session.
-): 将附着的客户端转换到下一个会话
-\, Rename the current window.
-\,: 重命名当前窗口
-\- Delete the most recently copied buffer of text.
-\-: 删除最近的复制文本缓存
-. Prompt for an index to move the current window.
-.: 提示一个索引来移动当前窗口
-0 to 9: Select windows 0 to 9.
-0-9: 选择0-9个窗口
-: Enter the tmux command prompt.
-: 输入tmux命令提示
-;: Move to the previously active pane.
-;: 移动到前面的活动面板
+    C-b:					 给应用发送一个前缀键 C-b
+    C-o:					 将当前窗口中的面板向前切换。
+    C-z:					 将tmux客户端挂起
+    !:						 将当前面板在窗口中突出显示
+    ":						 将当前的面板分割为上下两个面板
+    \#:						 列出所有的粘贴缓存
+    $:						 重命名当前会话
+    %:						 将当前面板分割为左右两个面板
+    &:						 终止当前窗口
+    ':						 显示一个窗口索引来进行选择
+    (:						 将当前附着的客户端转换到前一个会话
+    ):						 将附着的客户端转换到下一个会话
+    \,:						 重命名当前窗口
+    \-:						 删除最近的复制文本缓存
+    .:						 提示一个索引来移动当前窗口
+    0-9:					 选择0-9个窗口
+    :						 输入tmux命令提示
+    ;:						 移动到前面的活动面板
+    =:						 从一个列表中选择一个缓存来交互式粘贴。
+    ?:						 列出所有的键绑定
+    D:						 选择一个客户端来脱离其附着
+    L:						 将附着的客户端切换到最后一个会话中
+    [:						 输入赋值模式来复制文本或查看历史
+    ]:						 粘贴最近复制的文本缓存
+    c:						 创建一个新的窗口
+    d:						 脱离当前的客户端
+    f:						 提示在打开的窗口中搜索文本
+    i:						 显示关于当前窗口的一些信息
+    l:						 移动到之前选择的窗口
+    n:						 移动到下一个窗口
+    o:						 移动到当前窗口的下一个面板
+    p:						 移动到之前的窗口
+    q:						 简单地显示面板索引
+    r:						 强制重绘附着的客户端
+    s:						 为当前附着的客户端交互式地选择一个新的会话
+    t:						 显示时间
+    w:						 交互式地选择当前的窗口
+    x:						 终止当前的面板
+    z:						 切换当前面板的放大状态
+    {:						 使用之前的面板来替换当前的面板
+    }:						 使用下一个面板来替换当前的面板
+    ~:						 显示tmux之前的消息如果存在的话。
+    PageUp:					 进入复制模式并且将页面向上滚动一页。
+    Up,Down,Left,Right:		 转换到当前面板的上, 下，左，右
+    M-1到M-5（M=Alt）:       将面板按照预设的1-5个布局进行安排：偶数水平，偶数垂直，主水平，主垂直或平铺
+    Space:					 将当前窗口按照下一个预设布局进行安排
+    M-n:					 移动到下一个窗口并且带有一个响铃或者活动标记
+    M-o:					 将当前窗口中的面板从前向后反转
+    M-p:					 移动到前一个窗口并且带有响铃或者活动标记
+    C-Up, C-Down C-Left, C-Right:						 以一个单格的步调调整当前面板的大小
+    M-Up, M-Down M-Left, M-Right:						 以五个单格的步调调整当前面板的大小
 
-=: Choose which buffer to paste interactively from a list.
-=: 从一个列表中选择一个缓存来交互式粘贴。
-?: List all key bindings.
-?: 列出所有的键绑定
-D: Choose a client to detach.
-D: 选择一个客户端来脱离其附着
-L: Switch the attached client back to the last session.
-L: 将附着的客户端切换到最后一个会话中
-[: Enter copy mode to copy text or view the history.
-[: 输入赋值模式来复制文本或查看历史
-]: Paste the most recently copied buffer of text.
-]: 粘贴最近复制的文本缓存
-c: Create a new window.
-c: 创建一个新的窗口
-d: Detach the current client.
-d: 脱离当前的客户端
-f: Prompt to search for text in open windows.
-f: 提示在打开的窗口中搜索文本
-i: Display some information about the current window.
-i: 显示关于当前窗口的一些信息
-l: Move to the previously selected window.
-l: 移动到之前选择的窗口
-n: Change to the next window.
-n: 移动到下一个窗口
-o: Select the next pane in the current window.
-o: 移动到当前窗口的下一个面板
-p: Change to the previous window.
-p: 移动到之前的窗口
-q: Briefly display pane indexes.
-q: 简单地显示面板索引
-r: Force redraw of the attached client.
-r: 强制重绘附着的客户端
-s: Select a new session for the attached client interactively.
-s: 为当前附着的客户端交互式地选择一个新的会话
-t: Show the time.
-t: 显示时间
-w: Choose the current window interactively.
-w: 交互式地选择当前的窗口
-x: Kill the current pane.
-x: 终止当前的面板
-z: Toggle zoom state of the current pane.
-z: 切换当前面板的放大状态
-{: Swap the current pane with the previous pane.
-{: 使用之前的面板来替换当前的面板
-}: Swap the current pane with the next pane.
-}: 使用下一个面板来替换当前的面板
-~: Show previous messages from tmux, if any.
-~: 显示tmux之前的消息如果存在的话。
-Page Up: Enter copy mode and scroll one page up.
-PageUp: 进入复制模式并且将页面向上滚动一页。
-Up, Down, Left, Right: Change to the pane above, below, to the left, or to the right of the current pane.
-Up,Down,Left,Right: 转换到当前面板的上, 下，左，右
-M-1 to M-5: Arrange panes in one of the five preset layouts: even-horizontal, even-vertical, main-horizontal, main-vertical, or tiled.
-M-1到M-5（M=Alt）：将面板按照预设的1-5个布局进行安排：偶数水平，偶数垂直，主水平，主垂直或平铺
-Space: Arrange the current window in the next preset layout.
-Space: 将当前窗口按照下一个预设布局进行安排
-M-n: Move to the next window with a bell or activity marker.
-M-n: 移动到下一个窗口并且带有一个响铃或者活动标记
-M-o: Rotate the panes in the current window backwards.
-M-o: 将当前窗口中的面板从前向后反转
-M-p: Move to the previous window with a bell or activity marker.
-M-p: 移动到前一个窗口并且带有响铃或者活动标记
-C-Up, C-Down C-Left, C-Right: Resize the current pane in steps of one cell.
-C-Up, C-Down C-Left, C-Right: 以一个单格的步调调整当前面板的大小
-M-Up, M-Down M-Left, M-Right: Resize the current pane in steps of five cells.
-M-Up, M-Down M-Left, M-Right: 以五个单格的步调调整当前面板的大小
-
-Key bindings may be changed with the bind-key and unbind-key commands.
 键绑定可以通过bind-key和unbind-key命令来改变。
 
 
-COMMANDS
-命令
+##命令
 
-This section contains a list of the commands supported by tmux. Most commands accept the optional -t argument with one of target-client, target-session target-window, or target-pane. These specify the client, session, window or pane which a command should affect.
 这部分包含了tmux支持的命令列表，大部分的命令接收可选的-t参数与一个目标客户端，目标会话，目标窗口或者目标面板。
 它们指定了命令会影响到的客户端，会话，窗口或面板
 
-target-client should be the name of the pty(4) file to which the client is connected, for example either of /dev/ttyp1 or ttyp1 for the client attached to /dev/ttyp1. If no client is specified, tmux attempts to work out the client currently in use; if that fails, an error is reported. Clients may be listed with the list-clients command.
 目标客户端应该为客户端链接的pty文件的名称，例如对于附着在/dev/ttyp1的客户端可能为 /dev/ttyp1或
 ttyp1。如果没有指定客户端，tmux会尝试当前使用的客户端;
 如果失败的话，就会报告一个错误。客户端可以通过list-clients命令列出。
 
-target-session is tried as, in order:
 目标会话会按照顺序进行尝试:
 
-A session ID prefixed with a $.
 一个以$作为前缀的会话ID。
 
-An exact name of a session (as listed by the list-sessions command).
 一个精确的会话名称（会在list-sessions命令中列出）。
-The start of a session name, for example ‘mysess’ would match a session named ‘mysession’.
 会话名称的开始部分，例如“mysess”会匹配一个名为"mysession"的会话。
-An fnmatch(3) pattern which is matched against the session name.
 一个与会话名称匹配的fnmatch 模式
 
-If a single session is found, it is used as the target session; multiple matches produce an error. If a session is omitted, the current session is used if available; if no current session is available, the most recently used is chosen.
 如果找到了一个单独的会话，就会将其作为目标会话；如果匹配多个会话就会产生错误。如果忽略一个会话的话，那么就会使用当前的会话-如果可用的话；如果当前会话不可用，那么最近使用的会话就会被选择。
 
 target-window specifies a window in the form session:window. session follows the same rules as for target-session, and window is looked for in order as:
 目标窗口通过session:window的格式来指定一个窗口。 会话按照target-session的规则，而窗口会按照以下的顺序来查找：
 
-A special token, listed below.
-一个下面列表中的特殊标记。
-A window index, for example ‘mysession:1’ is window 1 in session ‘mysession’.
-一个窗口索引，例如'mysession:1'表示会话'mysession'中的第一个窗口。
-A window ID, such as @1.
-一个窗口ID，例如@1。
-An exact window name, such as ‘mysession:mywindow’.
-一个精确的窗口名称，例如'mysession:mywindow'。
-The start of a window name, such as ‘mysession:mywin’.
-一个窗口名称的开始部分，例如'mysession:mywin'。
-As an fnmatch(3) pattern matched against the window name.
-一个于窗口名称相匹配的fnmatch模式。
-An empty window name specifies the next unused index if appropriate (for example the new-window and link-window commands) otherwise the current window in session is chosen.
-一个空窗口名称制定了下一个未使用的索引如果合适的话（例如new-window或link-window命令），否则会话中的当前窗口就被选择。
-The following special tokens are available to indicate particular windows. Each has a single-character alternative form.
-下面的特殊标记可用来指定一个特定的窗口。每个都具有一个可选的单字符格式。
-Token		Meaning
-符号        含义
-{start}	^	The lowest-numbered window
-{start} ^   最小数值的窗口
-{end}	$	The highest-numbered window
-{end}   $   最大数值的窗口
-{last}	!	The last (previously current) window
-{last}  !   最后一个窗口
-{next}	+	The next window by number
-{next}  +   按照数字的下一个窗口
-{previous}	-	The previous window by number
-{previous}  -   按照数字的上一个窗口
-{mouse}	=	The window where the mouse event happened
-{mouse} =   鼠标事件发生的窗口
+    一个下面列表中的特殊标记。
+    一个窗口索引，例如'mysession:1'表示会话'mysession'中的第一个窗口。
+    一个窗口ID，例如@1。
+    一个精确的窗口名称，例如'mysession:mywindow'。
+    一个窗口名称的开始部分，例如'mysession:mywin'。
+    一个于窗口名称相匹配的fnmatch模式。
+    一个空窗口名称制定了下一个未使用的索引如果合适的话（例如new-window或link-window命令），否则会话中的当前窗口就被选择。
 
-target-pane may be a pane ID or takes a similar form to target-window but with the optional addition of a period followed by a pane index or pane ID, for example: ‘mysession:mywindow.1’. If the pane index is omitted, the currently active pane in the specified window is used. The following special tokens are available for the pane index:
+下面的特殊标记可用来指定一个特定的窗口。每个都具有一个可选的单字符格式。
+
+    符号        别名    含义
+
+    {start}     ^       最小数值的窗口
+    {end}       $       最大数值的窗口
+    {last}      !       最后一个窗口
+    {next}      +       按照数字的下一个窗口
+    {previous}  -       按照数字的上一个窗口
+    {mouse}     =       鼠标事件发生的窗口
+
 目标面板可以是一个面板ID或者是一个于目标窗口相似的形式，但是带有一个额外可选的跟随面板索引或面板ID的点号“.”。例如：
-"mysession:mywindow.1"。
 如果忽略面板索引的话，那么指定窗口当前的活动面板就会被使用，下面的特殊符合可以作为面板索引使用：
 
-Token		Meaning
-符号        含义
-{last}	!	The last (previously active) pane
-{last}  !   最后一个面板
-{next}	+	The next pane by number
-{next}  +   数字指定的下一个面板
-{previous}	-	The previous pane by number
-{previous}  -   数字指定的前一个面板
-{top}		The top pane
-{top}       顶端面板
-{bottom}		The bottom pane
-{bottom}        底端面板
-{left}		The leftmost pane
-{left}      最左端面板
-{right}		The rightmost pane
-{right}     最右端面板
-{top-left}		The top-left pane
-{top-left}      左顶端面板
-{top-right}		The top-right pane
-{top-right}     右顶端面板
-{bottom-left}		The bottom-left pane
-{bottom-left}       左底端面板
-{bottom-right}		The bottom-right pane
-{bottom-right}      右底端面板
-{up}		The pane above the active pane
-{up}        活动面板上面的面板
-{down}		The pane below the active pane
-{down}      活动面板下面的面板
-{left}		The pane to the left of the active pane
-{left}      活动面板左边的面板
-{right}		The pane to the right of the active pane
-{right}     活动面板右边的面板
-{mouse}	=	The pane where the mouse event happened
-{mouse} =   鼠标事件发生的面板
+    符号            别名      含义
+    {last}          !   最后一个面板
+    {next}          +   数字指定的下一个面板
+    {previous}      -   数字指定的前一个面板
+    {top}               顶端面板
+    {bottom}            底端面板
+    {left}              最左端面板
+    {right}             最右端面板
+    {top-left}          左顶端面板
+    {top-right}         右顶端面板
+    {bottom-left}       左底端面板
+    {bottom-right}      右底端面板
+    {up}                活动面板上面的面板
+    {down}              活动面板下面的面板
+    {left}              活动面板左边的面板
+    {right}             活动面板右边的面板
+    {mouse}         =   鼠标事件发生的面板
 
-The tokens ‘+’ and ‘-’ may be followed by an offset, for example:
 符合'+'和'-'可能跟随一个位移，例如:
-select-window -t:+2
 
-Sessions, window and panes are each numbered with a unique ID; session IDs are prefixed with a ‘$’, windows with a ‘@’, and panes with a ‘%’. These are unique and are unchanged for the life of the session, window or pane in the tmux server. The pane ID is passed to the child process of the pane in the TMUX_PANE environment variable. IDs may be displayed using the ‘session_id’, ‘window_id’, or ‘pane_id’ formats (see the FORMATS section) and the display-message, list-sessions, list-windows or list-panes commands.
+    select-window -t:+2
+
 会话，窗口和面板都通过一个唯一的ID来进行数字编码；
 会话ID带有一个'$'前缀，窗口ID带有一个'@'前缀，面板ID带有一个'%'前缀。这些在tmux服务器中的会话，窗口或面板生命周期中都是唯一不变的。面板ID通过TMUX_PANE环境变量传递给面板的子进程，ID可能使用'session_id','window_id'或'pane_id'何display-message,list-sesions,list-windows或list-panes命令的格式进行显示。
 
 
-shell-command arguments are sh(1) commands. This may be a single argument passed to the shell, for example:
 shell-command 参数时sh命令，这可能是一个传递给shell的单个参数，例如：
 
     new-window 'vi /etc/passwd'
 
-Will run:
 会运行：
     /bin/sh -c 'vi /etc/passwd'
 
-Additionally, the new-window, new-session, split-window, respawn-window and respawn-pane commands allow shell-command to be given as multiple arguments and executed directly (without ‘sh -c’). This can avoid issues with shell quoting. For example:
 此外，new-window,new-session,split-window, respawn-window以及respawn-pane命令允许 shell-command
 作为多惨数给定并且可以直接执行（不需要 'sh -C'）。 者可以避免shell引用问题，例如：
 
     $ tmux new-window vi /etc/passwd
 
-Will run vi(1) directly without invoking the shell.
 会直接运行vi,而不需要调用shell。
 
-command [arguments] refers to a tmux command, passed with the command and arguments separately, for example:
 命令 [参数] 指向一个tmux命令，命令和参数分别进行传递，例如：
 
     bind-key F1 set-window-option force-width 81
 
-Or if using sh(1):
 或者，如果使用sh的话：
 
     $ tmux bind-key F1 set-window-option force-width 81
 
-Multiple commands may be specified together as part of a command sequence. Each command should be separated by spaces and a semicolon; commands are executed sequentially from left to right and lines ending with a backslash continue on to the next line, except when escaped by another backslash. A literal semicolon may be included by escaping it with a backslash (for example, when specifying a command sequence to bind-key).
 多个命令可以作为命令序列的一部分一起指定，每个命令需要使用空格和分号来分隔；命令按照从左至右的顺序执行，并且以反斜线结束的行会继续到下一行，除非被另外一个反斜线转义。
 一个字面量分号可以通过一个反斜线进行转义包含进来（例如，当需要制定一个命令行序列给键绑定时）
-Example tmux commands include:
 tmux命令包含样例：
 
     refresh-client -t/dev/ttyp2 
@@ -359,7 +228,6 @@ tmux命令包含样例：
     bind-key R source-file ~/.tmux.conf \; \ 
 	    display-message "source-file done"
 
-Or from sh(1):
 或者从sh中：
 
     $ tmux kill-window -t :1 
@@ -368,565 +236,378 @@ Or from sh(1):
  
     $ tmux new-session -d 'vi /etc/passwd' \; split-window -d \; attach
 
-CLIENTS AND SESSIONS
-客户端和会话：
+##客户端和会话：
 
-The tmux server manages clients, sessions, windows and panes. Clients are attached to sessions to interact with them, either when they are created with the new-session command, or later with the attach-session command. Each session has one or more windows linked into it. Windows may be linked to multiple sessions and are made up of one or more panes, each of which contains a pseudo terminal. Commands for creating, linking and otherwise manipulating windows are covered in the WINDOWS AND PANES section.
 tmux服务器管理客户端，会话，窗口和面板。客户端是附着在会话上来与他们交互的，不论他们是通过new-session命令或者之后的attach-session命令创建的。
 每个会话具有一个或多个窗口与其链接。
 窗口可以连接到多个会话上，窗口又是有一个或多个面板组成的，每个面板包含了一个伪终端。
 对于创建、链接或其他窗口操作的命令会在WINDOWS AND PANES部分详解。
 
-The following commands are available to manage clients and sessions:
 下面的命令可以用来管理客户端和会话：
 attach-session [-dr] [-c working-directory] [-t target-session]
-(alias: attach)
 (别名： attach)
-
-If run from outside tmux, create a new client in the current terminal and attach it to target-session. If used from inside, switch the current client. If -d is specified, any other clients attached to the session are detached. -r signifies the client is read-only (only keys bound to the detach-client or switch-client commands have any effect)
 如果从tmux之外来运行，会在当前终端中创建一个新的客户端并且将其附着在一个目标会话上。如果这个命令是在tmux中运行的，就会切换当前的客户端。
 如果指定了 -d 选项， 附着在这个会话上的其他客户端就会脱离，
 -r表示这个客户端时只读的（只有键绑定到detach-client或switch-client命令时具有效果）。
-
-If no server is started, attach-session will attempt to start it; this will fail unless sessions are created in the configuration file.
 如果没有启动服务器， attach-session 会尝试启动服务器；除非在配置文件中创建了会话否则就会失败。
-
-The target-session rules for attach-session are slightly adjusted: if tmux needs to select the most recently used session, it will prefer the most recently used unattached session.
 对于attach-session命令的目标会话规则稍微有一点调整：如果tmux需要选择最近使用的会话，会偏好选择最近使用的脱离附着的会话。
-
--c will set the session working directory (used for new windows) to working-directory.
 -c 为设置会话的工作目录（为新窗口所使用）为working-directory
 
 detach-client [-P] [-a] [-s target-session] [-t target-client]
-(alias: detach)
 (别名： detach)
-
-Detach the current client if bound to a key, the client specified with -t, or all clients currently attached to the session specified by -s. The -a option kills all but the client given with -t. If -P is given, send SIGHUP to the parent process of the client, typically causing it to exit.
 如果绑定了一个键时会脱离当前客户端，由-t来指定客户端，或者所有附着在由-s指定的会话中的客户端。
 -a选项会终止除-t指定的目标客户端之外的所有客户端。
 如果给定了-P，会发送一个SIGHUP信号给当前客户端的父进程，一般时导致其触发退出动作。
 
 has-session [-t target-session]
-(alias: has)
 (别名: has)
-
-Report an error and exit with 1 if the specified session does not exist. If it does exist, exit with 0.
 如果指定的会话不存在的话，就会报告一个错误并且退出，返回值为1. 如果存在的话，就会退出，返回值为0.
 
 kill-server
-
-Kill the tmux server and clients and destroy all sessions.
 终止tmux服务器和客户端并且销毁所有的会话。
 
 kill-session [-a] [-t target-session]
-Destroy the given session, closing any windows linked to it and no other sessions, and detaching all clients attached to it. If -a is given, all sessions but the specified one is killed.
 销毁指定的会话，关闭连接到会话的任何窗口，并且让所有附着在其上的客户端脱离。
 如果给定了-a选项的话，除了指定的会话之外的会话都被终止。
 
 list-clients [-F format] [-t target-session]
-(alias: lsc)
 (别名： lsc)
-
-List all clients attached to the server. For the meaning of the -F flag, see the FORMATS section. If target-session is specified, list only clients connected to that session.
 列出附着在服务器上的所有客户端。 对于-F标记，可以参考 FORMATS 部分。
 如果给定了目标会话的话，只列出连接到该会话上的客户端。  
 
 list-commands
-(alias: lscm)
 (别名： lscm)
-
-List the syntax of all commands supported by tmux.
 列出所有tmux支持的所有命令语法。
 
 list-sessions [-F format]
-(alias: ls)
 (别名： ls)
-
-List all sessions managed by the server. For the meaning of the -F flag, see the FORMATS section.
 列出服务器管理的所有会话，对于-F标记，参考 FORMATS部分。
 
 lock-client [-t target-client]
-(alias: lockc)
 (别名: lockc)
-
-Lock target-client, see the lock-server command.
 锁定目标客户端， 可以参考 lock-server 命令。
 
 lock-session [-t target-session]
-(alias: locks)
 (别名: locks)
-Lock all clients attached to target-session.
 锁定附着在目标会话上的所有客户端。
 
 new-session [-AdDP] [-c start-directory] [-F format] [-n window-name] [-s session-name] [-t target-session] [-x width] [-y height] [shell-command]
-(alias: new)
 (别名:new)
-Create a new session with name session-name.
 使用session-name 来创建一个新的会话。
 
-The new session is attached to the current terminal unless -d is given. window-name and shell-command are the name of and shell command to execute in the initial window. If -d is used, -x and -y specify the size of the initial window (80 by 24 if not given).
 除非给定-d选项，否则新的会话就会附着在当前的终端上。 window-name和shell-comand
 是在初始化窗口中执行的窗口和shell命令你该名称。
 如果使用了-d选项， -x和-y用来指定初始窗口的大小（默认为80x24）。
-
-If run from a terminal, any termios(4) special characters are saved and used for new windows in the new session.
 如果从终端中运行的恶化，任何的termios特殊字符都被保存并且在新会话中的新窗口中使用。
-
-The -A flag makes new-session behave like attach-session if session-name already exists; in this case, -D behaves like -d to attach-session.
--A
-标记使得新会话与一个附着会话具有相同的行为，如果会话名称已经存在的话；这种情况下，对于attach-session来说-D具有与-d相同的行为。
-
-If -t is given, the new session is grouped with target-session. This means they share the same set of windows - all windows from target-session are linked to the new session and any subsequent new windows or windows being closed are applied to both sessions. The current and previous window and any session options remain independent and either session may be killed without affecting the other. Giving -n or shell-command are invalid if -t is used.
+-A 标记使得新会话与一个附着会话具有相同的行为，如果会话名称已经存在的话；这种情况下，对于attach-session来说-D具有与-d相同的行为。
 如果给定了-t选项，新的会话被分组到目标会话中。
 这就意味着他们共享相同的窗口集合--目标会话中的所有窗口都会连接到新的会话上，并且任何后续的新建窗口或关闭窗口都会被应用在两个会话上。
 当前的窗口和之前的窗口以及任何会话选项保持独立，并且每个会话都会在不影响其他会话的情况下被终止。 -n或
 shell-command只有在使用-t选项时合法。
-
-
-The -P option prints information about the new session after it has been created. By default, it uses the format ‘#{session_name}:’ but a different format may be specified with -F.
 -P选项会在新会话创建之后来打印新会话相关信息。默认情况下，会使用'#{session_name}:'格式，但是可以通过-F来指定一个不同的格式。
 
 refresh-client [-S] [-t target-client]
-(alias: refresh)
 (别名:refresh)
-
-Refresh the current client if bound to a key, or a single client if one is given with -t. If -S is specified, only update the client's status bar.
 如果绑定了一个键的话会刷新当前客户端，如果使用-t指定了一个客户端的话会刷新单独的客户端。如果指定-S，只会更新客户端的状态条。
 
 rename-session [-t target-session] new-name
-(alias: rename)
 (别名：rename)
-
-Rename the session to new-name.
 重命名会话为一个新名称。
 
 show-messages [-IJT] [-t target-client]
-(alias: showmsgs)
 (别名：showmsgs)
-Show client messages or server information. Any messages displayed on the status line are saved in a per-client message log, up to a maximum of the limit set by the message-limit server option. With -t, display the log for target-client. -I, -J and -T show debugging information about the running server, jobs and terminals.
 显示客户端消息或服务器信息。所有显示在状态行的消息都存储在一个客户端独立的消息日志中，具有一个由message-limit选项设置的最大限制。使用-t会显示目标客户端的日志。
 -I，-J 和-T分别显示运行服务器，任务和终端的调试信息。
 
 source-file path
-(alias: source)
 (别名：source)
-Execute commands from path.
 从路径中来执行命令
 
 start-server
-(alias: start)
 (别名：start)
-Start the tmux server, if not already running, without creating any sessions.
 开启tmux服务器，如果还没有运行，不会创建任何会话。
 
 suspend-client [-t target-client]
-(alias: suspendc)
 (别名：suspendc)
-Suspend a client by sending SIGTSTP (tty stop).
 通过发送一个SIGTSTP（tty stop）信号来挂起一个客户端。
 
 switch-client [-lnpr] [-c target-client] [-t target-session] [-T key-table]
-(alias: switchc)
 (别名：switchc)
-Switch the current session for client target-client to target-session. If -l, -n or -p is used, the client is moved to the last, next or previous session respectively. -r toggles whether a client is read-only (see the attach-session command).
 将目标客户端所在的当前会话切换到目标会话中， 如果-l, -n或者-p被使用的话，客户端会被分别移动到最后，下一个或上一个会话中。-r 转换一个客户端的只读（可以参考attach-session命令）
 
--T sets the client's key table; the next key from the client will be interpreted from key-table. This may be used to configure multiple prefix keys, or to bind commands to sequences of keys. For example, to make typing ‘abc’ run the list-keys command:
--T
-设置客户端的简表；来自客户端的下一个键会被解释为来自键表。这可能会被用在配置多个前缀键时或者绑定命令到一序列键值时使用。例如，让键入'abc'来运行 list-keys命令：
-bind-key -Ttable2 c list-keys 
-bind-key -Ttable1 b switch-client -Ttable2 
-bind-key -Troot   a switch-client -Ttable1
+-T 设置客户端的简表；来自客户端的下一个键会被解释为来自键表。这可能会被用在配置多个前缀键时或者绑定命令到一序列键值时使用。例如，让键入'abc'来运行 list-keys命令：
 
-WINDOWS AND PANES
-窗口和面板
+    bind-key -Ttable2 c list-keys 
+    bind-key -Ttable1 b switch-client -Ttable2 
+    bind-key -Troot   a switch-client -Ttable1
 
-A tmux window may be in one of several modes. The default permits direct access to the terminal attached to the window. The other is copy mode, which permits a section of a window or its history to be copied to a paste buffer for later insertion into another window. This mode is entered with the copy-mode command, bound to ‘\[’ by default. It is also entered when a command that produces output, such as list-keys, is executed from a key binding.
+##窗口和面板
+
 一个tmux窗口可能会在处在多个模式中的某一个模式。默认的模式时直接访问附着在窗口上的终端。另外一个是复制模式，允许一个窗口的一部分或者其历史能够被复制到一个粘贴缓存中，以便稍候插入到另外的窗口中。
 这个模式时使用 copy-mode命令来进入的，默认绑定到'\['上。也会在一个命令产生输出时进入，例如通过键绑定执行的list-keys。
-
-The keys available depend on whether emacs or vi mode is selected (see the mode-keys option). The following keys are supported as appropriate for the mode:
 可用的键依赖于是选择emacs还是vi模式（参考 mode-keys 选项）。 下面的键对于不同的模式具有合适的支持。
 
-Function	                vi	        emacs
-函数                        vi模式      emacs模式
-Append selection	        A	
-Back to indentation	        ^	        M-m
-Bottom of history	        G	        M-<
-Clear selection	Escape	    C-g
-Copy selection	Enter	    M-w
-Copy to named buffer    	"   	
-Cursor down	                j       	Down
-Cursor left	                h	        Left
-Cursor right	            l	        Right
-Cursor to bottom line	    L	
-Cursor to middle line	    M	        M-r
-Cursor to top line	        H	        M-R
-Cursor up	                k	        Up
-Delete entire line	        d	        C-u
-Delete/Copy to end of line	D	        C-k
-End of line	                $	        C-e
-Go to line              	:           g
-Half page down	            C-d	        M-Down
-Half page up	            C-u	        M-Up
-Jump again	                ;	        ;
-Jump again in reverse   	,	        ,
-Jump backward	            F	        F
-Jump forward	            f       	f
-Jump to backward	        T	
-Jump to forward	            t	
-Next page	                C-f	        Page down
-Next space	                W	
-Next space, end of word	    E	
-Next word	                w	
-Next word end	            e	        M-f
-Other end of selection	    o	
-Paste buffer	            p	        C-y
-Previous page	            C-b	        Page up
-Previous space	            B	
-Previous word	            b	        M-b
-Quit mode	                q	        Escape
-Rectangle toggle	        v	        R
-Scroll down	                C-Down/C-e	C-Down
-Scroll up	                C-Up/C-y	C-Up
-Search again	            n	        n
-Search again in reverse	    N	        N
-Search backward	            ?	        C-r
-Search forward	            /	        C-s
-Select line	                V	
-Start of line	            0	        C-a
-Start selection	            Space	    C-Space
-Top of history	            g	        M->
-Transpose characters		C-t
+    函数                        vi模式      emacs模式
+    Append selection	        A	
+    Back to indentation	        ^	        M-m
+    Bottom of history	        G	        M-<
+    Clear selection	Escape	    C-g
+    Copy selection	Enter	    M-w
+    Copy to named buffer    	"   	
+    Cursor down	                j       	Down
+    Cursor left	                h	        Left
+    Cursor right	            l	        Right
+    Cursor to bottom line	    L	
+    Cursor to middle line	    M	        M-r
+    Cursor to top line	        H	        M-R
+    Cursor up	                k	        Up
+    Delete entire line	        d	        C-u
+    Delete/Copy to end of line	D	        C-k
+    End of line	                $	        C-e
+    Go to line              	:           g
+    Half page down	            C-d	        M-Down
+    Half page up	            C-u	        M-Up
+    Jump again	                ;	        ;
+    Jump again in reverse   	,	        ,
+    Jump backward	            F	        F
+    Jump forward	            f       	f
+    Jump to backward	        T	
+    Jump to forward	            t	
+    Next page	                C-f	        Page down
+    Next space	                W	
+    Next space, end of word	    E	
+    Next word	                w	
+    Next word end	            e	        M-f
+    Other end of selection	    o	
+    Paste buffer	            p	        C-y
+    Previous page	            C-b	        Page up
+    Previous space	            B	
+    Previous word	            b	        M-b
+    Quit mode	                q	        Escape
+    Rectangle toggle	        v	        R
+    Scroll down	                C-Down/C-e	C-Down
+    Scroll up	                C-Up/C-y	C-Up
+    Search again	            n	        n
+    Search again in reverse	    N	        N
+    Search backward	            ?	        C-r
+    Search forward	            /	        C-s
+    Select line	                V	
+    Start of line	            0	        C-a
+    Start selection	            Space	    C-Space
+    Top of history	            g	        M->
+    Transpose characters		C-t
 
-The next and previous word keys use space and the ‘-’, ‘_’ and ‘@’ characters as word delimiters by default, but this can be adjusted by setting the word-separators session option. Next word moves to the start of the next word, next word end to the end of the next word and previous word to the start of the previous word. The three next and previous space keys work similarly but use a space alone as the word separator.
 下一个和上一个单词简默认使用空格和'-','_'以及'@'字符作为单词分隔符，但是可以通过设置会话的word-separators选项进行调整。下一个单词会移动到下一个单词的开始位置，下一个单词的末尾会移动到下一个单词的末尾位置，
 前一个单词移动到前一个单词的开始位置。 三个下一个和前一个空格键具有相似的作用但是单独使用一个空国作为单词分隔符。
 
-The jump commands enable quick movement within a line. For instance, typing ‘f’ followed by ‘/’ will move the cursor to the next ‘/’ character on the current line. A ‘;’ will then jump to the next occurrence.
 跳转命令允许在一个行中快速移动，例如，输入'f'跟随一个'/'会将光标移动到当前行的下一个'/'字符处。
 一个';'之后会移动到字符下一次出现的地方。
 
-Commands in copy mode may be prefaced by an optional repeat count. With vi key bindings, a prefix is entered using the number keys; with emacs, the Alt (meta) key and a number begins prefix entry. For example, to move the cursor forward by ten words, use ‘M-1 0 M-f’ in emacs mode, and ‘10w’ in vi.
 复制模式中的命令可能由一个可选的重复计数器作为前导，在vi键绑定下，通过数字键来输入前导；使用emacs时，使用Alt(meta)+数字作为前导实体。例如，为了将光标向前移动10个单词使用'M-1 0 M-f'-对于emacs模式，'10w'-对于vi模式。
 
-Mode key bindings are defined in a set of named tables: vi-edit and emacs-edit for keys used when line editing at the command prompt; vi-choice and emacs-choice for keys used when choosing from lists (such as produced by the choose-window command); and vi-copy and emacs-copy used in copy mode. The tables may be viewed with the list-keys command and keys modified or removed with bind-key and unbind-key. If append-selection, copy-selection, or start-named-buffer are given the -x flag, tmux will not exit copy mode after copying. copy-pipe copies the selection and pipes it to a command. For example the following will bind ‘C-w’ not to exit after copying and ‘C-q’ to copy the selection into /tmp as well as the paste buffer:
 模式键绑定是通过一个命名表集合定义的：在命令提示的行编辑时使用vi-edit和emacs-edit键，当从列表中选择时使用vi-choice和emacs-coice键，在复制模式中时使用vi-copy和emacs-copy键。这些表可以通过list-keys命令来查看，另外可以通过bind-key和unbund-key命令来修改或移除键。如果append-selection,copy-selection或者start-named-buffer给定-x标记，tmux将不会在复制之后退出复制模式。
 copy-pipe复制所选内容并且将其管道到一个命令。例如下面的命令会绑定'C-w'在复制之后不会退出，
 'C-q'将所选内容复制到/tmp和粘贴缓冲中。
 
-bind-key -temacs-copy C-w copy-selection -x 
-bind-key -temacs-copy C-q copy-pipe "cat >/tmp/out"
+    bind-key -temacs-copy C-w copy-selection -x 
+    bind-key -temacs-copy C-q copy-pipe "cat >/tmp/out"
 
-The paste buffer key pastes the first line from the top paste buffer on the stack.
 粘贴缓存键会从栈中顶端的粘贴缓存中粘贴第一行。
-
-The synopsis for the copy-mode command is:
 copy-mode命令的简介为：
 
-copy-mode [-Mu] [-t target-pane]
-Enter copy mode. The -u option scrolls one page up. -M begins a mouse drag (only valid if bound to a mouse key binding, see MOUSE SUPPORT).
+    copy-mode [-Mu] [-t target-pane]
+
 进入复制模式。-u选项向上滚动一页。 -M 开始一个鼠标拖拽（只有在绑定鼠标键绑定时有效，参考MOUSE SUPPORT）
 
-Each window displayed by tmux may be split into one or more panes; each pane takes up a certain area of the display and is a separate terminal. A window may be split into panes using the split-window command. Windows may be split horizontally (with the -h flag) or vertically. Panes may be resized with the resize-pane command (bound to ‘C-up’, ‘C-down’ ‘C-left’ and ‘C-right’ by default), the current pane may be changed with the select-pane command and the rotate-window and swap-pane commands may be used to swap panes without changing their position. Panes are numbered beginning from zero in the order they are created.
 tmux显示的每个窗口可能会被分割为一个或多个面板；每个面板占用一个特定的区域进行显示并且具有一个单独的终端。一个窗口可以通过split-window名令分割为多个面板。窗口可以被水平分割（使用-h标记）或者垂直分割。面板可以通过resize-pane命令改变大小（默认绑定为'C-up','C-down','C-left','C-right'）, 当前的面板可能会通过select-panel命令改变，而rotate-window和swap-panel命令可以在不改变面板位置的情况下切换面板。 面板被从0开始的数字按顺序计数。
 
-A number of preset layouts are available. These may be selected with the select-layout command or cycled with next-layout (bound to ‘Space’ by default); once a layout is chosen, panes within it may be moved and resized as normal.
 有一些默认的预设布局可用，这可以通过select-layout命令来选择或者使用next-layout命令循环选择（默认绑定为'Space'布局）；一旦布局被选定，其中的面板会被移动以及重新改变大小。
 
-The following layouts are supported:
 支持以下的布局：
 
-even-horizontal:
-Panes are spread out evenly from left to right across the window.
-面板按照偶数地从左到右来分布在窗口中。
+even-horizontal: 面板按照偶数地从左到右来分布在窗口中。
+even-vertical: 面板按照偶数地从上到下来分布在窗口中
+main-horizontal: 在窗口的顶端会显示一个大的面板，其余的面板按照从左到右的方式在底部左端的空间分布，可以使用main-pane-height窗口选项来指定顶部面板的高度。
+main-vertical: 类似于main-horizontal，但是最大的面板会放置在窗口左边而其他的面板按照从上往下的方式在右边进行分布。 可以参考main-pane-width窗口选项。
+tiled: 面板会尽量将面板在窗口中在行列上以偶数地方式分布。
 
-even-vertical:
-Panes are spread evenly from top to bottom.
-面板按照偶数地从上到下来分布在窗口中
-
-main-horizontal
-A large (main) pane is shown at the top of the window and the remaining panes are spread from left to right in the leftover space at the bottom. Use the main-pane-height window option to specify the height of the top pane.
-在窗口的顶端会显示一个大的面板，其余的面板按照从左到右的方式在底部左端的空间分布，可以使用main-pane-height窗口选项来指定顶部面板的高度。
-
-main-vertical
-Similar to main-horizontal but the large pane is placed on the left and the others spread from top to bottom along the right. See the main-pane-width window option.
-类似于main-horizontal，但是最大的面板会放置在窗口左边而其他的面板按照从上往下的方式在右边进行分布。
-可以参考main-pane-width窗口选项。
-
-tiled
-Panes are spread out as evenly as possible over the window in both rows and columns.
-面板会尽量将面板在窗口中在行列上以偶数地方式分布。
-
-In addition, select-layout may be used to apply a previously used layout - the list-windows command displays the layout of each window in a form suitable for use with select-layout. For example:
 此外，select-layout可以用来应用一个之前使用的布局，list-windows命令会以一个合适的格式显示每个窗口的布局来于select-layout命令结合使用，例如：
 
     $ tmux list-windows 
 
-0: ksh [159x48] 
-    layout: bb62,159x48,0,0{79x48,0,0,79x48,80,0} 
-$ tmux select-layout bb62,159x48,0,0{79x48,0,0,79x48,80,0}
+    0: ksh [159x48] layout: bb62,159x48,0,0{79x48,0,0,79x48,80,0} 
+    $ tmux select-layout bb62,159x48,0,0{79x48,0,0,79x48,80,0}
 
-tmux automatically adjusts the size of the layout for the current window size. Note that a layout cannot be applied to a window with more panes than that from which the layout was originally defined.
 tmux自动地调整当前窗口大小中的布局大小。 注意，一个布局不能应用在多于布局默认定义的面板数量。
 
-Commands related to windows and panes are as follows:
 与窗口和面板相关的命令如下：
-
 break-pane [-dP] [-F format] [-t target-pane]
-(alias: breakp)
 (别名：breakp)
-Break target-pane off from its containing window to make it the only pane in a new window. If -d is given, the new window does not become the current window. The -P option prints information about the new window after it has been created. By default, it uses the format ‘#{session_name}:#{window_index}’ but a different format may be specified with -F.
 将目标面板从其所在的窗口中终止，并将其作为一个新窗口中的唯一的面板。 如果指定-d,新的窗口不会称为当前的窗口。
 -P选项会在新窗口创建之后显示其信息。 默认会使用
 '#{session_name}:#{window_index}'的显示格式，但是可以通过-f来指定一个不同的格式。
 
 capture-pane [-aepPq] [-b buffer-name] [-E end-line] [-S start-line] [-t target-pane]
-(alias: capturep)
 (别名：capturep)
-Capture the contents of a pane. If -p is given, the output goes to stdout, otherwise to the buffer specified with -b or a new buffer if omitted. If -a is given, the alternate screen is used, and the history is not accessible. If no alternate screen exists, an error will be returned unless -q is given. If -e is given, the output includes escape sequences for text and background attributes. -C also escapes non-printable characters as octal \xxx. -J joins wrapped lines and preserves trailing spaces at each line's end. -P captures only any output that the pane has received that is the beginning of an as-yet incomplete escape sequence.
 捕获一个面板的内容，如果指定-p，那么输出会到达stdou，否则会到达有-b指定的缓冲区（如果没有指定-b缓冲区的话就会指定一个新的缓冲区）。
 如果指定-a, 会使用备用屏幕，并且历史是不可以访问的。如果没有备用的屏幕，在没有指定-q的情况下会返回一个错误。
 如果指定-e,那么输出会包含文本转义序列和后台属性。 -C 也会转义非打印字符为八进制 \\xxx。 -J
 会链接包裹的多行并且保留每行末尾尾随的空格。 -P 只会面板接受到的捕获开头是一个非完整转义序列的任意输出。
-
--S and -E specify the starting and ending line numbers, zero is the first line of the visible pane and negative numbers are lines in the history. ‘-’ to -S is the start of the history and to -E the end of the visible pane. The default is to capture only the visible contents of the pane.
 -S 和 -E 指定开始和结束行的行数，0是可视面板的第一行，而负数时历史行。 '-'到 -S是历史的开始，而
 '-'到-E是可视面板的结尾。 默认情况下只会捕获面板的可视内容。
 
 choose-client [-F format] [-t target-window] [template]
-Put a window into client choice mode, allowing a client to be selected interactively from a list. After a client is chosen, ‘%%’ is replaced by the client pty(4) path in template and the result executed as a command. If template is not given, "detach-client -t '%%'" is used. For the meaning of the -F flag, see the FORMATS section. This command works only if at least one client is attached.
 将一个窗口置于客户端选择模式，允许从一个列表中交互地选择一个客户端。
 在一个客户端被选择之后'%%'会由模板中的客户端pty路径替换，之后的结果会作为一个命令被执行。如果模板没有给定，会使用"detach-client
 -t '%%'"。 对于-F标记，可以参考FORMATS部分。 这个命令只有在至少一个客户端被附着之后才工作。
+
 choose-session [-F format] [-t target-window] [template]
-Put a window into session choice mode, where a session may be selected interactively from a list. When one is chosen, ‘%%’ is replaced by the session name in template and the result executed as a command. If template is not given, "switch-client -t '%%'" is used. For the meaning of the -F flag, see the FORMATS section. This command works only if at least one client is attached.
 将一个窗口置于会话选择模式中，可以从一个列表中交互式地选择一个会话。当一个会话被选择时，'%%'会由模板中的会话名称替换，之后的结果会作为一个命令被执行。如果模板没有给定，会使用"switch-client -t '%%'"。对于-F标记，可以参考FORMATS部分.这个命令只有在至少有一个客户端附着时工作。
 
 choose-tree [-suw] [-b session-template] [-c window-template] [-S format] [-W format] [-t target-window]
-Put a window into tree choice mode, where either sessions or windows may be selected interactively from a list. By default, windows belonging to a session are indented to show their relationship to a session.
 将窗口置于一个树选择模式，其中的会话或窗口可能是从一个列表中交互地选择的。
 默认情况下，窗口属于一个会话主要为了显示他们与一个会话的关系。
-
-Note that the choose-window and choose-session commands are wrappers around choose-tree.
 注意choose-window和choose-session命令被包裹在choose-tree中。
-
-If -s is given, will show sessions. If -w is given, will show windows.
 如果给定-s会显示会话，如果给定-w会显示窗口。
-
-By default, the tree is collapsed and sessions must be expanded to windows with the right arrow key. The -u option will start with all sessions expanded instead.
 默认情形下，树是被折叠起来的，会话必须通过右箭头简将其展开为窗口。 -u选项会将所有的会话展开。
-
-If -b is given, will override the default session command. Note that ‘%%’ can be used and will be replaced with the session name. The default option if not specified is "switch-client -t '%%'". If -c is given, will override the default window command. Like -b, ‘%%’ can be used and will be replaced with the session name and window index. When a window is chosen from the list, the session command is run before the window command.
 如果给定-b，会重载默认的会话命令。 注意 '%%'可以被使用而且会被会话名称替换。如果没有指定的话，默认为"switch-client -t
 '%%'"。 如果给定-c，会重载默认的窗口命令，与-b类似，'%%'可以被使用而且会被会话名与窗口索引替换。
 当一个窗口从列表中被选择时，会话命令会在窗口命令运行之前运行。
-
-If -S is given will display the specified format instead of the default session format. If -W is given will display the specified format instead of the default window format. For the meaning of the -s and -w options, see the FORMATS section.
 如果给定-S，会显示指定的格式而不是默认的会话格式。如果给定-W，会显示指定的格式而不是默认的窗口格式。
 对于-s和-w选项的含义可以参考FORMATS部分。
-
-This command works only if at least one client is attached.
 这个命令只有当至少有一个客户端附着时工作。
 
 choose-window [-F format] [-t target-window] [template]
-Put a window into window choice mode, where a window may be chosen interactively from a list. After a window is selected, ‘%%’ is replaced by the session name and window index in template and the result executed as a command. If template is not given, "select-window -t '%%'" is used. For the meaning of the -F flag, see the FORMATS section. This command works only if at least one client is attached.
 将一个窗口置于一个选择模式，其中的窗口可以从一个列表中交互地选择。当选择一个窗口之后，'%%'会被模板中的会话名称和窗括索引替换，之后的结果作为一个命令被执行。如果没有给定模板，"select-window -t '%%'"被使用。 对于-F的含义可以参考FORMATS部分。 这个命令只有在至少一个客户端附着之后才会工作。
 
 display-panes [-t target-client]
-(alias: displayp)
 (别名：displayp)
-Display a visible indicator of each pane shown by target-client. See the display-panes-time, display-panes-colour, and display-panes-active-colour session options. While the indicator is on screen, a pane may be selected with the ‘0’ to ‘9’ keys.
 由一个客户端来显示每个面板的可视化指示器，可以参考 display-panes-time, display-panes-colour和
 display-panes-active-colour会话选项。由于指示器在屏幕上，一个面板可以通过'0-9'键来选择。
 
 find-window [-CNT] [-F format] [-t target-window] match-string
-(alias: findw)
 (别名:findw)
-Search for the fnmatch(3) pattern match-string in window names, titles, and visible content (but not history). The flags control matching behavior: -C matches only visible window contents, -N matches only the window name and -T matches only the window title. The default is -CNT. If only one window is matched, it'll be automatically selected, otherwise a choice list is shown. For the meaning of the -F flag, see the FORMATS section. This command works only if at least one client is attached.
 在窗口名称，标题和可见的内容中搜索fnmatch模式的匹配字符串。标记被用来控制匹配行为： -C只匹配可见窗口内容，
 -N只匹配窗口名称，-T匹配窗口标题。
 默认为-CNT。如果只有一个窗口匹配，就会被自动选择，否则就会显示一个选项列表。对于-F标记可以参考FORMATS部分。这个命令只有在至少一个客户端被附着时会工作。
 
 join-pane [-bdhv] [-l size | -p percentage] [-s src-pane] [-t dst-pane]
-(alias: joinp)
 (别名：joinp)
-Like split-window, but instead of splitting dst-pane and creating a new pane, split it and move src-pane into the space. This can be used to reverse break-pane. The -b option causes src-pane to be joined to left of or above dst-pane.
 与split-window相似，但是取代分割dst-panel并创建一个新面板而代之的是，将其分割并将src-panel移动到空间中。
 这个可以用来逆转break-pane动作。-b选项使得src-pane被联接到dst-pane的左边或上边。
 
 kill-pane [-a] [-t target-pane]
-(alias: killp)
 (别名：killp)
-Destroy the given pane. If no panes remain in the containing window, it is also destroyed. The -a option kills all but the pane given with -t.
 销毁给定的pane。如果所在窗口中没有剩余的面板，该窗口也会被销毁。 -a选项会销毁除由-t指定面板之外的所有面板。
 
 kill-window [-a] [-t target-window]
-(alias: killw)
 (别名：killw)
-Kill the current window or the window at target-window, removing it from any sessions to which it is linked. The -a option kills all but the window given with -t.
 终止当前窗口或目标窗口，将其从所链接的任意会话中移除。 -a选项终止除-t指定窗口之外的所有窗口。
 
 last-pane [-de] [-t target-window]
-(alias: lastp)
 (别名：lastp)
-Select the last (previously selected) pane. -e enables or -d disables input to the pane.
 选择最后一个面板，-e 使得输入到面板生效，-d使得输入到面板失效。
 
 last-window [-t target-session]
-(alias: last)
 (别名:last)
-Select the last (previously selected) window. If no target-session is specified, select the last window of the current session.
 选择最后一个窗口，如果没有目标窗口指定，选择当前会话中的最后一个窗口。
 
 link-window [-dk] [-s src-window] [-t dst-window]
-(alias: linkw)
 (别名:linkw)
-Link the window at src-window to the specified dst-window. If dst-window is specified and no such window exists, the src-window is linked there. If -k is given and dst-window exists, it is killed, otherwise an error is generated. If -d is given, the newly linked window is not selected.
 将在src-window的窗口链接到指定的dst-window。如果dst-window被指定但是不存在的话，那么src-window会被链接导那儿。
 如果给定-k并且dst-window存在，那么就会将其终止，否则就会生成一个错误。如果给定-d，新链接的窗口不会被选择。
 
 list-panes [-as] [-F format] [-t target]
-(alias: lsp)
 (别名：lsp)
-If -a is given, target is ignored and all panes on the server are listed. If -s is given, target is a session (or the current session). If neither is given, target is a window (or the current window). For the meaning of the -F flag, see the FORMATS section.
 如果给定-a, 会湖绿target并且会列出服务器上的所有面板。
 如果给定-s，target就是一个会话（或者当前会话）。如果都没有指定，target就是一个窗口（或者当前窗口）。对于-F标记可以参考FORMATS部分。
 
 list-windows [-a] [-F format] [-t target-session]
-(alias: lsw)
 (别名：lsw)
-If -a is given, list all windows on the server. Otherwise, list windows in the current session or in target-session. For the meaning of the -F flag, see the FORMATS section.
 如果给定-a,会列出服务器上的所有窗口。 否则会列出当前会话或target-session中的窗口。对于-F标记可以参考FORMATS部分。
 
 move-pane [-bdhv] [-l size | -p percentage] [-s src-pane] [-t dst-pane]
-(alias: movep)
 (别名：movep)
-Like join-pane, but src-pane and dst-pane may belong to the same window.
 与join-pane类似，但是src-pane和dst-pane可以属于相同的窗口。
 
 move-window [-rdk] [-s src-window] [-t dst-window]
-(alias: movew)
 (别名: movew)
-This is similar to link-window, except the window at src-window is moved to dst-window. With -r, all windows in the session are renumbered in sequential order, respecting the base-index option.
 这个于link-window相似，除了src-window中的窗口被移动到dst-window。给定-r会话中的所有窗口都会在遵照base-index选项下按照序列顺序重新编号。
 
 new-window [-adkP] [-c start-directory] [-F format] [-n window-name] [-t target-window] [shell-command]
-(alias: neww)
 (别名：neww)
-Create a new window. With -a, the new window is inserted at the next index up from the specified target-window, moving windows up if necessary, otherwise target-window is the new window location.
 创建一个新的窗口，给定-a，新建的窗口会被插入到指定target-window的下一个索引上，必要的话会将窗口向上移，否则target-window就是这个新建的窗口。
 
-If -d is given, the session does not make the new window the current window. target-window represents the window to be created; if the target already exists an error is shown, unless the -k flag is used, in which case it is destroyed. shell-command is the command to execute. If shell-command is not specified, the value of the default-command option is used. -c specifies the working directory in which the new window is created.
-如果给定-d,
-会话不会将新建窗口作为当前窗口。target-window表示将会创建的窗口；如果目标窗口已经存在会显示一个错误，如果使用-k标记就会销毁。
+如果给定-d, 会话不会将新建窗口作为当前窗口。target-window表示将会创建的窗口；如果目标窗口已经存在会显示一个错误，如果使用-k标记就会销毁。
 shell-command是将要执行的命令。如果没有指定shell-command,
 default-command选项的值被默认使用。-c选项指定了新窗口创建的工作目录。
-
-When the shell command completes, the window closes. See the remain-on-exit option to change this behaviour.
 当shell命令完成时，窗口关闭。 参考remain-on-exit选项来改变这个行为。
-
-The TERM environment variable must be set to “screen” for all programs running inside tmux. New windows will automatically have “TERM=screen” added to their environment, but care must be taken not to reset this in shell start-up files.
 对于运行在tmux中的所有程序需要将TERM环境变量设置为"screen"。新的窗口会自动将"TERM=screen"加到他们的环境中，但是必须注意不要在shell启动文件中重置这个变量。
-
-The -P option prints information about the new window after it has been created. By default, it uses the format ‘#{session_name}:#{window_index}’ but a different format may be specified with -F.
--P
-选项在新窗口创建后会打印与之相关的信息。默认情况下，使用'#{session_name}:#{window_index}'的格式，但是可以通过使用-F来指定一个不同的格式。
+-P 选项在新窗口创建后会打印与之相关的信息。默认情况下，使用'#{session_name}:#{window_index}'的格式，但是可以通过使用-F来指定一个不同的格式。
 
 next-layout [-t target-window]
-(alias: nextl)
 (别名：nextl)
-Move a window to the next layout and rearrange the panes to fit.
 将窗口移动到下一个布局模式并且重新安排面板来使之适应。
 
 next-window [-a] [-t target-session]
-(alias: next)
 (别名：next)
-Move to the next window in the session. If -a is used, move to the next window with an alert.
 移动到会话中的下一个窗口，如果-a指定，在移动到下一个窗口时带有警告。
 
 pipe-pane [-o] [-t target-pane] [shell-command]
-(alias: pipep)
 (别名：pipep)
-Pipe any output sent by the program in target-pane to a shell command. A pane may only be piped to one command at a time, any existing pipe is closed before shell-command is executed. The shell-command string may contain the special character sequences supported by the status-left option. If no shell-command is given, the current pipe (if any) is closed.
 将target-pane中程序的输出通过管道传递给一个shell命令。一个面板可能一次只能管道给一个命令，在shell-command命令执行之前任何存在的管道都会关闭。
 shell-command字符串可能会包含status-left选项所支持的特殊字符序列。 如果没有指定shell-command,那么当前的管道就会被关闭。
-
-The -o option only opens a new pipe if no previous pipe exists, allowing a pipe to be toggled with a single key, for example:
 -o选项只有在没有之前的管道存在时打开一个新管道，允许一个管道通过一个单键进行切换，例如：
+
     bind-key C-p pipe-pane -o 'cat >>~/output.#I-#P'
 
-
 previous-layout [-t target-window]
-(alias: prevl)
 (别名：prevl )
-Move to the previous layout in the session.
 移动到会话之前的布局。
 
 previous-window [-a] [-t target-session]
-(alias: prev)
 (别名:prev)
-Move to the previous window in the session. With -a, move to the previous window with an alert.
 移动到会话之前的窗口，使用-a选项会带有一个警告。
 
 rename-window [-t target-window] new-name
-(alias: renamew)
 (别名: renamew)
-Rename the current window, or the window at target-window if specified, to new-name.
 重命名当前窗口或者由-t指定的target-window窗口为new-name
 
 resize-pane [-DLMRUZ] [-t target-pane] [-x width] [-y height] [adjustment]
-(alias: resizep)
 (别名：resizep)
-Resize a pane, up, down, left or right by adjustment with -U, -D, -L or -R, or to an absolute size with -x or -y. The adjustment is given in lines or cells (the default is 1).
 重新定义面板的大小，通过-U, -D, -L或-R来调整上下左右，或者通过-x/-y指定绝对值大小。
 调整是通过行或单元格来给定的（默认为1）。
-
-With -Z, the active pane is toggled between zoomed (occupying the whole of the window) and unzoomed (its normal position in the layout).
 使用-Z时，活动面板会在放大（占用整个窗口）或未放大（在布局中的正常位置）之间进行切换。
-
--M begins mouse resizing (only valid if bound to a mouse key binding, see MOUSE SUPPORT).
 -M 开始鼠标重定义大小（只有在鼠标键绑定时有效，参考MOUSE SUPPORT部分）
 
 respawn-pane [-k] [-t target-pane] [shell-command]
-(alias: respawnp)
 (别名：respawnp)
-Reactivate a pane in which the command has exited (see the remain-on-exit window option). If shell-command is not given, the command used when the pane was created is executed. The pane must be already inactive, unless -k is given, in which case any existing command is killed.
 在shell-comman退出之后重新激活面板（可以参考remain-on-exit 窗口选项）。如果没有给定shell-comman,
 那么面板创建时所使用的命令会被执行。面板必须是已经激活的状态，如果给定-k,任何存在的命令都会被终止。
 
 respawn-window [-k] [-t target-window] [shell-command]
-(alias: respawnw)
 (别名：respawnw)
-Reactivate a window in which the command has exited (see the remain-on-exit window option). If shell-command is not given, the command used when the window was created is executed. The window must be already inactive, unless -k is given, in which case any existing command is killed.
 在shell-command退出之后重新激活窗口（可以参考remain-on-exit窗口选项）。 如果没有指定shell-comman,
 那么窗口创建时所使用的命令会被执行。 窗口必须是已经激活的状态，如果指定-k任何存在的命令都会被终止。
 
 rotate-window [-DU] [-t target-window]
-(alias: rotatew)
 (别名：rotatew)
-Rotate the positions of the panes within a window, either upward (numerically lower) with -U or downward (numerically higher).
 轮换窗口中面板的位置，或者通过-U向前或者向后。
 
 select-layout [-nop] [-t target-window] [layout-name]
-(alias: selectl)
 (别名：selectl)
-Choose a specific layout for a window. If layout-name is not given, the last preset layout used (if any) is reapplied. -n and -p are equivalent to the next-layout and previous-layout commands. -o applies the last set layout if possible (undoes the most recent layout change).
 为窗口选择一个特定的布局，如果没有指定布局名称，就会使用最后使用的预设布局并且重新布局。
-select-pane [-DdegLlRU] [-P style] [-t target-pane]
-(alias: selectp)
-(别名：selectp)
-Make pane target-pane the active pane in window target-window, or set its style (with -P). If one of -D, -L, -R, or -U is used, respectively the pane below, to the left, to the right, or above the target pane is used. -l is the same as using the last-pane command. -e enables or -d disables input to the pane.
-将target-pane面板作为target-window窗口中的活动面板，或者设置其风格（使用-P）。如果使用了-D,-L,-R或者-U的话，就会分别使用target-pane面板的下面，左边，右边或上面的面板。-l与使用last-pane命令效果一样。
--e使得输入到面板生效，-d使得输入到面板失效。
 
-Each pane has a style: by default the window-style and window-active-style options are used, select-pane -P sets the style for a single pane. For example, to set the pane 1 background to red:
+select-pane [-DdegLlRU] [-P style] [-t target-pane]
+(别名：selectp)
+将target-pane面板作为target-window窗口中的活动面板，或者设置其风格（使用-P）。如果使用了-D,-L,-R或者-U的话，就会分别使用target-pane面板的下面，左边，右边或上面的面板。-l与使用last-pane命令效果一样。 -e使得输入到面板生效，-d使得输入到面板失效。
+
 每个面板具有一个风格：默认使用window-style和window-active-style选项。select-pane -P 为单个面板设置风格。
 例如将第一个面板的北京设置为红色red:
+
     select-pane -t:.1 -P 'bg=red'
 
--g shows the current pane style.
--g 显示当前面板的风格。
+-g 显示当前面板的样式。
 
 select-window [-lnpT] [-t target-window]
 (alias: selectw)
@@ -1465,107 +1146,116 @@ show-window-options [-gv] [-t target-window] [option]
 List the window options or a single option for target-window, or the global window options if -g is used. -v shows only the option value, not the name.
 MOUSE SUPPORT
 If the mouse option is on (the default is off), tmux allows mouse events to be bound as keys. The name of each key is made up of a mouse event (such as ‘MouseUp1’) and a location suffix (one of ‘Pane’ for the contents of a pane, ‘Border’ for a pane border or ‘Status’ for the status line). The following mouse events are available:
-MouseDown1	MouseUp1	MouseDrag1
-MouseDown2	MouseUp2	MouseDrag2
-MouseDown3	MouseUp3	MouseDrag3
-WheelUp	WheelDown	
+
+    MouseDown1	MouseUp1	MouseDrag1
+    MouseDown2	MouseUp2	MouseDrag2
+    MouseDown3	MouseUp3	MouseDrag3
+    WheelUp	WheelDown	
+
 Each should be suffixed with a location, for example ‘MouseDown1Status’.
 The special token ‘{mouse}’ or ‘=’ may be used as target-window or target-pane in commands bound to mouse key bindings. It resolves to the window or pane over which the mouse event took place (for example, the window in the status line over which button 1 was released for a ‘MouseUp1Status’ binding, or the pane over which the wheel was scrolled for a ‘WheelDownPane’ binding).
 The send-keys -M flag may be used to forward a mouse event to a pane.
 The default key bindings allow the mouse to be used to select and resize panes, to copy text and to change window using the status line. These take effect if the mouse option is turned on.
+
 FORMATS
+格式：
 Certain commands accept the -F flag with a format argument. This is a string which controls the output format of the command. Replacement variables are enclosed in ‘#{’ and ‘}’, for example ‘#{session_name}’. The possible variables are listed in the table below, or the name of a tmux option may be used for an option's value. Some variables have a shorter alias such as ‘#S’, and ‘##’ is replaced by a single ‘#’.
 Conditionals are available by prefixing with ‘?’ and separating two alternatives with a comma; if the specified variable exists and is not zero, the first alternative is chosen, otherwise the second is used. For example ‘#{?session_attached,attached,not attached}’ will include the string ‘attached’ if the session is attached and the string ‘not attached’ if it is unattached, or ‘#{?automatic-rename,yes,no}’ will include ‘yes’ if automatic-rename is enabled, or ‘no’ if not. A limit may be placed on the length of the resultant string by prefixing it by an ‘=’, a number and a colon, so ‘#{=10:pane_title}’ will include at most the first 10 characters of the pane title.
 The following variables are available, where appropriate:
-Variable name	Alias	Replaced with
-alternate_on		If pane is in alternate screen
-alternate_saved_x		Saved cursor X in alternate screen
-alternate_saved_y		Saved cursor Y in alternate screen
-buffer_sample		Sample of start of buffer
-buffer_size		Size of the specified buffer in bytes
-client_activity		Integer time client last had activity
-client_activity_string		String time client last had activity
-client_created		Integer time client created
-client_created_string		String time client created
-client_height		Height of client
-client_last_session		Name of the client's last session
-client_prefix		1 if prefix key has been pressed
-client_readonly		1 if client is readonly
-client_session		Name of the client's session
-client_termname		Terminal name of client
-client_tty		Pseudo terminal of client
-client_utf8		1 if client supports utf8
-client_width		Width of client
-cursor_flag		Pane cursor flag
-cursor_x		Cursor X position in pane
-cursor_y		Cursor Y position in pane
-history_bytes		Number of bytes in window history
-history_limit		Maximum window history lines
-history_size		Size of history in bytes
-host	#H	Hostname of local host
-host_short	#h	Hostname of local host (no domain name)
-insert_flag		Pane insert flag
-keypad_cursor_flag		Pane keypad cursor flag
-keypad_flag		Pane keypad flag
-line		Line number in the list
-mouse_any_flag		Pane mouse any flag
-mouse_button_flag		Pane mouse button flag
-mouse_standard_flag		Pane mouse standard flag
-mouse_utf8_flag		Pane mouse UTF-8 flag
-pane_active		1 if active pane
-pane_bottom		Bottom of pane
-pane_current_command		Current command if available
-pane_dead		1 if pane is dead
-pane_dead_status		Exit status of process in dead pane
-pane_height		Height of pane
-pane_id	#D	Unique pane ID
-pane_in_mode		If pane is in a mode
-pane_input_off		If input to pane is disabled
-pane_index	#P	Index of pane
-pane_left		Left of pane
-pane_pid		PID of first process in pane
-pane_right		Right of pane
-pane_start_command		Command pane started with
-pane_synchronized		If pane is synchronized
-pane_tabs		Pane tab positions
-pane_title	#T	Title of pane
-pane_top		Top of pane
-pane_tty		Pseudo terminal of pane
-pane_width		Width of pane
-saved_cursor_x		Saved cursor X in pane
-saved_cursor_y		Saved cursor Y in pane
-scroll_region_lower		Bottom of scroll region in pane
-scroll_region_upper		Top of scroll region in pane
-session_attached		Number of clients session is attached to
-session_activity		Integer time of session last activity
-session_activity_string		String time of session last activity
-session_created		Integer time session created
-session_created_string		String time session created
-session_group		Number of session group
-session_grouped		1 if session in a group
-session_height		Height of session
-session_id		Unique session ID
-session_many_attached		1 if multiple clients attached
-session_name	#S	Name of session
-session_width		Width of session
-session_windows		Number of windows in session
-window_active		1 if window active
-window_activity_flag		1 if window has activity alert
-window_bell_flag		1 if window has bell
-window_find_matches		Matched data from the find-window
-window_flags	#F	Window flags
-window_height		Height of window
-window_id		Unique window ID
-window_index	#I	Index of window
-window_last_flag		1 if window is the last used
-window_layout		Window layout description
-window_name	#W	Name of window
-window_panes		Number of panes in window
-window_silence_flag		1 if window has silence alert
-window_width		Width of window
-window_zoomed_flag		1 if window is zoomed
-wrap_flag		Pane wrap flag
+
+    Variable name	        Alias	        Replaced with
+    变量名                  别名            替换值
+    alternate_on		                    If pane is in alternate screen
+    alternate_saved_x		                Saved cursor X in alternate screen
+    alternate_saved_y		                Saved cursor Y in alternate screen
+    buffer_sample		                    Sample of start of buffer
+    buffer_size		                        Size of the specified buffer in bytes
+    client_activity		                    Integer time client last had activity
+    client_activity_string		            String time client last had activity
+    client_created		                    Integer time client created
+    client_created_string		            String time client created
+    client_height		                    Height of client
+    client_last_session		                Name of the client's last session
+    client_prefix		                    1 if prefix key has been pressed
+    client_readonly		                    1 if client is readonly
+    client_session		                    Name of the client's session
+    client_termname		                    Terminal name of client
+    client_tty		                        Pseudo terminal of client
+    client_utf8		                        1 if client supports utf8
+    client_width		                    Width of client
+    cursor_flag		                        Pane cursor flag
+    cursor_x		                        Cursor X position in pane
+    cursor_y		                        Cursor Y position in pane
+    history_bytes		                    Number of bytes in window history
+    history_limit		                    Maximum window history lines
+    history_size		                    Size of history in bytes
+    host	                #H	            Hostname of local host
+    host_short	            #h  	        Hostname of local host (no domain name)
+    insert_flag		                        Pane insert flag
+    keypad_cursor_flag		                Pane keypad cursor flag
+    keypad_flag		                        Pane keypad flag
+    line		                            Line number in the list
+    mouse_any_flag		                    Pane mouse any flag
+    mouse_button_flag		                Pane mouse button flag
+    mouse_standard_flag		                Pane mouse standard flag
+    mouse_utf8_flag		                    Pane mouse UTF-8 flag
+    pane_active		                        1 if active pane
+    pane_bottom		                        Bottom of pane
+    pane_current_command		            Current command if available
+    pane_dead		                        1 if pane is dead
+    pane_dead_status		                Exit status of process in dead pane
+    pane_height		                        Height of pane
+    pane_id	                #D	            Unique pane ID
+    pane_in_mode		                    If pane is in a mode
+    pane_input_off		                    If input to pane is disabled
+    pane_index	            #P	            Index of pane
+    pane_left		                        Left of pane
+    pane_pid		                        PID of first process in pane
+    pane_right		                        Right of pane
+    pane_start_command		                Command pane started with
+    pane_synchronized		                If pane is synchronized
+    pane_tabs		                        Pane tab positions
+    pane_title	            #T	            Title of pane
+    pane_top		                        Top of pane
+    pane_tty		                        Pseudo terminal of pane
+    pane_width		                        Width of pane
+    saved_cursor_x		                    Saved cursor X in pane
+    saved_cursor_y		                    Saved cursor Y in pane
+    scroll_region_lower		                Bottom of scroll region in pane
+    scroll_region_upper		                Top of scroll region in pane
+    session_attached		                Number of clients session is attached to
+    session_activity		                Integer time of session last activity
+    session_activity_string		            String time of session last activity
+    session_created		                    Integer time session created
+    session_created_string		            String time session created
+    session_group		                    Number of session group
+    session_grouped		                    1 if session in a group
+    session_height		                    Height of session
+    session_id		                        Unique session ID
+    session_many_attached		            1 if multiple clients attached
+    session_name	        #S	            Name of session
+    session_width		                    Width of session
+    session_windows		                    Number of windows in session
+    window_active		                    1 if window active
+    window_activity_flag		            1 if window has activity alert
+    window_bell_flag		                1 if window has bell
+    window_find_matches		                Matched data from the find-window
+    window_flags	        #F	            Window flags
+    window_height		                    Height of window
+    window_id		                        Unique window ID
+    window_index	        #I	            Index of window
+    window_last_flag		                1 if window is the last used
+    window_layout		                    Window layout description
+    window_name	            #W	            Name of window
+    window_panes		                    Number of panes in window
+    window_silence_flag		                1 if window has silence alert
+    window_width		                    Width of window
+    window_zoomed_flag		                1 if window is zoomed
+    wrap_flag		                        Pane wrap flag
+
 NAMES AND TITLES
+名称和标题：
+
 tmux distinguishes between names and titles. Windows and sessions have names, which may be used to specify them in targets and are displayed in the status line and various lists: the name is the tmux identifier for a window or session. Only panes have titles. A pane's title is typically set by the program running inside the pane and is not modified by tmux. It is the same mechanism used to set for example the xterm(1) window title in an X(7) window manager. Windows themselves do not have titles - a window's title is the title of its active pane. tmux itself may set the title of the terminal in which the client is running, see the set-titles option.
 A session's name is set with the new-session and rename-session commands. A window's name is set with one of:
 A command argument (such as -n for new-window or new-session).
@@ -1584,16 +1274,20 @@ Set or unset an environment variable. If -g is used, the change is made in the g
 show-environment [-g] [-t target-session] [variable]
 (alias: showenv)
 Display the environment for target-session or the global environment with -g. If variable is omitted, all variables are shown. Variables removed from the environment are prefixed with ‘-’.
+
 STATUS LINE
+状态行：
 tmux includes an optional status line which is displayed in the bottom line of each terminal. By default, the status line is enabled (it may be disabled with the status session option) and contains, from left-to-right: the name of the current session in square brackets; the window list; the title of the active pane in double quotes; and the time and date.
 The status line is made of three parts: configurable left and right sections (which may contain dynamic content such as the time or output from a shell command, see the status-left, status-left-length, status-right, and status-right-length options below), and a central window list. By default, the window list shows the index, name and (if any) flag of the windows present in the current session in ascending numerical order. It may be customised with the window-status-format and window-status-current-format options. The flag is one of the following symbols appended to the window name:
-Symbol	Meaning
-*	Denotes the current window.
--	Marks the last window (previously selected).
-#	Window is monitored and activity has been detected.
-!	A bell has occurred in the window.
-~	The window has been silent for the monitor-silence interval.
-Z	The window's active pane is zoomed.
+
+    Symbol	Meaning
+    *	    Denotes the current window.
+    -	    Marks the last window (previously selected).
+    #	    Window is monitored and activity has been detected.
+    !	    A bell has occurred in the window.
+    ~	    The window has been silent for the monitor-silence interval.
+    Z	    The window's active pane is zoomed.
+
 The # symbol relates to the monitor-activity window option. The window name is printed in inverted colours if an alert (bell, activity or silence) is present.
 The colour and attributes of the status line may be configured, the entire status line using the status-style session option and individual windows using the window-status-style window option.
 The status line is automatically refreshed at interval if it has changed, the interval may be controlled with the status-interval session option.
@@ -1697,11 +1391,16 @@ The window with ID window-id was linked to the current session.
 The window with ID window-id closed.
 %window-renamed window-id name
 The window with ID window-id was renamed to name.
+
 FILES
+文件：
 ~/.tmux.conf
 Default tmux configuration file.
+默认的tmux配置文件。
+
 /etc/tmux.conf
 System-wide configuration file.
+系统范围的配置文件。
 
 EXAMPLES
 样例：
@@ -1715,28 +1414,52 @@ Most commands have a shorter form, known as an alias. For new-session, this is n
     $ tmux new vi
 
 Alternatively, the shortest unambiguous form of a command is accepted. If there are several options, they are listed:
-$ tmux n 
-ambiguous command: n, could be: new-session, new-window, next-window
+可选地，一个命令最短的不混淆的简短格式是被接受的，如果有多个选项，会被列出：
+    $ tmux n 
+    ambiguous command: n, could be: new-session, new-window, next-window
+
 Within an active session, a new window may be created by typing ‘C-b c’ (Ctrl followed by the ‘b’ key followed by the ‘c’ key).
+在一个活动会话中，一个新的窗口可以通过键入'C-b c'来创建（ctrl 跟随b 然后跟随c键）。
+
 Windows may be navigated with: ‘C-b 0’ (to select window 0), ‘C-b 1’ (to select window 1), and so on; ‘C-b n’ to select the next window; and ‘C-b p’ to select the previous window.
+窗口可以使用'C-b 0-9'来在窗口0-9中导航，也可以通过'C-b n'选择下一个窗口，'C-b p'选择上一个窗口。
+
 A session may be detached using ‘C-b d’ (or by an external event such as ssh(1) disconnection) and reattached with:
-$ tmux attach-session
+一个会话可以通过使用'C-b d'来脱离附着，也可以通过以下命令来重新附着：
+    $ tmux attach-session
+
 Typing ‘C-b ?’ lists the current key bindings in the current window; up and down may be used to navigate the list or ‘q’ to exit from it.
+键入'C-b ?' 列出当前窗口中的当前键绑定; 使用上下箭头可以导航列表，'q'从其中退出。
+
 Commands to be run when the tmux server is started may be placed in the ~/.tmux.conf configuration file. Common examples include:
-Changing the default prefix key:
-set-option -g prefix C-a 
-unbind-key C-b 
-bind-key C-a send-prefix
+当tmux启动时运行的命令可能放置在 ~/.tmux.conf配置文件中，常见样例包括：
+
+changing the default prefix key:
+改变默认的前导键：
+
+    set-option -g prefix C-a 
+    unbind-key C-b 
+    bind-key C-a send-prefix
+
 Turning the status line off, or changing its colour:
-set-option -g status off 
-set-option -g status-style bg=blue
+关闭状态行或者改变其颜色：
+
+    set-option -g status off 
+    set-option -g status-style bg=blue
+
 Setting other options, such as the default command, or locking after 30 minutes of inactivity:
-set-option -g default-command "exec /bin/ksh" 
-set-option -g lock-after-time 1800
+设置其他选项，例如默认命令或者在30分钟不活动之后锁定：
+
+    set-option -g default-command "exec /bin/ksh" 
+    set-option -g lock-after-time 1800
+
 Creating new key bindings:
-bind-key b set-option status 
-bind-key / command-prompt "split-window 'exec man %%'" 
-bind-key S command-prompt "new-window -n %1 'ssh %1'"
+创建新的键绑定：
+
+    bind-key b set-option status 
+    bind-key / command-prompt "split-window 'exec man %%'" 
+    bind-key S command-prompt "new-window -n %1 'ssh %1'"
+
 SEE ALSO
 pty(4)
 AUTHORS
