@@ -25,7 +25,7 @@ tmux是一个终端复用器：它可以在一个单独屏幕中创建，访问�
 
 使用默认的shell来执行shell命令。如果有必要的话，tmux服务器会开启来检索默认的shell选项。这个选项用来当tmux作为一个登录shell时与sh进行兼容的。
 
--f 文件
+    -f 文件
 
 制定一个可选的配置文件，默认情况下，tmux会从/etc/tmux.conf中加载系统配置文件，如果这个文件存在的话，
 然后会尝试查找用户的配置文件 ~/.tmux.conf
@@ -34,25 +34,18 @@ tmux是一个终端复用器：它可以在一个单独屏幕中创建，访问�
 
 tmux在第一次会话创建时会显示配置文件中的命令出现的任何错误，但是会继续处理配置文件的余下部分。
 
--L socket-名字
+    -L socket-名字
 
 tmurx 将服务器socket存储在TMUX_TMPDIR目录下，如果这个变量没有设置的话就会使用TMPDIR替换，
 或者当两者都不存在时，就会存储在/tmp目录下。默认的socket的名称为default.
 这个选项允许指定一个不同的socket名称，允许多个独立的tmux服务器运行。 与
 -S不同的是，不需要使用全路经：所有的sockets文件会创建在一个相同的目录下。
-
 如果socket被意外地删除了，那么SIGUSR1信号会发送给tmux服务器进程来重新创建socket文件(注意如果当之前描述的任何父目录不存在的话会出错)。
 
--l
-当作一个登录shell使用，当前这个标记没有什么效果并且是被用来当使用tmux作为登录shell时与其他shell进行兼容的。
--S socket-路径
-为服务器的socket指定一个可选的全路经，当这个选项指定之后，那么默认的目录不会被使用,并且-L选项会被忽略。
--u
-tmux尝试通过第一个LC_ALL,LC_CTYPE和LANG环境变量来猜测终端是否可能支持UTF-8,这可能不会总是正确，这个 -u
-选项显式地告知tmux UTF-8是支持的。
-如果服务器通过客户端传递-u或者检测到UTF-8进行启动的，那么utf8和status-utf8选项会分别在全局窗口和会话选项中生效。
--v
-请求详细登录，这个选项可能由于不断增长的修饰词被多次指定。登录消息会被存储在当前目录下的tmux-客户端PID.log和tmux-服务器PID.log文件中，其中的PID代表服务器或客户端进程ID。
+-l 当作一个登录shell使用，当前这个标记没有什么效果并且是被用来当使用tmux作为登录shell时与其他shell进行兼容的。
+-S socket-路径 为服务器的socket指定一个可选的全路经，当这个选项指定之后，那么默认的目录不会被使用,并且-L选项会被忽略。
+-u tmux尝试通过第一个LC_ALL,LC_CTYPE和LANG环境变量来猜测终端是否可能支持UTF-8,这可能不会总是正确，这个 -u 选项显式地告知tmux UTF-8是支持的。 如果服务器通过客户端传递-u或者检测到UTF-8进行启动的，那么utf8和status-utf8选项会分别在全局窗口和会话选项中生效。
+-v 请求详细登录，这个选项可能由于不断增长的修饰词被多次指定。登录消息会被存储在当前目录下的tmux-客户端PID.log和tmux-服务器PID.log文件中，其中的PID代表服务器或客户端进程ID。
 
 command [flags]
 这个用来指定命令集合中的一个来控制tmux，如果没有指定任何命令那么假设一个新建会话命令。
@@ -187,7 +180,6 @@ target-window specifies a window in the form session:window. session follows the
 会话，窗口和面板都通过一个唯一的ID来进行数字编码；
 会话ID带有一个'$'前缀，窗口ID带有一个'@'前缀，面板ID带有一个'%'前缀。这些在tmux服务器中的会话，窗口或面板生命周期中都是唯一不变的。面板ID通过TMUX_PANE环境变量传递给面板的子进程，ID可能使用'session_id','window_id'或'pane_id'何display-message,list-sesions,list-windows或list-panes命令的格式进行显示。
 
-
 shell-command 参数时sh命令，这可能是一个传递给shell的单个参数，例如：
 
     new-window 'vi /etc/passwd'
@@ -215,22 +207,16 @@ shell-command 参数时sh命令，这可能是一个传递给shell的单个参�
 tmux命令包含样例：
 
     refresh-client -t/dev/ttyp2 
- 
     rename-session -tfirst newname 
- 
     set-window-option -t:0 monitor-activity on 
- 
     new-window ; split-window -d 
- 
     bind-key R source-file ~/.tmux.conf \; \ 
 	    display-message "source-file done"
 
 或者从sh中：
 
     $ tmux kill-window -t :1 
- 
     $ tmux new-window \; split-window -d 
- 
     $ tmux new-session -d 'vi /etc/passwd' \; split-window -d \; attach
 
 ##客户端和会话：
@@ -1376,7 +1362,6 @@ o
 
 SEE ALSO
 pty(4)
-AUTHORS
 
 作者: Nicholas Marriott <nicm@users.sourceforge.net>
 
