@@ -1113,10 +1113,11 @@ The default key bindings allow the mouse to be used to select and resize panes, 
 ##格式：FORMATS
 
 Certain commands accept the -F flag with a format argument. This is a string which controls the output format of the command. Replacement variables are enclosed in ‘#{’ and ‘}’, for example ‘#{session_name}’. The possible variables are listed in the table below, or the name of a tmux option may be used for an option's value. Some variables have a shorter alias such as ‘#S’, and ‘##’ is replaced by a single ‘#’.
-有些命令接受由-F标记附带的格式参数。这个参数是一个控制命令输出格式的字符串。可替换的变量被包含在'#{'和'}'之间，例如'#{session_name}'。
+有些命令接受由-F标记附带的格式参数。这个参数是一个控制命令输出格式的字符串。可替换的变量被包含在'#{'和'}'之间，例如'#{session_name}'。可用的变量在下表中列出，或者tmux选项的名称可以一个选项的值。有些变量具有一个简短的别名，例如'#s', 而'##'会使用一个单独的'#'来替换。
 
 Conditionals are available by prefixing with ‘?’ and separating two alternatives with a comma; if the specified variable exists and is not zero, the first alternative is chosen, otherwise the second is used. For example ‘#{?session_attached,attached,not attached}’ will include the string ‘attached’ if the session is attached and the string ‘not attached’ if it is unattached, or ‘#{?automatic-rename,yes,no}’ will include ‘yes’ if automatic-rename is enabled, or ‘no’ if not. A limit may be placed on the length of the resultant string by prefixing it by an ‘=’, a number and a colon, so ‘#{=10:pane_title}’ will include at most the first 10 characters of the pane title.
-The following variables are available, where appropriate:
+
+在合适的地方有以下的变量是可用的：
 
     变量名                 | 别名        |    替换值
     -----------------------|-------------|------------------------------------
