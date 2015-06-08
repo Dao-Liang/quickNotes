@@ -1034,14 +1034,21 @@ These two options configure a simple form of rate limiting for a pane. If tmux s
 
 clock-mode-colour colour
 Set clock colour.
+设置时钟颜色。
+
 clock-mode-style [12 | 24]
 Set clock hour format.
+设置时钟小时格式
+
 force-height height
 force-width width
 Prevent tmux from resizing a window to greater than width or height. A value of zero restores the default unlimited setting.
+组织tmux将窗口的大小值超过width或height, 0值会恢复默认无限制设置。
+
 main-pane-height height
 main-pane-width width
 Set the width or height of the main (left or top) pane in the main-horizontal or main-vertical layouts.
+在
 mode-keys [vi | emacs]
 Use vi or emacs-style key bindings in copy and choice modes. As with the status-keys option, the default is emacs, unless VISUAL or EDITOR contains ‘vi’.
 mode-style style
