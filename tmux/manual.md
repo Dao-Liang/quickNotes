@@ -1109,9 +1109,12 @@ The special token ‘{mouse}’ or ‘=’ may be used as target-window or targe
 The send-keys -M flag may be used to forward a mouse event to a pane.
 The default key bindings allow the mouse to be used to select and resize panes, to copy text and to change window using the status line. These take effect if the mouse option is turned on.
 
-FORMATS
-格式：
+
+##格式：FORMATS
+
 Certain commands accept the -F flag with a format argument. This is a string which controls the output format of the command. Replacement variables are enclosed in ‘#{’ and ‘}’, for example ‘#{session_name}’. The possible variables are listed in the table below, or the name of a tmux option may be used for an option's value. Some variables have a shorter alias such as ‘#S’, and ‘##’ is replaced by a single ‘#’.
+有些命令接受由-F标记附带的格式参数。这个参数是一个控制命令输出格式的字符串。可替换的变量被包含在'#{'和'}'之间，例如'#{session_name}'。
+
 Conditionals are available by prefixing with ‘?’ and separating two alternatives with a comma; if the specified variable exists and is not zero, the first alternative is chosen, otherwise the second is used. For example ‘#{?session_attached,attached,not attached}’ will include the string ‘attached’ if the session is attached and the string ‘not attached’ if it is unattached, or ‘#{?automatic-rename,yes,no}’ will include ‘yes’ if automatic-rename is enabled, or ‘no’ if not. A limit may be placed on the length of the resultant string by prefixing it by an ‘=’, a number and a colon, so ‘#{=10:pane_title}’ will include at most the first 10 characters of the pane title.
 The following variables are available, where appropriate:
 
@@ -1223,6 +1226,7 @@ A session's name is set with the new-session and rename-session commands. A wind
     $ printf '\033]2;My Title\033\\'
 
 ##环境
+
 当tmux服务器启动时，tmux会将环境复制到全局环境中，此外每个会话具有一个会话环境。
 当一个窗口被创建时，会将会话环境和全局环境合并。
 如果一个变量存在两个环境中，会使用会话环境中的变量。结果就是初始环境传递给新进程。
