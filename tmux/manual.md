@@ -3,6 +3,19 @@
 - [描述](#描述)
 - [键绑定](#键绑定)
 - [命令](#命令)
+- [客户端和会话](#客户端和会话)
+- [窗口和面板](#窗口和面板)
+- [格式](#格式)
+- [名称和标题](#名称和标题)
+- [环境](#环境)
+- [状态行](#状态行)
+- [缓冲区](#缓冲区)
+- [杂项](#杂项)
+- [TERMINFO EXTENSIONS](#TERMINFO EXTENSIONS)
+- [控制模式](#控制模式)
+- [文件](#文件)
+- [样例](#样例)
+
 
 ##名称
 tmux — terminal multiplexer
@@ -1121,7 +1134,7 @@ The send-keys -M flag may be used to forward a mouse event to a pane.
 The default key bindings allow the mouse to be used to select and resize panes, to copy text and to change window using the status line. These take effect if the mouse option is turned on.
 
 
-##格式：FORMATS
+##格式
 
 有些命令接受由-F标记附带的格式参数。这个参数是一个控制命令输出格式的字符串。可替换的变量被包含在'#{'和'}'之间，例如'#{session_name}'。可用的变量在下表中列出，或者tmux选项的名称可以一个选项的值。有些变量具有一个简短的别名，例如'#s', 而'##'会使用一个单独的'#'来替换。
 
@@ -1221,7 +1234,7 @@ The default key bindings allow the mouse to be used to select and resize panes, 
     wrap_flag		       |              |   Pane wrap flag
 
 
-##名称和标题：(NAMES AND TITLES)
+##名称和标题
 
 tmux distinguishes between names and titles. Windows and sessions have names, which may be used to specify them in targets and are displayed in the status line and various lists: the name is the tmux identifier for a window or session. Only panes have titles. A pane's title is typically set by the program running inside the pane and is not modified by tmux. It is the same mechanism used to set for example the xterm(1) window title in an X(7) window manager. Windows themselves do not have titles - a window's title is the title of its active pane. tmux itself may set the title of the terminal in which the client is running, see the set-titles option.
 tmux区分名称和标题，窗口和会话具有名称用来作为目标标识，并且在状态行和不同的列表中显示：名称是tmux对于一个窗口或会话的标识符。只有pane面板有标题，面板的标题是由在其中运行的程序设置的并且不能由tmux改变。 与X窗口管理器中的xterm窗口标题的设置所使用的机制相同。窗口本身没有标题-一个窗口的标题就是其活动面板的标题。tmux本身会设置客户端所在终端的标题，参考set-title选项。
@@ -1256,7 +1269,7 @@ show-environment [-g] [-t target-session] [variable]
 显示目标会话target-session或者全局环境（使用-g时）变量。
 如果忽略变量，会显示所有的变量。从环境中移除的变量会用'-'作为前导。
 
-##状态行：
+##状态行
 tmux包含了一个可选的状态行会显示在每个终端的底端行。默认状态行时有效的（可以通过status会话选项失效）并且被包含的，从左到右分别有：包含在方括号中的当前会话名称;窗口列表;双引号包含的活动面板;以及时间和日期。
 
 状态行由三部分组成：可配置的左边和右边部分（可以包含shell命令输出的动态的内容，例如时间和日期，参考status-left,status-left-length,status-right,status-right-length选项），以及中间的窗口列表。默认窗口列表显示当前会话中按照数字升序排列窗口的索引，名称和标记（如果存在的话）。 可以通过window-status-format和window-status-current-format选项客制化。 附加在窗口名称后面的标记可以是以下符号之一：
@@ -1388,7 +1401,7 @@ Ss, Se
 Ms
 这个序列可以被tmux用来存储当前缓冲区到主机终端剪贴板中。可以参考set-clipboad选项和xterm的man页面。
 
-##CONTROL MODE
+##控制模式
 tmux提供了一个成为control（控制）模式的文本界面。这使得应用程序可以通过一个简单的文本协议与tmux进行交流。
 
 在控制模式中，一个客户端发送tmux命令或以新行结束的命令序列到标准输入中。每个命令将会在标准输出中产生一个输出块。一个输出块包含了一个%begin行与跟随的输出（可能为空）。
@@ -1437,12 +1450,12 @@ ID为window-id的窗口被关闭。
     %window-renamed window-id name
 ID为window-id的窗口重命名为name。
 
-##文件：
+##文件
 o
     ~/.tmux.conf : 默认的tmux配置文件。
     /etc/tmux.conf : 系统范围的配置文件。
 
-##样例：
+##样例
 
 创建一个运行vi的新的tmux会话：
     $ tmux new-session vi
