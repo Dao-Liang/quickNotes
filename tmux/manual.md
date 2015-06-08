@@ -1,4 +1,4 @@
-[openBSD]
+- [名称](#名称)
 
 ##名称
 tmux — terminal multiplexer
