@@ -1003,20 +1003,35 @@ set-window-option [-agoqu] [-t target-window] option value
 Set a window option. The -a, -g, -o, -q and -u flags work similarly to the set-option command.
 
 Supported window options are:
+支持的窗口选项有:
 aggressive-resize [on | off]
 Aggressively resize the chosen window. This means that tmux will resize the window to the size of the smallest session for which it is the current window, rather than the smallest session to which it is attached. The window may resize when the current window is changed on another sessions; this option is good for full-screen programs which support SIGWINCH and poor for interactive programs such as shells.
+积极地重新调整所选窗口大小。意味着tmux会重新调整窗口的尺寸为当前窗口的最小会话尺寸，而不是其附着的最小的会话。当当前窗口改变为另外一个会话时窗口会重新调整大小;这个选项对于支持SIGWINCH的全屏程序有好处而对于交互式程序如shell不是太好。
+
 allow-rename [on | off]
 Allow programs to change the window name using a terminal escape sequence (\033k...\033\\). The default is on.
+允许程序通过终端转义序列(\033k...\033\\)改变窗口名称。默认为on。
+
 alternate-screen [on | off]
 This option configures whether programs running inside tmux may use the terminal alternate screen feature, which allows the smcup and rmcup terminfo(5) capabilities. The alternate screen feature preserves the contents of the window when an interactive application starts and restores it on exit, so that any output visible before the application starts reappears unchanged after it exits. The default is on.
+这个选项用来配置运行在tmux中的程序是否可以使用终端的被用屏幕特性-允许terminfo的smcup和rmcup能力。被用屏幕特性在一个交互式程序开启并且在从退出后恢复之后可以保留窗口的内容，
+这样任何程序开始之前的可视输出会在程序退出之后重新出现。默认为on。
+
 automatic-rename [on | off]
 Control automatic window renaming. When this setting is enabled, tmux will rename the window automatically using the format specified by automatic-rename-format. This flag is automatically disabled for an individual window when a name is specified at creation with new-window or new-session, or later with rename-window, or with a terminal escape sequence. It may be switched off globally with:
-set-window-option -g automatic-rename off
+控制自动化窗口命名。当开启这个设置时，tmux会使用由automatic-rename-format指定的格式来自动地重命名窗口。对于由new-window和new-session在创建时，或者之后通过rename-window或者使用终端转义序列指定的窗口名称, 这个标识会自动失效。可以通过以下方式来将其在全局范围内关闭：
+
+    set-window-option -g automatic-rename off
+
 automatic-rename-format format
 The format (see FORMATS) used when the automatic-rename option is enabled.
+在automatic-rename选项生效时会使用这个格式（参考FORMATS）。
+
 c0-change-interval interval
 c0-change-trigger trigger
 These two options configure a simple form of rate limiting for a pane. If tmux sees more than trigger C0 sequences that modify the screen (for example, carriage returns, linefeeds or backspaces) in one millisecond, it will stop updating the pane immediately and instead redraw it entirely every interval milliseconds. This helps to prevent fast output (such as yes(1)) overwhelming the terminal. The default is a trigger of 250 and an interval of 100. A trigger of zero disables the rate limiting.
+
+
 clock-mode-colour colour
 Set clock colour.
 clock-mode-style [12 | 24]
