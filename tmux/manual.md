@@ -1,4 +1,6 @@
 - [名称](#名称)
+- [用法](#用法)
+- [描述](#描述)
 
 ##名称
 tmux — terminal multiplexer
