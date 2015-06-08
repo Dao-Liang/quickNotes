@@ -1112,12 +1112,10 @@ The default key bindings allow the mouse to be used to select and resize panes, 
 
 ##格式：FORMATS
 
-Certain commands accept the -F flag with a format argument. This is a string which controls the output format of the command. Replacement variables are enclosed in ‘#{’ and ‘}’, for example ‘#{session_name}’. The possible variables are listed in the table below, or the name of a tmux option may be used for an option's value. Some variables have a shorter alias such as ‘#S’, and ‘##’ is replaced by a single ‘#’.
 有些命令接受由-F标记附带的格式参数。这个参数是一个控制命令输出格式的字符串。可替换的变量被包含在'#{'和'}'之间，例如'#{session_name}'。可用的变量在下表中列出，或者tmux选项的名称可以一个选项的值。有些变量具有一个简短的别名，例如'#s', 而'##'会使用一个单独的'#'来替换。
 
-Conditionals are available by prefixing with ‘?’ and separating two alternatives with a comma; if the specified variable exists and is not zero, the first alternative is chosen, otherwise the second is used. For example ‘#{?session_attached,attached,not attached}’ will include the string ‘attached’ if the session is attached and the string ‘not attached’ if it is unattached, or ‘#{?automatic-rename,yes,no}’ will include ‘yes’ if automatic-rename is enabled, or ‘no’ if not. A limit may be placed on the length of the resultant string by prefixing it by an ‘=’, a number and a colon, so ‘#{=10:pane_title}’ will include at most the first 10 characters of the pane title.
 
-条件可以通过'?'作为前缀，逗号作为分隔符来使用，如果指定的变量存在并且不是0，那么第一个选项被选择，否则选择第二个选项。例如'#{?session_attached,attached,not attached}'条件，当会话是附着的就会包含'attached'否则就会包含'not attached'。而对于'#{?automatic-rename, yes, no}'
+条件可以通过'?'作为前缀，逗号作为分隔符来使用，如果指定的变量存在并且不是0，那么第一个选项被选择，否则选择第二个选项。例如'#{?session_attached,attached,not attached}'条件，当会话是附着的就会包含'attached'否则就会包含'not attached'。而对于'#{?automatic-rename, yes, no}'如果开启了automatic-rename的话会包含'yes'否则包含'no'。可以通过一个前缀'=',一个数字和一个冒号来作为字符串的长度限制，所以'#{=10:pane_title}'最多包含pane标题的前10个字符。
 
 在合适的地方有以下的变量是可用的：
 
