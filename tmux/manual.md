@@ -1117,6 +1117,8 @@ Certain commands accept the -F flag with a format argument. This is a string whi
 
 Conditionals are available by prefixing with ‘?’ and separating two alternatives with a comma; if the specified variable exists and is not zero, the first alternative is chosen, otherwise the second is used. For example ‘#{?session_attached,attached,not attached}’ will include the string ‘attached’ if the session is attached and the string ‘not attached’ if it is unattached, or ‘#{?automatic-rename,yes,no}’ will include ‘yes’ if automatic-rename is enabled, or ‘no’ if not. A limit may be placed on the length of the resultant string by prefixing it by an ‘=’, a number and a colon, so ‘#{=10:pane_title}’ will include at most the first 10 characters of the pane title.
 
+条件可以通过'?'作为前缀，逗号作为分隔符来使用，如果指定的变量存在并且不是0，那么第一个选项被选择，否则选择第二个选项。例如'#{?session_attached,attached,not attached}'条件，当会话是附着的就会包含'attached'否则就会包含'not attached'。而对于'#{?automatic-rename, yes, no}'
+
 在合适的地方有以下的变量是可用的：
 
     变量名                 | 别名        |    替换值
