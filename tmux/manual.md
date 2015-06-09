@@ -758,6 +758,8 @@ tmux也支持以'@'作为前导的用户选项， 用户选项可以具有任何
 选项的值依赖于选项类型，可以为数字，字符串，或者一个标记（on/off/省略）。
 
 
+
+
 ###服务器选项
 可选的服务器选项有：
 
@@ -790,7 +792,7 @@ tmux也支持以'@'作为前导的用户选项， 用户选项可以具有任何
 
     disallowedWindowOps: 20,21,SetXprop
 
-或者在需要的时候从xterm交互中改变这个属性值
+或者在需要的时候从xterm交互中改变这个属性值。
 
     terminal-overrides string
 包含了一个个实体列表来重载使用terminfo读取的终端描述信息。
@@ -804,6 +806,8 @@ tmux也支持以'@'作为前导的用户选项， 用户选项可以具有任何
 终端实体值会在解释之前通过strunvis传递，默认的值会强制地更新支持256colors的终端的'colors'实体：
 
     "*256col*:colors=256,xterm*:XT"
+
+
 
 ###会话选项
 
@@ -826,8 +830,9 @@ tmux也支持以'@'作为前导的用户选项， 用户选项可以具有任何
 默认是一个空字符串，用来指示tmux使用默认shell选项来创建一个登录shell。
 
     default-shell path
-指定默认的shell，
-当default-command为空时，这个会作为新建窗口的登录shell，这个path值必须为完整的路径名。在启动之后，tmux会尝试从第一个合适的SHELL环境变量中来设置为默认值，shell由getpwuid或者 /bin/sh。 这个选项在将tmux作为一个登录shell使用时应该被配置。
+指定默认的shell， 当default-command为空时，这个会作为新建窗口的登录shell，这个path值必须为完整的路径名。
+在启动之后，tmux会尝试从第一个合适的SHELL环境变量中来设置为默认值，shell由'getpwuid'或者 '/bin/sh'。
+这个选项在将tmux作为一个登录shell使用时应该被配置。
 
     destroy-unattached [on | off]
 如果生效的话，当会话不再附着在任何客户端时就会被销毁。
@@ -863,18 +868,20 @@ tmux也支持以'@'作为前导的用户选项， 用户选项可以具有任何
     message-command-style style
 设置状态行命令样式，样式是一个由逗号分割的字符列表来指定的。
 这些样式可能时'bg=colour'来设置背景颜色，'fg=colour'来设置前景颜色，另外有下面指定的属性列表：
-颜色值可以为这些颜色中的一个：black,red,green, yellow, blue, magenta,cyan,white,aixterm bright
-variants(如果支持的话,会有:brightred,breightgreen，等)，
-256-colour集合中从colour0到colour255为默认值，或者一个十六进制的RGB字符串，例如'#ffffff'-会从默认的256-colour集合中选择最匹配的颜色。
-属性既可以为none或者一个逗号分割一个或多个包含(bright(或bold),dim，underscore,blink,reverse,
-hidden或者italics)的列表来开启属性，或者带有'no'前缀的属性来关闭属性。
 
-样例有:
+颜色值可以为这些颜色中的一个：black,red,green, yellow, blue, magenta,cyan,white,aixterm bright
+variants(如果支持的话,会有:brightred,breightgreen，等)。
+
+256-colour集合中从colour0到colour255为默认值，或者一个十六进制的RGB字符串，例如'#ffffff'-会从默认的256-colour集合中选择最匹配的颜色。
+
+属性既可以为none或者一个逗号分割一个或多个包含(bright(或bold),dim，underscore,blink,reverse, hidden或者italics)的列表来开启属性，或者带有'no'前缀的属性来关闭属性。
+
+样例:
 
     fg=yellow,bold,underscore,blink 
     bg=black,fg=default,noreverse
     
-如果set-option命令具有一个 -a标记的话，新的样式会添加进来，否则已经存在的样式被替换。
+如果set-option命令具有一个 '-a' 标记的话，新的样式会添加进来，否则已经存在的样式被替换。
 
     message-style style
 设置状态行消息样式，对于如何指定样式，可以参考message-command-style选项。
