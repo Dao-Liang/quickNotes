@@ -671,9 +671,9 @@ shell-command字符串可能会包含status-left选项所支持的特殊字符�
 
 ##键绑定2
 
-tmux允许一个命令被绑定到大多数键上-无论是否带有前导键。当指定键时，大部分键代表其本身字面量含义（例如'A-Z'）。 <br/>
-Control键可能表示为'C-'或'^'前导，而Alt(meta)表示为'M-'.此外，特殊的键名称也是被接受的：Up,Down, Left, Right, <br/>
-BSpace, BTab, DC(delete), End, Enter, Escape, F1-F12, Home, IC(insert), NPage/PageDown/PgDn, PPage/PageUp/PgUp,Space,和Tab。<br/>
+tmux允许一个命令被绑定到大多数键上-无论是否带有前导键。当指定键时，大部分键代表其本身字面量含义（例如'A-Z'）。 
+Control键可能表示为'C-'或'^'前导，而Alt(meta)表示为'M-'.此外，特殊的键名称也是被接受的：Up,Down, Left, Right, 
+BSpace, BTab, DC(delete), End, Enter, Escape, F1-F12, Home, IC(insert), NPage/PageDown/PgDn, PPage/PageUp/PgUp, Space和Tab。
 注意为了绑定双引号或单引号键，引号标记是必需的，例如：
 
     bind-key '"' split-window 
