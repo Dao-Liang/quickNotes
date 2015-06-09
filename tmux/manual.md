@@ -1101,7 +1101,8 @@ If the mouse option is on (the default is off), tmux allows mouse events to be b
     MouseDown3	MouseUp3	MouseDrag3
     WheelUp	WheelDown	
 
-Each should be suffixed with a location, for example ‘MouseDown1Status’.
+每个都需要带有一个位置后缀，例如'MouseDown1Status'
+
 The special token ‘{mouse}’ or ‘=’ may be used as target-window or target-pane in commands bound to mouse key bindings. It resolves to the window or pane over which the mouse event took place (for example, the window in the status line over which button 1 was released for a ‘MouseUp1Status’ binding, or the pane over which the wheel was scrolled for a ‘WheelDownPane’ binding).
 The send-keys -M flag may be used to forward a mouse event to a pane.
 The default key bindings allow the mouse to be used to select and resize panes, to copy text and to change window using the status line. These take effect if the mouse option is turned on.
@@ -1109,24 +1110,29 @@ The default key bindings allow the mouse to be used to select and resize panes, 
 
 ##格式
 
-有些命令接受由-F标记附带的格式参数。这个参数是一个控制命令输出格式的字符串。可替换的变量被包含在'#{'和'}'之间，例如'#{session_name}'。可用的变量在下表中列出，或者tmux选项的名称可以一个选项的值。有些变量具有一个简短的别名，例如'#s', 而'##'会使用一个单独的'#'来替换。
+有些命令接受由-F标记附带的格式参数。这个参数是一个控制命令输出格式的字符串。
+可替换的变量被包含在'#{'和'}'之间，例如'#{session_name}'。可用的变量在下表中列出，或者tmux选项的名称可以一个选项的值。
+有些变量具有一个简短的别名，例如'#s', 而'##'会使用一个单独的'#'来替换。
 
 
-条件可以通过'?'作为前缀，逗号作为分隔符来使用，如果指定的变量存在并且不是0，那么第一个选项被选择，否则选择第二个选项。例如'#{?session_attached,attached,not attached}'条件，当会话是附着的就会包含'attached'否则就会包含'not attached'。而对于'#{?automatic-rename, yes, no}'如果开启了automatic-rename的话会包含'yes'否则包含'no'。可以通过一个前缀'=',一个数字和一个冒号来作为字符串的长度限制，所以'#{=10:pane_title}'最多包含pane标题的前10个字符。
+条件可以通过'?'作为前缀，逗号作为分隔符来使用，如果指定的变量存在并且不是0，那么第一个选项被选择，否则选择第二个选项。
+例如'#{?session_attached,attached,not attached}'条件，当会话是附着的就会包含'attached'否则就会包含'not attached'。
+而对于'#{?automatic-rename, yes, no}'如果开启了automatic-rename的话会包含'yes'否则包含'no'。
+可以通过一个前缀'=',一个数字和一个冒号来作为字符串的长度限制，所以'#{=10:pane_title}'最多包含pane标题的前10个字符。
 
 在合适的地方有以下的变量是可用的：
 
-    变量名                 | 别名        |    替换值
-    -----------------------|-------------|------------------------------------
+    变量名                 | 别名         |    替换值
+    -----------------------|--------------|-----------------------------------
     alternate_on		   |              |   If pane is in alternate screen
     alternate_saved_x	   |              |   Saved cursor X in alternate screen
     alternate_saved_y	   |              |   Saved cursor Y in alternate screen
     buffer_sample		   |              |   Sample of start of buffer
     buffer_size		       |              |   Size of the specified buffer in bytes
     client_activity		   |              |   Integer time client last had activity
-    client_activity_string | 	         |   String time client last had activity
+    client_activity_string | 	          |   String time client last had activity
     client_created		   |              |   Integer time client created
-    client_created_string  | 	         |   String time client created
+    client_created_string  | 	          |   String time client created
     client_height		   |              |   Height of client
     client_last_session	   |              |   Name of the client's last session
     client_prefix		   |              |   1 if prefix key has been pressed
@@ -1142,8 +1148,8 @@ The default key bindings allow the mouse to be used to select and resize panes, 
     history_bytes		   |              |   Number of bytes in window history
     history_limit		   |              |   Maximum window history lines
     history_size		   |              |   Size of history in bytes
-    host	               | #H	         |   Hostname of local host
-    host_short	           | #h  	     |   Hostname of local host (no domain name)
+    host	               | #H	          |   Hostname of local host
+    host_short	           | #h  	      |   Hostname of local host (no domain name)
     insert_flag		       |              |   Pane insert flag
     keypad_cursor_flag	   |              |   Pane keypad cursor flag
     keypad_flag		       |              |   Pane keypad flag
@@ -1154,21 +1160,21 @@ The default key bindings allow the mouse to be used to select and resize panes, 
     mouse_utf8_flag		   |              |   Pane mouse UTF-8 flag
     pane_active		       |              |   1 if active pane
     pane_bottom		       |              |   Bottom of pane
-    pane_current_command   | 	         |   Current command if available
+    pane_current_command   | 	          |   Current command if available
     pane_dead		       |              |   1 if pane is dead
     pane_dead_status	   |              |   Exit status of process in dead pane
     pane_height		       |              |   Height of pane
-    pane_id	               | #D	         |   Unique pane ID
+    pane_id	               | #D	          |   Unique pane ID
     pane_in_mode		   |              |   If pane is in a mode
     pane_input_off		   |              |   If input to pane is disabled
-    pane_index	           | #P	         |   Index of pane
+    pane_index	           | #P	          |   Index of pane
     pane_left		       |              |   Left of pane
     pane_pid		       |              |   PID of first process in pane
     pane_right		       |              |   Right of pane
     pane_start_command	   |              |   Command pane started with
     pane_synchronized	   |              |   If pane is synchronized
     pane_tabs		       |              |   Pane tab positions
-    pane_title	           | #T	         |   Title of pane
+    pane_title	           | #T	          |   Title of pane
     pane_top		       |              |   Top of pane
     pane_tty		       |              |   Pseudo terminal of pane
     pane_width		       |              |   Width of pane
@@ -1178,28 +1184,28 @@ The default key bindings allow the mouse to be used to select and resize panes, 
     scroll_region_upper	   |              |   Top of scroll region in pane
     session_attached	   |              |   Number of clients session is attached to
     session_activity	   |              |   Integer time of session last activity
-    session_activity_string|		         |   String time of session last activity
+    session_activity_string|		      |   String time of session last activity
     session_created		   |              |   Integer time session created
-    session_created_string | 	         |   String time session created
+    session_created_string | 	          |   String time session created
     session_group		   |              |   Number of session group
     session_grouped		   |              |   1 if session in a group
     session_height		   |              |   Height of session
     session_id		       |              |   Unique session ID
-    session_many_attached  | 	         |   1 if multiple clients attached
-    session_name	       | #S	         |   Name of session
+    session_many_attached  | 	          |   1 if multiple clients attached
+    session_name	       | #S	          |   Name of session
     session_width		   |              |   Width of session
     session_windows		   |              |   Number of windows in session
     window_active		   |              |   1 if window active
-    window_activity_flag   | 	         |   1 if window has activity alert
+    window_activity_flag   | 	          |   1 if window has activity alert
     window_bell_flag	   |              |   1 if window has bell
     window_find_matches	   |              |   Matched data from the find-window
-    window_flags	       | #F	         |   Window flags
+    window_flags	       | #F	          |   Window flags
     window_height		   |              |   Height of window
     window_id		       |              |   Unique window ID
-    window_index	       | #I	         |   Index of window
+    window_index	       | #I	          |   Index of window
     window_last_flag	   |              |   1 if window is the last used
     window_layout		   |              |   Window layout description
-    window_name	           | #W	         |   Name of window
+    window_name	           | #W	          |   Name of window
     window_panes		   |              |   Number of panes in window
     window_silence_flag	   |              |   1 if window has silence alert
     window_width		   |              |   Width of window
@@ -1209,8 +1215,10 @@ The default key bindings allow the mouse to be used to select and resize panes, 
 
 ##名称和标题
 
-tmux distinguishes between names and titles. Windows and sessions have names, which may be used to specify them in targets and are displayed in the status line and various lists: the name is the tmux identifier for a window or session. Only panes have titles. A pane's title is typically set by the program running inside the pane and is not modified by tmux. It is the same mechanism used to set for example the xterm(1) window title in an X(7) window manager. Windows themselves do not have titles - a window's title is the title of its active pane. tmux itself may set the title of the terminal in which the client is running, see the set-titles option.
-tmux区分名称和标题，窗口和会话具有名称用来作为目标标识，并且在状态行和不同的列表中显示：名称是tmux对于一个窗口或会话的标识符。只有pane面板有标题，面板的标题是由在其中运行的程序设置的并且不能由tmux改变。 与X窗口管理器中的xterm窗口标题的设置所使用的机制相同。窗口本身没有标题-一个窗口的标题就是其活动面板的标题。tmux本身会设置客户端所在终端的标题，参考set-title选项。
+tmux区分名称和标题，窗口和会话具有名称用来作为目标标识，并且在状态行和不同的列表中显示：名称是tmux对于一个窗口或会话的标识符。
+只有pane面板有标题，面板的标题是由在其中运行的程序设置的并且不能由tmux改变。 
+与X窗口管理器中的xterm窗口标题的设置所使用的机制相同。窗口本身没有标题-一个窗口的标题就是其活动面板的标题。
+tmux本身会设置客户端所在终端的标题，参考set-title选项。
 
 A session's name is set with the new-session and rename-session commands. A window's name is set with one of:
 一个会话的名称通过new-session和rename-session命令来设置的，一个窗口的名称可以通过以下方式设置：
@@ -1229,23 +1237,30 @@ A session's name is set with the new-session and rename-session commands. A wind
 当一个窗口被创建时，会将会话环境和全局环境合并。
 如果一个变量存在两个环境中，会使用会话环境中的变量。结果就是初始环境传递给新进程。
 
-当一个新会话创建或者一个就会话重新附着时，update-environment会话选项可以用来从一个客户端来更新会话环境。tmux也会使用一些内部信息来初始化TMUX变量以便允许命令在内部执行，TERM变量会设置为正确的终端'screen'。
+当一个新会话创建或者一个就会话重新附着时，update-environment会话选项可以用来从一个客户端来更新会话环境。
+tmux也会使用一些内部信息来初始化TMUX变量以便允许命令在内部执行，TERM变量会设置为正确的终端'screen'。
 
 修改和查看环境的命令有：
-set-environment [-gru] [-t target-session] name [value]
-(别名:setenv)
+
+    set-environment [-gru] [-t target-session] name [value]
+    (别名:setenv)
 设置或重置一个环境变量，如果使用-g，会在全局变量中进行改变;否则只会改变target-session的会话环境。
 -u标记用来重置一个变量。 -r用来指示在开起一个新进程时从环境中移除该变量。
 
-show-environment [-g] [-t target-session] [variable]
-(别名：showenv)
+    show-environment [-g] [-t target-session] [variable]
+    (别名：showenv)
 显示目标会话target-session或者全局环境（使用-g时）变量。
 如果忽略变量，会显示所有的变量。从环境中移除的变量会用'-'作为前导。
 
 ##状态行
-tmux包含了一个可选的状态行会显示在每个终端的底端行。默认状态行时有效的（可以通过status会话选项失效）并且被包含的，从左到右分别有：包含在方括号中的当前会话名称;窗口列表;双引号包含的活动面板;以及时间和日期。
+tmux包含了一个可选的状态行会显示在每个终端的底端行。
+默认状态行时有效的（可以通过status会话选项失效）并且被包含的，从左到右分别有：包含在方括号中的当前会话名称;窗口列表;双引号包含的活动面板;以及时间和日期。
 
-状态行由三部分组成：可配置的左边和右边部分（可以包含shell命令输出的动态的内容，例如时间和日期，参考status-left,status-left-length,status-right,status-right-length选项），以及中间的窗口列表。默认窗口列表显示当前会话中按照数字升序排列窗口的索引，名称和标记（如果存在的话）。 可以通过window-status-format和window-status-current-format选项客制化。 附加在窗口名称后面的标记可以是以下符号之一：
+状态行由三部分组成：
+可配置的左边和右边部分（可以包含shell命令输出的动态的内容，例如时间和日期，参考status-left,status-left-length,status-right,status-right-length选项），
+以及中间的窗口列表。
+默认窗口列表显示当前会话中按照数字升序排列窗口的索引，名称和标记（如果存在的话）。 
+可以通过window-status-format和window-status-current-format选项客制化。 附加在窗口名称后面的标记可以是以下符号之一：
 
     符号 |  含义
 ---------|-----------
@@ -1263,29 +1278,31 @@ tmux包含了一个可选的状态行会显示在每个终端的底端行。默�
 状态行会自动地刷新如果当其在时间间隔内被改变的话，时间间隔可以通过status-interval会话选项控制。
 
 与状态行相关的命令有：
-command-prompt [-I inputs] [-p prompts] [-t target-client] [template]
+
+    command-prompt [-I inputs] [-p prompts] [-t target-client] [template]
 在客户端打开一个命令提示，可以在tmux内用用来执行交互式命令。
 
 如果指定了template的话，其会被作为命令使用。-I是每个提示初始化文本列表-由逗号分割的。
 如果指定-p，那么提示是一个按照顺序显示的逗号分割的提示列表;否则只显示一个单独的构造于template（如果提供了的话）提示，否则使用':'。
 inputs和prompts都可能包含由status-left选项支持的特殊字符序列。
-在命令被执行之前，第一个出现的字符串'%%'和出现的所有'%1'都会被第一个提示的响应替换，第二个'%%'和所有的'%2'会被第二个提示的响应替换，以此类推。直到第九个提示可以被替换。
+在命令被执行之前，第一个出现的字符串'%%'和出现的所有'%1'都会被第一个提示的响应替换，第二个'%%'和所有的'%2'会被第二个提示的响应替换，以此类推。
+直到第九个提示可以被替换。
 
-confirm-before [-p prompt] [-t target-client] command
-(别名：confirm)
+    confirm-before [-p prompt] [-t target-client] command
+    (别名：confirm)
 在执行命令之前进行确认，如果指定-p, 提示为prompt参数的显示，否则提示会从command来构造。
 可能会包含由status-left选项支持的特殊字符序列。
 这个命令只会在tmux中工作。
 
-display-message [-p] [-c target-client] [-t target-pane] [message]
-(别名：display)
+    display-message [-p] [-c target-client] [-t target-pane] [message]
+    (别名：display)
 显示一个消息， 如果没有给定-p,
 那么输出会被打印到标准输出中，否则会显示在target-client的状态行上。消息的格式在FORMTS部分描述。
 如果给第-t就会从target-pane中获取信息，否则就会从附着在target-client的会话中的活动窗口中获取。
 
 ##缓冲区
-tmux维护了一个命名的粘贴缓冲区集合，每个可能显式地或自动地命名。显式地命名的缓冲区实在通过set-buffer或load-buffer命令创建时命名的，或者是通过set-buffer
--n 来重命名一个自动命名的缓冲区。
+tmux维护了一个命名的粘贴缓冲区集合，每个可能显式地或自动地命名。显式地命名的缓冲区实在通过set-buffer或load-buffer命令创建时命名的，
+或者是通过set-buffer -n 来重命名一个自动命名的缓冲区。
 自动命名的缓冲区的名称会类似于'buffer0001','buffer0002'等。当达到buffer-limit选项的限制时，最旧的自动命名的缓冲区被删除。
 显示命名的缓冲区不会收到buffer-limit的限制，可以通过delete-buffer命令删除。
 
@@ -1295,64 +1312,68 @@ tmux维护了一个命名的粘贴缓冲区集合，每个可能显式地或自�
 每个窗口也会维护一个可配值的历史缓冲区，默认会保留到2000行;这个可以通过history-limit选项修改（参考set-option命令）。
 
 缓冲区命令有：
-choose-buffer [-F format] [-t target-window] [template]
-将窗口置于缓冲区选择模式，一个缓冲区可以从一个列表中交互地选择。在选择一个缓冲区之后,'%%'会被template中的缓冲区名称替换，之后的结果会作为一个命令被执行。如果没有给定template，会使用"paste-buffer -b '%%'"来替换。 对于-F标记参考FORMATS部分。这个命令只有在至少有一个客户端附着时工作。
+    choose-buffer [-F format] [-t target-window] [template]
+将窗口置于缓冲区选择模式，一个缓冲区可以从一个列表中交互地选择。
+在选择一个缓冲区之后,'%%'会被template中的缓冲区名称替换，之后的结果会作为一个命令被执行。
+如果没有给定template，会使用"paste-buffer -b '%%'"来替换。 对于-F标记参考FORMATS部分。
+这个命令只有在至少有一个客户端附着时工作。
 
-clear-history [-t target-pane]
-(别名:clearhist)
+    clear-history [-t target-pane]
+    (别名:clearhist)
 对指定的pane删除并释放history。
 
-delete-buffer [-b buffer-name]
-(别名：deleteb)
+    delete-buffer [-b buffer-name]
+    (别名：deleteb)
 删除名为buffer-name的缓冲区，在没有指定buffer-name时删除最佳男自动命名添加的缓冲区。
 
-list-buffers [-F format]
-(别名:lsb)
+    list-buffers [-F format]
+    (别名:lsb)
 列出全局缓冲区，对于-F可以参考FORMATS部分。
 
-load-buffer [-b buffer-name] path
-(别名:loadb)
+    load-buffer [-b buffer-name] path
+    (别名:loadb)
 从path中加载指定粘贴缓冲区的内容。
 
-paste-buffer [-dpr] [-b buffer-name] [-s separator] [-t target-pane]
-(别名:pasteb)
-将一个粘贴缓冲却中的内容插入到一个指定的pane中。如果没有指定target-pane,会被粘贴到当前的一个。指定-d时也会删除粘贴缓冲区。当输出时，任何粘贴缓冲区中的换行符会使用一个分隔符替换（默认为回车符）。可以通过-s指定客制化分隔符。-r标记意味着不做换行符的替换。 指定-p时，当应用程序请求大括号粘贴模式的话，粘贴的大括号控制代码会被插入到缓冲区中。
+    paste-buffer [-dpr] [-b buffer-name] [-s separator] [-t target-pane]
+    (别名:pasteb)
+将一个粘贴缓冲却中的内容插入到一个指定的pane中。如果没有指定target-pane，会被粘贴到当前的一个。
+指定-d时也会删除粘贴缓冲区。当输出时，任何粘贴缓冲区中的换行符会使用一个分隔符替换（默认为回车符）。
+可以通过-s指定客制化分隔符。-r标记意味着不做换行符的替换。 指定-p时，当应用程序请求大括号粘贴模式的话，粘贴的大括号控制代码会被插入到缓冲区中。
 
-save-buffer [-a] [-b buffer-name] path
-(别名：saveb)
+    save-buffer [-a] [-b buffer-name] path
+    (别名：saveb)
 将指定的粘贴缓冲区中的内容保存到一个路径path. -a选项用来指示附加模式而不是直接重写文件。
 
-set-buffer [-a] [-b buffer-name] [-n new-buffer-name] data
-(别名：setb)
+    set-buffer [-a] [-b buffer-name] [-n new-buffer-name] data
+    (别名：setb)
 将指定缓冲区的内容设置为data.
 使用-a选项来将data附加到缓冲区而不是直接重写缓冲区。-n用来重命名缓冲区到一个new-buffer-name。
 
-show-buffer [-b buffer-name]
-(别名：showb)
+    show-buffer [-b buffer-name]
+    (别名：showb)
 显示指定缓冲区的内容。
 
 ##杂项
 其他杂项命令有：
-clock-mode [-t target-pane]
+    clock-mode [-t target-pane]
 显示一个大的时钟。
 
-if-shell [-bF] [-t target-pane] shell-command command [command]
-(别名：if)
+    if-shell [-bF] [-t target-pane] shell-command command [command]
+    (别名：if)
 如果shell-command返回成功的话执行第一个命令，否则执行第二个命令。
 在执行之前，shell-command会使用FORMATS部分指定的规则进行扩展，包括相关的target-pane。-b指示shell-command在后台运行。
-If -F is given, shell-command is not executed but considered success if neither empty nor zero (after formats are expanded).
 如果给定-F,shell-command不会被执行而是认为时成功的（如果既不是空的也不是0的话-在格式扩展之后）。
 
-lock-server
-(别名:lock)
+    lock-server
+    (别名:lock)
 通过运行lock-command选项指定的命令来分别锁定每个客户端。
 
-run-shell [-b] [-t target-pane] shell-command
-（别名:run）
+    run-shell [-b] [-t target-pane] shell-command
+    （别名:run）
 再不创建一个窗口的前提下在后台中运行一个shell-command。执行之前，shell-command使用FORMATS部分指定的规则进行扩展。-b指示在后台运行。在完成之后，任何到标准输出的输出会在copy模式中显示（在由-t指定的pane或当前pane-如果缺省的话）。如果命令没有成功返回，退出状态也会被显示。
 
-wait-for [-L | -S | -U] channel
-(别名:wait)
+    wait-for [-L | -S | -U] channel
+    (别名:wait)
 当不带选项使用时，在使用相同的channel的wait-for -S唤醒之前阻止客户端退出。
 -L会锁定channel，任何尝试锁定相同channel的客户端会一直等待直到使用wait-for -U 解锁。 这个命令只有在tmux外部工作。
 
