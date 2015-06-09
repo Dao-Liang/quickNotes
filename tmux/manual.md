@@ -1101,6 +1101,7 @@ If the mouse option is on (the default is off), tmux allows mouse events to be b
     MouseDown3	MouseUp3	MouseDrag3
     WheelUp	WheelDown	
 
+Each should be suffixed with a location, for example ‘MouseDown1Status’.
 每个都需要带有一个位置后缀，例如'MouseDown1Status'
 
 The special token ‘{mouse}’ or ‘=’ may be used as target-window or target-pane in commands bound to mouse key bindings. It resolves to the window or pane over which the mouse event took place (for example, the window in the status line over which button 1 was released for a ‘MouseUp1Status’ binding, or the pane over which the wheel was scrolled for a ‘WheelDownPane’ binding).
