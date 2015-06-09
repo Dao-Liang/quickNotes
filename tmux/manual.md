@@ -5,6 +5,15 @@
 - [命令](#命令)
 - [客户端和会话](#客户端和会话)
 - [窗口和面板](#窗口和面板)
+    - [窗口和面板命令](#窗口和面板命令)
+- [键绑定2](#键绑定2)
+    - [键绑定命令](#键绑定命令)
+- [选项](#选项)
+    - [选项设置](#选项设置)
+    - [服务器选项](#服务器选项)
+    - [会话选项](#会话选项)
+    - [窗口选项](#窗口选项)
+- [鼠标支持](#鼠标支持)
 - [格式](#格式)
 - [名称和标题](#名称和标题)
 - [环境](#环境)
@@ -72,58 +81,59 @@ command [flags]
 tmux可以通过一个前缀键与跟随的命令键进行结合的方式从一个附着的客户端进行控制，前缀键默认为'C-b'
 
 默认的命令键绑定为:
-
-    C-b:					 给应用发送一个前缀键 C-b
-    C-o:					 将当前窗口中的面板向前切换。
-    C-z:					 将tmux客户端挂起
-    !:						 将当前面板在窗口中突出显示
-    ":						 将当前的面板分割为上下两个面板
-    \#:						 列出所有的粘贴缓存
-    $:						 重命名当前会话
-    %:						 将当前面板分割为左右两个面板
-    &:						 终止当前窗口
-    ':						 显示一个窗口索引来进行选择
-    (:						 将当前附着的客户端转换到前一个会话
-    ):						 将附着的客户端转换到下一个会话
-    \,:						 重命名当前窗口
-    \-:						 删除最近的复制文本缓存
-    .:						 提示一个索引来移动当前窗口
-    0-9:					 选择0-9个窗口
-    :						 输入tmux命令提示
-    ;:						 移动到前面的活动面板
-    =:						 从一个列表中选择一个缓存来交互式粘贴。
-    ?:						 列出所有的键绑定
-    D:						 选择一个客户端来脱离其附着
-    L:						 将附着的客户端切换到最后一个会话中
-    [:						 输入赋值模式来复制文本或查看历史
-    ]:						 粘贴最近复制的文本缓存
-    c:						 创建一个新的窗口
-    d:						 脱离当前的客户端
-    f:						 提示在打开的窗口中搜索文本
-    i:						 显示关于当前窗口的一些信息
-    l:						 移动到之前选择的窗口
-    n:						 移动到下一个窗口
-    o:						 移动到当前窗口的下一个面板
-    p:						 移动到之前的窗口
-    q:						 简单地显示面板索引
-    r:						 强制重绘附着的客户端
-    s:						 为当前附着的客户端交互式地选择一个新的会话
-    t:						 显示时间
-    w:						 交互式地选择当前的窗口
-    x:						 终止当前的面板
-    z:						 切换当前面板的放大状态
-    {:						 使用之前的面板来替换当前的面板
-    }:						 使用下一个面板来替换当前的面板
-    ~:						 显示tmux之前的消息如果存在的话。
-    PageUp:					 进入复制模式并且将页面向上滚动一页。
-    Up,Down,Left,Right:		 转换到当前面板的上, 下，左，右
-    M-1到M-5（M=Alt）:       将面板按照预设的1-5个布局进行安排：偶数水平，偶数垂直，主水平，主垂直或平铺
-    Space:					 将当前窗口按照下一个预设布局进行安排
-    M-n:					 移动到下一个窗口并且带有一个响铃或者活动标记
-    M-o:					 将当前窗口中的面板从前向后反转
-    M-p:					 移动到前一个窗口并且带有响铃或者活动标记
-    C-Up, C-Down C-Left, C-Right:						 以一个单格的步调调整当前面板的大小
-    M-Up, M-Down M-Left, M-Right:						 以五个单格的步调调整当前面板的大小
+    结合键                           |含义
+-------------------------------------|---------------------
+    C-b:				             |给应用发送一个前缀键 C-b
+    C-o:				             |将当前窗口中的面板向前切换。
+    C-z:				             |将tmux客户端挂起
+    !:					             |将当前面板在窗口中突出显示
+    ":					             |将当前的面板分割为上下两个面板
+    \#:					             |列出所有的粘贴缓存
+    $:					             |重命名当前会话
+    %:					             |将当前面板分割为左右两个面板
+    &:					             |终止当前窗口
+    ':					             |显示一个窗口索引来进行选择
+    (:					             |将当前附着的客户端转换到前一个会话
+    ):					             |将附着的客户端转换到下一个会话
+    \,:					             |重命名当前窗口
+    \-:					             |删除最近的复制文本缓存
+    .:					             |提示一个索引来移动当前窗口
+    0-9:				             |选择0-9个窗口
+    :					             |输入tmux命令提示
+    ;:					             |移动到前面的活动面板
+    =:					             |从一个列表中选择一个缓存来交互式粘贴。
+    ?:					             |列出所有的键绑定
+    D:					             |选择一个客户端来脱离其附着
+    L:					             |将附着的客户端切换到最后一个会话中
+    [:					             |输入赋值模式来复制文本或查看历史
+    ]:					             |粘贴最近复制的文本缓存
+    c:					             |创建一个新的窗口
+    d:					             |脱离当前的客户端
+    f:					             |提示在打开的窗口中搜索文本
+    i:					             |显示关于当前窗口的一些信息
+    l:					             |移动到之前选择的窗口
+    n:					             |移动到下一个窗口
+    o:					             |移动到当前窗口的下一个面板
+    p:					             |移动到之前的窗口
+    q:					             |简单地显示面板索引
+    r:					             |强制重绘附着的客户端
+    s:					             |为当前附着的客户端交互式地选择一个新的会话
+    t:					             |显示时间
+    w:					             |交互式地选择当前的窗口
+    x:					             |终止当前的面板
+    z:					             |切换当前面板的放大状态
+    {:					             |使用之前的面板来替换当前的面板
+    }:					             |使用下一个面板来替换当前的面板
+    ~:					             |显示tmux之前的消息如果存在的话。
+    PageUp:				             |进入复制模式并且将页面向上滚动一页。
+    Up,Down,Left,Right:	             |转换到当前面板的上, 下，左，右
+    M-1到M-5（M=Alt）:               |将面板按照预设的1-5个布局进行安排：偶数水平，偶数垂直，主水平，主垂直或平铺
+    Space:				             |将当前窗口按照下一个预设布局进行安排
+    M-n:				             |移动到下一个窗口并且带有一个响铃或者活动标记
+    M-o:				             |将当前窗口中的面板从前向后反转
+    M-p:				             |移动到前一个窗口并且带有响铃或者活动标记
+    C-Up, C-Down C-Left, C-Right:	 |以一个单格的步调调整当前面板的大小
+    M-Up, M-Down M-Left, M-Right:	 |以五个单格的步调调整当前面板的大小
 
 键绑定可以通过bind-key和unbind-key命令来改变。
 
@@ -150,45 +160,46 @@ ttyp1。如果没有指定客户端，tmux会尝试当前使用的客户端;
 target-window specifies a window in the form session:window. session follows the same rules as for target-session, and window is looked for in order as:
 目标窗口通过session:window的格式来指定一个窗口。 会话按照target-session的规则，而窗口会按照以下的顺序来查找：
 
-    一个下面列表中的特殊标记。
-    一个窗口索引，例如'mysession:1'表示会话'mysession'中的第一个窗口。
-    一个窗口ID，例如@1。
-    一个精确的窗口名称，例如'mysession:mywindow'。
-    一个窗口名称的开始部分，例如'mysession:mywin'。
-    一个于窗口名称相匹配的fnmatch模式。
-    一个空窗口名称制定了下一个未使用的索引如果合适的话（例如new-window或link-window命令），否则会话中的当前窗口就被选择。
+   1. 一个下面列表中的特殊标记。
+   2. 一个窗口索引，例如'mysession:1'表示会话'mysession'中的第一个窗口。
+   3. 一个窗口ID，例如@1。
+   4. 一个精确的窗口名称，例如'mysession:mywindow'。
+   5. 一个窗口名称的开始部分，例如'mysession:mywin'。
+   6. 一个于窗口名称相匹配的fnmatch模式。
+   7. 一个空窗口名称制定了下一个未使用的索引如果合适的话（例如new-window或link-window命令），否则会话中的当前窗口就被选择。
 
 下面的特殊标记可用来指定一个特定的窗口。每个都具有一个可选的单字符格式。
 
-    符号        别名    含义
-
-    {start}     ^       最小数值的窗口
-    {end}       $       最大数值的窗口
-    {last}      !       最后一个窗口
-    {next}      +       按照数字的下一个窗口
-    {previous}  -       按照数字的上一个窗口
-    {mouse}     =       鼠标事件发生的窗口
+    符号      | 别名 |  含义
+--------------|------|---------------
+    {start}   |  ^    |   最小数值的窗口
+    {end}     |  $    |   最大数值的窗口
+    {last}    |  !    |   最后一个窗口
+    {next}    |  +    |   按照数字的下一个窗口
+    {previous}|  -    |   按照数字的上一个窗口
+    {mouse}   |  =    |   鼠标事件发生的窗口
 
 目标面板可以是一个面板ID或者是一个于目标窗口相似的形式，但是带有一个额外可选的跟随面板索引或面板ID的点号“.”。例如：
 如果忽略面板索引的话，那么指定窗口当前的活动面板就会被使用，下面的特殊符合可以作为面板索引使用：
 
-    符号            别名      含义
-    {last}          !   最后一个面板
-    {next}          +   数字指定的下一个面板
-    {previous}      -   数字指定的前一个面板
-    {top}               顶端面板
-    {bottom}            底端面板
-    {left}              最左端面板
-    {right}             最右端面板
-    {top-left}          左顶端面板
-    {top-right}         右顶端面板
-    {bottom-left}       左底端面板
-    {bottom-right}      右底端面板
-    {up}                活动面板上面的面板
-    {down}              活动面板下面的面板
-    {left}              活动面板左边的面板
-    {right}             活动面板右边的面板
-    {mouse}         =   鼠标事件发生的面板
+    符号           |别名  |        含义
+-------------------|------|-------------
+    {last}         | !    |        最后一个面板
+    {next}         | +    |        数字指定的下一个面板
+    {previous}     | -    |        数字指定的前一个面板
+    {top}          |      |        顶端面板
+    {bottom}       |      |        底端面板
+    {left}         |      |        最左端面板
+    {right}        |      |        最右端面板
+    {top-left}     |      |        左顶端面板
+    {top-right}    |      |        右顶端面板
+    {bottom-left}  |      |        左底端面板
+    {bottom-right} |      |        右底端面板
+    {up}           |      |        活动面板上面的面板
+    {down}         |      |        活动面板下面的面板
+    {left}         |      |        活动面板左边的面板
+    {right}        |      |        活动面板右边的面板
+    {mouse}        | =    |        鼠标事件发生的面板
 
 符合'+'和'-'可能跟随一个位移，例如:
 
@@ -434,7 +445,7 @@ copy-pipe复制所选内容并且将其管道到一个命令。例如下面的�
 粘贴缓存键会从栈中顶端的粘贴缓存中粘贴第一行。
 copy-mode命令的简介为：
 
-    copy-mode [-Mu] [-t target-pane]
+####copy-mode [-Mu] [-t target-pane]
 
 进入复制模式。-u选项向上滚动一页。 -M 开始一个鼠标拖拽（只有在绑定鼠标键绑定时有效，参考MOUSE SUPPORT）
 
@@ -459,15 +470,18 @@ tiled: 面板会尽量将面板在窗口中在行列上以偶数地方式分布�
 
 tmux自动地调整当前窗口大小中的布局大小。 注意，一个布局不能应用在多于布局默认定义的面板数量。
 
+###窗口和面板命令
 与窗口和面板相关的命令如下：
-break-pane [-dP] [-F format] [-t target-pane]
-(别名：breakp)
+
+####break-pane [-dP] [-F format] [-t target-pane]
+####(别名：breakp)
+
 将目标面板从其所在的窗口中终止，并将其作为一个新窗口中的唯一的面板。 如果指定-d,新的窗口不会称为当前的窗口。
 -P选项会在新窗口创建之后显示其信息。 默认会使用
 '#{session_name}:#{window_index}'的显示格式，但是可以通过-f来指定一个不同的格式。
 
-capture-pane [-aepPq] [-b buffer-name] [-E end-line] [-S start-line] [-t target-pane]
-(别名：capturep)
+####capture-pane [-aepPq] [-b buffer-name] [-E end-line] [-S start-line] [-t target-pane]
+####(别名：capturep)
 捕获一个面板的内容，如果指定-p，那么输出会到达stdou，否则会到达有-b指定的缓冲区（如果没有指定-b缓冲区的话就会指定一个新的缓冲区）。
 如果指定-a, 会使用备用屏幕，并且历史是不可以访问的。如果没有备用的屏幕，在没有指定-q的情况下会返回一个错误。
 如果指定-e,那么输出会包含文本转义序列和后台属性。 -C 也会转义非打印字符为八进制 \\xxx。 -J
@@ -475,15 +489,15 @@ capture-pane [-aepPq] [-b buffer-name] [-E end-line] [-S start-line] [-t target-
 -S 和 -E 指定开始和结束行的行数，0是可视面板的第一行，而负数时历史行。 '-'到 -S是历史的开始，而
 '-'到-E是可视面板的结尾。 默认情况下只会捕获面板的可视内容。
 
-choose-client [-F format] [-t target-window] [template]
+####choose-client [-F format] [-t target-window] [template]
 将一个窗口置于客户端选择模式，允许从一个列表中交互地选择一个客户端。
 在一个客户端被选择之后'%%'会由模板中的客户端pty路径替换，之后的结果会作为一个命令被执行。如果模板没有给定，会使用"detach-client
 -t '%%'"。 对于-F标记，可以参考FORMATS部分。 这个命令只有在至少一个客户端被附着之后才工作。
 
-choose-session [-F format] [-t target-window] [template]
+####choose-session [-F format] [-t target-window] [template]
 将一个窗口置于会话选择模式中，可以从一个列表中交互式地选择一个会话。当一个会话被选择时，'%%'会由模板中的会话名称替换，之后的结果会作为一个命令被执行。如果模板没有给定，会使用"switch-client -t '%%'"。对于-F标记，可以参考FORMATS部分.这个命令只有在至少有一个客户端附着时工作。
 
-choose-tree [-suw] [-b session-template] [-c window-template] [-S format] [-W format] [-t target-window]
+####choose-tree [-suw] [-b session-template] [-c window-template] [-S format] [-W format] [-t target-window]
 将窗口置于一个树选择模式，其中的会话或窗口可能是从一个列表中交互地选择的。
 默认情况下，窗口属于一个会话主要为了显示他们与一个会话的关系。
 注意choose-window和choose-session命令被包裹在choose-tree中。
@@ -496,65 +510,65 @@ choose-tree [-suw] [-b session-template] [-c window-template] [-S format] [-W fo
 对于-s和-w选项的含义可以参考FORMATS部分。
 这个命令只有当至少有一个客户端附着时工作。
 
-choose-window [-F format] [-t target-window] [template]
+####choose-window [-F format] [-t target-window] [template]
 将一个窗口置于一个选择模式，其中的窗口可以从一个列表中交互地选择。当选择一个窗口之后，'%%'会被模板中的会话名称和窗括索引替换，之后的结果作为一个命令被执行。如果没有给定模板，"select-window -t '%%'"被使用。 对于-F的含义可以参考FORMATS部分。 这个命令只有在至少一个客户端附着之后才会工作。
 
-display-panes [-t target-client]
-(别名：displayp)
+####display-panes [-t target-client]
+####(别名：displayp)
 由一个客户端来显示每个面板的可视化指示器，可以参考 display-panes-time, display-panes-colour和
 display-panes-active-colour会话选项。由于指示器在屏幕上，一个面板可以通过'0-9'键来选择。
 
-find-window [-CNT] [-F format] [-t target-window] match-string
-(别名:findw)
+####find-window [-CNT] [-F format] [-t target-window] match-string
+####(别名:findw)
 在窗口名称，标题和可见的内容中搜索fnmatch模式的匹配字符串。标记被用来控制匹配行为： -C只匹配可见窗口内容，
 -N只匹配窗口名称，-T匹配窗口标题。
 默认为-CNT。如果只有一个窗口匹配，就会被自动选择，否则就会显示一个选项列表。对于-F标记可以参考FORMATS部分。这个命令只有在至少一个客户端被附着时会工作。
 
-join-pane [-bdhv] [-l size | -p percentage] [-s src-pane] [-t dst-pane]
-(别名：joinp)
+####join-pane [-bdhv] [-l size | -p percentage] [-s src-pane] [-t dst-pane]
+####(别名：joinp)
 与split-window相似，但是取代分割dst-panel并创建一个新面板而代之的是，将其分割并将src-panel移动到空间中。
 这个可以用来逆转break-pane动作。-b选项使得src-pane被联接到dst-pane的左边或上边。
 
-kill-pane [-a] [-t target-pane]
-(别名：killp)
+####kill-pane [-a] [-t target-pane]
+####(别名：killp)
 销毁给定的pane。如果所在窗口中没有剩余的面板，该窗口也会被销毁。 -a选项会销毁除由-t指定面板之外的所有面板。
 
-kill-window [-a] [-t target-window]
-(别名：killw)
+####kill-window [-a] [-t target-window]
+####(别名：killw)
 终止当前窗口或目标窗口，将其从所链接的任意会话中移除。 -a选项终止除-t指定窗口之外的所有窗口。
 
-last-pane [-de] [-t target-window]
-(别名：lastp)
+####last-pane [-de] [-t target-window]
+####(别名：lastp)
 选择最后一个面板，-e 使得输入到面板生效，-d使得输入到面板失效。
 
-last-window [-t target-session]
-(别名:last)
+####last-window [-t target-session]
+####(别名:last)
 选择最后一个窗口，如果没有目标窗口指定，选择当前会话中的最后一个窗口。
 
-link-window [-dk] [-s src-window] [-t dst-window]
-(别名:linkw)
+####link-window [-dk] [-s src-window] [-t dst-window]
+####(别名:linkw)
 将在src-window的窗口链接到指定的dst-window。如果dst-window被指定但是不存在的话，那么src-window会被链接导那儿。
 如果给定-k并且dst-window存在，那么就会将其终止，否则就会生成一个错误。如果给定-d，新链接的窗口不会被选择。
 
-list-panes [-as] [-F format] [-t target]
-(别名：lsp)
+####list-panes [-as] [-F format] [-t target]
+####(别名：lsp)
 如果给定-a, 会湖绿target并且会列出服务器上的所有面板。
 如果给定-s，target就是一个会话（或者当前会话）。如果都没有指定，target就是一个窗口（或者当前窗口）。对于-F标记可以参考FORMATS部分。
 
-list-windows [-a] [-F format] [-t target-session]
-(别名：lsw)
+####list-windows [-a] [-F format] [-t target-session]
+####(别名：lsw)
 如果给定-a,会列出服务器上的所有窗口。 否则会列出当前会话或target-session中的窗口。对于-F标记可以参考FORMATS部分。
 
-move-pane [-bdhv] [-l size | -p percentage] [-s src-pane] [-t dst-pane]
-(别名：movep)
+####move-pane [-bdhv] [-l size | -p percentage] [-s src-pane] [-t dst-pane]
+####(别名：movep)
 与join-pane类似，但是src-pane和dst-pane可以属于相同的窗口。
 
-move-window [-rdk] [-s src-window] [-t dst-window]
-(别名: movew)
+####move-window [-rdk] [-s src-window] [-t dst-window]
+####(别名: movew)
 这个于link-window相似，除了src-window中的窗口被移动到dst-window。给定-r会话中的所有窗口都会在遵照base-index选项下按照序列顺序重新编号。
 
-new-window [-adkP] [-c start-directory] [-F format] [-n window-name] [-t target-window] [shell-command]
-(别名：neww)
+####new-window [-adkP] [-c start-directory] [-F format] [-n window-name] [-t target-window] [shell-command]
+####(别名：neww)
 创建一个新的窗口，给定-a，新建的窗口会被插入到指定target-window的下一个索引上，必要的话会将窗口向上移，否则target-window就是这个新建的窗口。
 
 如果给定-d, 会话不会将新建窗口作为当前窗口。target-window表示将会创建的窗口；如果目标窗口已经存在会显示一个错误，如果使用-k标记就会销毁。
@@ -564,61 +578,62 @@ default-command选项的值被默认使用。-c选项指定了新窗口创建的
 对于运行在tmux中的所有程序需要将TERM环境变量设置为"screen"。新的窗口会自动将"TERM=screen"加到他们的环境中，但是必须注意不要在shell启动文件中重置这个变量。
 -P 选项在新窗口创建后会打印与之相关的信息。默认情况下，使用'#{session_name}:#{window_index}'的格式，但是可以通过使用-F来指定一个不同的格式。
 
-next-layout [-t target-window]
-(别名：nextl)
+####next-layout [-t target-window]
+####(别名：nextl)
 将窗口移动到下一个布局模式并且重新安排面板来使之适应。
 
-next-window [-a] [-t target-session]
-(别名：next)
+####next-window [-a] [-t target-session]
+####(别名：next)
 移动到会话中的下一个窗口，如果-a指定，在移动到下一个窗口时带有警告。
 
-pipe-pane [-o] [-t target-pane] [shell-command]
-(别名：pipep)
+####pipe-pane [-o] [-t target-pane] [shell-command]
+####(别名：pipep)
 将target-pane中程序的输出通过管道传递给一个shell命令。一个面板可能一次只能管道给一个命令，在shell-command命令执行之前任何存在的管道都会关闭。
 shell-command字符串可能会包含status-left选项所支持的特殊字符序列。 如果没有指定shell-command,那么当前的管道就会被关闭。
 -o选项只有在没有之前的管道存在时打开一个新管道，允许一个管道通过一个单键进行切换，例如：
 
     bind-key C-p pipe-pane -o 'cat >>~/output.#I-#P'
 
-previous-layout [-t target-window]
-(别名：prevl )
+
+####previous-layout [-t target-window]
+####(别名：prevl )
 移动到会话之前的布局。
 
-previous-window [-a] [-t target-session]
-(别名:prev)
+####previous-window [-a] [-t target-session]
+####(别名:prev)
 移动到会话之前的窗口，使用-a选项会带有一个警告。
 
-rename-window [-t target-window] new-name
-(别名: renamew)
+####rename-window [-t target-window] new-name
+####(别名: renamew)
 重命名当前窗口或者由-t指定的target-window窗口为new-name
 
-resize-pane [-DLMRUZ] [-t target-pane] [-x width] [-y height] [adjustment]
-(别名：resizep)
+####resize-pane [-DLMRUZ] [-t target-pane] [-x width] [-y height] [adjustment]
+####(别名：resizep)
 重新定义面板的大小，通过-U, -D, -L或-R来调整上下左右，或者通过-x/-y指定绝对值大小。
 调整是通过行或单元格来给定的（默认为1）。
 使用-Z时，活动面板会在放大（占用整个窗口）或未放大（在布局中的正常位置）之间进行切换。
 -M 开始鼠标重定义大小（只有在鼠标键绑定时有效，参考MOUSE SUPPORT部分）
 
-respawn-pane [-k] [-t target-pane] [shell-command]
-(别名：respawnp)
+####respawn-pane [-k] [-t target-pane] [shell-command]
+####(别名：respawnp)
 在shell-comman退出之后重新激活面板（可以参考remain-on-exit 窗口选项）。如果没有给定shell-comman,
 那么面板创建时所使用的命令会被执行。面板必须是已经激活的状态，如果给定-k,任何存在的命令都会被终止。
 
-respawn-window [-k] [-t target-window] [shell-command]
-(别名：respawnw)
+####respawn-window [-k] [-t target-window] [shell-command]
+####(别名：respawnw)
 在shell-command退出之后重新激活窗口（可以参考remain-on-exit窗口选项）。 如果没有指定shell-comman,
 那么窗口创建时所使用的命令会被执行。 窗口必须是已经激活的状态，如果指定-k任何存在的命令都会被终止。
 
-rotate-window [-DU] [-t target-window]
-(别名：rotatew)
+####rotate-window [-DU] [-t target-window]
+####(别名：rotatew)
 轮换窗口中面板的位置，或者通过-U向前或者向后。
 
-select-layout [-nop] [-t target-window] [layout-name]
-(别名：selectl)
+####select-layout [-nop] [-t target-window] [layout-name]
+####(别名：selectl)
 为窗口选择一个特定的布局，如果没有指定布局名称，就会使用最后使用的预设布局并且重新布局。
 
-select-pane [-DdegLlRU] [-P style] [-t target-pane]
-(别名：selectp)
+####select-pane [-DdegLlRU] [-P style] [-t target-pane]
+####(别名：selectp)
 将target-pane面板作为target-window窗口中的活动面板，或者设置其风格（使用-P）。如果使用了-D,-L,-R或者-U的话，就会分别使用target-pane面板的下面，左边，右边或上面的面板。-l与使用last-pane命令效果一样。 -e使得输入到面板生效，-d使得输入到面板失效。
 
 每个面板具有一个风格：默认使用window-style和window-active-style选项。select-pane -P 为单个面板设置风格。
@@ -628,208 +643,157 @@ select-pane [-DdegLlRU] [-P style] [-t target-pane]
 
 -g 显示当前面板的样式。
 
-select-window [-lnpT] [-t target-window]
-(alias: selectw)
-(别名：selectw)
-Select the window at target-window. -l, -n and -p are equivalent to the last-window, next-window and previous-window commands. If -T is given and the selected window is already the current window, the command behaves like last-window.
+####select-window [-lnpT] [-t target-window]
+####(别名：selectw)
 选择目标窗口。-l,-n和-p等价于last-window,next-window和previous-window命令。
 如果给定-T,而且选择的窗口已经是当前窗口，那么命令表现为last-windown命令。
 
-split-window [-bdhvP] [-c start-directory] [-l size | -p percentage] [-t target-pane] [shell-command] [-F format]
-(alias: splitw)
-(别名：splitw)
-Create a new pane by splitting target-pane: -h does a horizontal split and -v a vertical split; if neither is specified, -v is assumed. The -l and -p options specify the size of the new pane in lines (for vertical split) or in cells (for horizontal split), or as a percentage, respectively. The -b option causes the new pane to be created to the left of or above target-pane. All other options have the same meaning as for the new-window command.
+####split-window [-bdhvP] [-c start-directory] [-l size | -p percentage] [-t target-pane] [shell-command] [-F format]
+####(别名：splitw)
 通过分割target-pane窗口来创建一个新面板: -h为水平分割，-v为垂直分割; 默认为垂直分割。
 -l和-p选项指定新面板的行（对于垂直分割）或单元格（水平分割）,或者作为百分比。-b选项使得新建面板在target-pane的左边或上边。其他的任何选项的含义于new-window命令一样。
 
-swap-pane [-dDU] [-s src-pane] [-t dst-pane]
-(alias: swapp)
-(别名：swapp)
-Swap two panes. If -U is used and no source pane is specified with -s, dst-pane is swapped with the previous pane (before it numerically); -D swaps with the next pane (after it numerically). -d instructs tmux not to change the active pane.
+####swap-pane [-dDU] [-s src-pane] [-t dst-pane]
+####(别名：swapp)
 转换两个面板。如果使用-U并且没有通过-s来指定源面板的话，dst-pane会与之前的面板进行转换;-D与下一个面板进行转换。
 -d用来指示tmux不要改变活动面板。
 
-swap-window [-d] [-s src-window] [-t dst-window]
-(alias: swapw)
-(别名：swapw)
-This is similar to link-window, except the source and destination windows are swapped. It is an error if no window exists at src-window.
+####swap-window [-d] [-s src-window] [-t dst-window]
+####(别名：swapw)
 这个与link-window类似，除了源面板与目标面板相互转换之外。如果在src-window没有窗口的话会出错。
 
-unlink-window [-k] [-t target-window]
-(alias: unlinkw)
-(别名：unlinkw)
-Unlink target-window. Unless -k is given, a window may be unlinked only if it is linked to multiple sessions - windows may not be linked to no sessions; if -k is specified and the window is linked to only one session, it is unlinked and destroyed.
+####unlink-window [-k] [-t target-window]
+####(别名：unlinkw)
 取消target-window的链接。除非给定-k选项，否则只有当一个窗口链接到多个会话时才会被取消链接-窗口不能链接到空会话;如果指定-k选项，而且窗口只有与一个会话相关联，那么窗口会被取消该链接并且被销毁。
 
-KEY BINDINGS
-键绑定：
+##键绑定2
 
-tmux allows a command to be bound to most keys, with or without a prefix key. When specifying keys, most represent themselves (for example ‘A’ to ‘Z’). Ctrl keys may be prefixed with ‘C-’ or ‘^’, and Alt (meta) with ‘M-’. In addition, the following special key names are accepted: Up, Down, Left, Right, BSpace, BTab, DC (Delete), End, Enter, Escape, F1 to F12, Home, IC (Insert), NPage/PageDown/PgDn, PPage/PageUp/PgUp, Space, and Tab. Note that to bind the ‘"’ or ‘'’ keys, quotation marks are necessary, for example:
 tmux允许一个命令被绑定到大多数键上-无论时候带有前导键。当指定键时，大部分键代表其本身字面量含义（例如'A-Z'）。
 Control键可能表示为'C-'或'^'前导，而Alt(meta)表示为'M-'.此外，特殊的键名称也是被接受的：Up,Down,Left,Right,BSpace,BTab,DC(delete),End,Enter,Escape,F1-F12,Home,IC(insert), NPage/PageDown/PgDn, PPage/PageUp/PgUp,Space,和Tab。注意为了绑定双引号或单引号键，引号标记是必需的，例如：
+
     bind-key '"' split-window 
     bind-key "'" new-window
 
-Commands related to key bindings are as follows:
+###键绑定命令
 与键绑定相关的命令如下：
 
-bind-key [-cnr] [-t mode-table] [-T key-table] key command [arguments]
-(alias: bind)
-(别名:bind)
-Bind key key to command. Keys are bound in a key table. By default (without -T), the key is bound in the prefix key table. This table is used for keys pressed after the prefix key (for example, by default ‘c’ is bound to new-window in the prefix table, so ‘C-b c’ creates a new window). The root table is used for keys pressed without the prefix key: binding ‘c’ to new-window in the root table (not recommended) means a plain ‘c’ will create a new window. -n is an alias for -T root. Keys may also be bound in custom key tables and the switch-client -T command used to switch to them from a key binding. The -r flag indicates this key may repeat, see the repeat-time option.
+####bind-key [-cnr] [-t mode-table] [-T key-table] key command [arguments]
+####(别名:bind)
 将键绑定到命令。键被绑定到一个键表中。
 默认情况（没有-T)时，键被绑定到前导键表中。这个表被用在前导键键入之后再键入的键（例如，'c'默认绑定为前导键表中的新建窗口命令，所以'C-b c'会创建一个新窗口）。根键表被用在不需要前导键的键输入：将'c'在根键表中绑定为新建窗口命令时意味着一个普通的'c'键就会创建一个新窗口。-n 是 -T root的别名。键同样可以绑定到客制化的键表中，switch-client -T command 用来从一个键绑定中切换到相应的键。 -r标记指定这个键可以重复，参考repeat-time选项。
 
-If -t is present, key is bound in mode-table: the binding for command mode with -c or for normal mode without. See the WINDOWS AND PANES section and the list-keys command for information on mode key bindings.
-如果出现-t选项，那么键会绑定到一个mode-table(模式表): 使用-c来绑定到命令模式，缺省时绑定为普通模式。 可以参考WINDOWS AND
-PANES部分，并且 list-keys命令可以查看模式键绑定。
+如果出现-t选项，那么键会绑定到一个mode-table(模式表): 使用-c来绑定到命令模式，缺省时绑定为普通模式。 可以参考WINDOWS AND PANES部分，并且 list-keys命令可以查看模式键绑定。
 
-To view the default bindings and possible commands, see the list-keys command.
 为了查看默认的绑定和可用的命令可以参考list-keys 命令：
 
-list-keys [-t mode-table] [-T key-table]
-(alias: lsk)
-(别名：lsk)
-List all key bindings. Without -T all key tables are printed. With -T only key-table.
+####list-keys [-t mode-table] [-T key-table]
+####(别名：lsk)
 列出所有的键绑定。 没有指定-T时会打印所有的键表，指定-T时只会打印key-table.
 
-With -t, the key bindings in mode-table are listed; this may be one of: vi-edit, emacs-edit, vi-choice, emacs-choice, vi-copy or emacs-copy.
 带-t时，在模式表中的键绑定会被列出来; 模式可能为以下之一：vi-edit,emacs-edit,vi-choice,emacs-choice,
 vi-copy或emcas-copy。
 
-send-keys [-lMR] [-t target-pane] key ...
-(alias: send)
-(别名:send)
-Send a key or keys to a window. Each argument key is the name of the key (such as ‘C-a’ or ‘npage’ ) to send; if the string is not recognised as a key, it is sent as a series of characters. The -l flag disables key name lookup and sends the keys literally. All arguments are sent sequentially from first to last. The -R flag causes the terminal state to be reset.
+####send-keys [-lMR] [-t target-pane] key ...
+####(别名:send)
 发送一个或多个键到一个窗口中，其中的每个参数key是发送的键的名称（例如'C-a'或者'npage'）；如果字符串不能作为键来识别，就会作为一系列字符串发送。
 -l标记让键名查找失效并且发送键的字面量值。所有的参数被按照先后顺序序列地发送。 -R标记导致终端状态被重置。
 
--M passes through a mouse event (only valid if bound to a mouse key binding, see MOUSE SUPPORT).
 -M 通过一个鼠标时间传递（只有当绑定一个鼠标键绑定时有效，参考MOUSE SUPPORT）。
 
-send-prefix [-2] [-t target-pane]
-Send the prefix key, or with -2 the secondary prefix key, to a window as if it was pressed.
+####send-prefix [-2] [-t target-pane]
 发送前导键-或者发送二级前导键如果与-2一起使用时-到一个窗口就像该键被按下一样。
 
-unbind-key [-acn] [-t mode-table] [-T key-table] key
-(alias: unbind)
-(别名：unbind)
-Unbind the command bound to key. -c, -n, -T and -t are the same as for bind-key. If -a is present, all key bindings are removed.
+####unbind-key [-acn] [-t mode-table] [-T key-table] key
+####(别名：unbind)
 取消命令到键的绑定，-c,-n,-T 和-t与bind-key命令的含义一样。 如果-a存在，所有的键绑定都会被移除。
 
-OPTIONS
-选项
-The appearance and behaviour of tmux may be modified by changing the value of various options. There are three types of option: server options, session options and window options.
+##选项
 tmux的外观和行为可以通过修改各个选项的值来进行改变，具有三种选项：服务器选项，会话选项和窗口选项。
 
-The tmux server has a set of global options which do not apply to any particular window or session. These are altered with the set-option -s command, or displayed with the show-options -s command.
 tmux服务器具有一个全局选项集合-这个选项集合不会应用到任何特定的窗口或会话中。 这些选项通过set-option -s
 命令进行修改，或者通过show-options -s 命令进行显示。
 
-In addition, each individual session may have a set of session options, and there is a separate set of global session options. Sessions which do not have a particular option configured inherit the value from the global session options. Session options are set or unset with the set-option command and may be listed with the show-options command. The available server and session options are listed under the set-option command.
 此外，每个单独的会话可能具有一个会话选项集合，同时具有一个分开全局会话选项集合。
 没有特定选项配置的会话会从全局会话选项中继承其值。会话选项可以通过set-option命令进行设置或重置，
 可以通过show-options命令来列出会话选项。可用的服务器和会话选项会在set-option命令下列出。
 
-Similarly, a set of window options is attached to each window, and there is a set of global window options from which any unset options are inherited. Window options are altered with the set-window-option command and can be listed with the show-window-options command. All window options are documented with the set-window-option command.
 类似地，每个窗口都附着了一个窗口选项集合，并且具有一个全局窗口集合来继承所有的重置选项。
 窗口选项使用set-window-option命令来进行修改，并且可以通过show-window-options命令来列出。
 所有的窗口选项使用set-window-option命令归档。
 
-tmux also supports user options which are prefixed with a ‘@’. User options may have any name, so long as they are prefixed with ‘@’, and be set to any string. For example:
 tmux也支持以'@'作为前导的用户选项， 用户选项可以具有任何名称，可以被设置为任何字符串，只要具有'@'作为前导，例如：
 
     $ tmux setw -q @foo "abc123" 
     $ tmux showw -v @foo 
     abc123
 
-Commands which set options are as follows:
+###选项设置
 设置选项的命令如下：
 
-set-option [-agoqsuw] [-t target-session | target-window] option value
-(alias: set)
-(别名：set)
-Set a window option with -w (equivalent to the set-window-option command), a server option with -s, otherwise a session option.
+####set-option [-agoqsuw] [-t target-session | target-window] option value
+####(别名：set)
 通过-w来设置窗口选项(与set-window-option命令等价)，-s设置服务器选项，否则设置会话选项。
 
-If -g is specified, the global session or window option is set. The -u flag unsets an option, so a session inherits the option from the global options. It is not possible to unset a global option.
 如果指定-g，那么全局会话或窗口选项就会被设置。 -u标记用来重置选项，所以一个会话从全局选项中来继承。
 不能重置一个全局选项。
-
-The -o flag prevents setting an option that is already set.
 -o标记阻止设置一个已经存在的选项。
 
-The -q flag suppresses errors about unknown options.
 -q标记会取消位置选项发生的错误。
 
-With -a, and if the option expects a string or a style, value is appended to the existing setting. For example:
 带有-a时，如果选项期待一个字符串或者一个样式，那么只会被附加在已经设置的值后面，例如：
 
     set -g status-left "foo" 
     set -ag status-left "bar"
 
-Will result in ‘foobar’. And:
 会得到'foobar'结果，而：
 
     set -g status-style "bg=red" 
     set -ag status-style "fg=blue"
 
-Will result in a red background and blue foreground. Without -a, the result would be the default background and a blue foreground.
 会得到一个红所背景和蓝色前景的结果。 没有-a时，这个值会使用默认的背景和一个蓝色前景。
 
-Available window options are listed under set-window-option.
 可用的窗口选项在set-window-option下列出。
 
-value depends on the option and may be a number, a string, or a flag (on, off, or omitted to toggle).
-选项的值依赖于选项，可以为数字，字符串，或者一个标记（on/off/省略）。
+选项的值依赖于选项类型，可以为数字，字符串，或者一个标记（on/off/省略）。
 
-Available server options are:
+###服务器选项
 可选的服务器选项有：
 
-buffer-limit number
-Set the number of buffers; as new buffers are added to the top of the stack, old ones are removed from the bottom if necessary to maintain this maximum length.
+####buffer-limit number
 设置缓冲器数量; 新的缓冲器被放置在栈顶端，旧的缓冲器在维护最大长度时有必要时从栈底端移除。
 
-default-terminal terminal
-Set the default terminal for new windows created in this session - the default value of the TERM environment variable. For tmux to work correctly, this must be set to ‘screen’, ‘tmux’ or a derivative of them.
+####default-terminal terminal
 为会话中新创键的窗口设置一个默认的终端-默认值为TERM环境变量。为了让tmux正确工作，这个值必须设置为'screen','tmux'或者来自他们的一个派生值。
 
-escape-time time
-Set the time in milliseconds for which tmux waits after an escape is input to determine if it is part of a function or meta key sequences. The default is 500 milliseconds.
+####escape-time time
 设置一个tmux用来在接受到一个转义字符输入时的等待毫秒数，以此让tmux来判断该字符时函数的一部分还是一个meta键序列的一部分。
 默认为500毫秒。
 设置一个tmux用来在接受到一个转义字符输入时的等待毫秒数，以此让tmux来判断该字符时函数的一部分还是一个meta键序列的一部分。
 默认为500毫秒。
 
-exit-unattached [on | off]
-If enabled, the server will exit when there are no attached clients.
+####exit-unattached [on | off]
 如果生效，服务器会在没有任何附着的客户端时退出。
 
 
-focus-events [on | off]
-When enabled, focus events are requested from the terminal if supported and passed through to applications running in tmux. Attached clients should be detached and attached again after changing this option.
+####focus-events [on | off]
 如果生效，在终端支持的情况下会从终端获取聚焦事件请求，然后通过tmux中运行的应用来传递。
 附着的客户端应该被脱离附着状态然后在选项修改之后重新进行附着。
 
-message-limit number
-Set the number of error or information messages to save in the message log for each client. The default is 100.
+####message-limit number
 设置每个客户端保存到消息日志中的错误或信息消息的数量，默认为100。
 
-set-clipboard [on | off]
-Attempt to set the terminal clipboard content using the \e]52;...\007 xterm(1) escape sequences. This option is on by default if there is an Ms entry in the terminfo(5) description for the client terminal. Note that this feature needs to be enabled in xterm(1) by setting the resource:
+####set-clipboard [on | off]
 尝试使用\e]52;...\007 xterm转义序列来设置终端的剪切版。
 如果在客户终端的terminfo描述中存在一个Ms实体，那么这个选项默认为on. 注意在xterm中需要设置以下资源来让这个特性生效：
+
     disallowedWindowOps: 20,21,SetXprop
 
-Or changing this property from the xterm(1) interactive menu when required.
 或者在需要的时候从xterm交互中改变这个属性值
 
-terminal-overrides string
-Contains a list of entries which override terminal descriptions read using terminfo(5). string is a comma-separated list of items each a colon-separated string made up of a terminal type pattern (matched using fnmatch(3)) and a set of name=value entries.
+####terminal-overrides string
 包含了一个个实体列表来重载使用terminfo读取的终端描述信息。
 字符串是一个"逗号"分割的项目列表，每个项目是一个':'分割的字符串来组成终端类型模式以及一个name=value实体集合。
 
-For example, to set the ‘clear’ terminfo(5) entry to ‘\e[H\e[2J’ for all terminal types and the ‘dch1’ entry to ‘\e[P’ for the ‘rxvt’ terminal type, the option could be set to the string:
 例如，为了给所有的终端类型设置terminfo实体'clear'为'\e[H\e[J'，以及将'rxvt'终端类型的实体'dch1'的值设置为'\e[P',
 那么这个选项会按照以下字符串进行设置：
 
@@ -839,60 +803,62 @@ For example, to set the ‘clear’ terminfo(5) entry to ‘\e[H\e[2J’ for all
 
     "*256col*:colors=256,xterm*:XT"
 
+###会话选项
+
 可用的会话选项有：
 
-assume-paste-time milliseconds
+####assume-paste-time milliseconds
 如果被键入的键快于用毫秒指定的值，那么这些键会被假设为粘贴而不是键入，而且tmux键绑定不会被执行。默认为一毫秒，0用来让选项失效。
 
-base-index index
+####base-index index
 设置在创建一个新窗口时应该搜索的未使用索引的基索引，默认为0。
 
-bell-action [any | none | current]
+####bell-action [any | none | current]
 窗口响铃动作，any表示连接到一个会话的任何窗口中的响铃会导致这个会话中的当前窗口中的一个响铃，none表示所有的响铃被忽略，current表示除了当前窗口之外的窗口中的响铃将会被忽略。
 
-bell-on-alert [on | off]
+####bell-on-alert [on | off]
 如果为on，在出现一个警告时，终端会响铃。
 
-default-command shell-command
+####default-command shell-command
 设置新窗口所使用的命令（如果没有指定就是窗口创建时的命令）为shell-command, 可能为任何sh命令。
 默认是一个空字符串，用来指示tmux使用默认shell选项来创建一个登录shell。
 
-default-shell path
+####default-shell path
 指定默认的shell，
 当default-command为空时，这个会作为新建窗口的登录shell，这个path值必须为完整的路径名。在启动之后，tmux会尝试从第一个合适的SHELL环境变量中来设置为默认值，shell由getpwuid或者 /bin/sh。 这个选项在将tmux作为一个登录shell使用时应该被配置。
 
-destroy-unattached [on | off]
+####destroy-unattached [on | off]
 如果生效的话，当会话不再附着在任何客户端时就会被销毁。
 
-detach-on-destroy [on | off]
+####detach-on-destroy [on | off]
 如果为on(默认值), 当附着的会话被销毁时，客户端会脱离附着。 如果off,客户端会被切换为剩余会话中的最近活动的会话。
 
-display-panes-active-colour colour
+####display-panes-active-colour colour
 设置为活动面板显示指令的display-panes命令所使用的colour。
 
-display-panes-colour colour
+####display-panes-colour colour
 设置为不活动面板显示指令的display-panes命令所使用的colour。
 
-display-panes-time time
+####display-panes-time time
 以毫秒为淡灰来设置display-panes命令显示指令出现的时间。
 
-display-time time
+####display-time time
 设置状态行消息和其他屏幕指令显示的时间总和，时间是以毫秒指定的。
 
-history-limit lines
+####history-limit lines
 设置窗口历史持有的最大行数，这个设置只会应用在新窗口上--退出时窗口历史不会重写大小并且会保留在其创建时段的限制。
 
-lock-after-time number
+####lock-after-time number
 在number秒时间不活动后会锁定会话（与lock-session命令类似），如果lock-server选项被设置的话，那么整个服务器（所有会话）都会被锁定。默认为不锁定（number为0)。
 
-lock-command shell-command
+####lock-command shell-command
 锁定每个客户端时运行的命令，默认为lock -np 命令。
 
-lock-server [on | off]
+####lock-server [on | off]
 如果选项为on(默认值), 与每个会话单独锁定不同的是，整个服务器会在所有会话被锁定时锁定。
 作为一个会话选项这个没有什么影响，这个必须时一个全局选项。
 
-message-command-style style
+####message-command-style style
 设置状态行命令样式，样式是一个由逗号分割的字符列表来指定的。
 这些样式可能时'bg=colour'来设置背景颜色，'fg=colour'来设置前景颜色，另外有下面指定的属性列表：
 颜色值可以为这些颜色中的一个：black,red,green, yellow, blue, magenta,cyan,white,aixterm bright
@@ -900,6 +866,7 @@ variants(如果支持的话,会有:brightred,breightgreen，等)，
 256-colour集合中从colour0到colour255为默认值，或者一个十六进制的RGB字符串，例如'#ffffff'-会从默认的256-colour集合中选择最匹配的颜色。
 属性既可以为none或者一个逗号分割一个或多个包含(bright(或bold),dim，underscore,blink,reverse,
 hidden或者italics)的列表来开启属性，或者带有'no'前缀的属性来关闭属性。
+
 样例有:
 
     fg=yellow,bold,underscore,blink 
@@ -907,52 +874,52 @@ hidden或者italics)的列表来开启属性，或者带有'no'前缀的属性�
     
 如果set-option命令具有一个 -a标记的话，新的样式会添加进来，否则已经存在的样式被替换。
 
-message-style style
+####message-style style
 设置状态行消息样式，对于如何指定样式，可以参考message-command-style选项。
 
-mouse [on | off]
+####mouse [on | off]
 如果为on,tmux会捕获鼠标并且允许鼠标时间作为键绑定进行结合。 可以参考MOUSE SUPPORT 部分详解。
 
-mouse-utf8 [on | off]
+####mouse-utf8 [on | off]
 如果生效，在UTF-8终端请求鼠标输入作为UTF-8。
 
-prefix key
+####prefix key
 设置接收到的key作为前导键
 
-prefix2 key
+####prefix2 key
 设置接收到的键作为二级前导键。
 
-renumber-windows [on | off]
+####renumber-windows [on | off]
 如果为on,
 当一个窗口在会话中关闭时，自动地将其他窗口按照数字顺序重新编序。这回参考base-index选项如果设置了这个选项的话。如果为off,不会对窗口进行重新排序。
 
-repeat-time time
+####repeat-time time
 允许指定的时间内（默认为500毫秒）在不重新输入前导键时输入多个命令。一个键是否可以重复可以在使用bind-key命令结合时使用-r选项进行设置。
 对于与resize-pane命令结合的默认键的重复是开启的。
 
-set-remain-on-exit [on | off]
+####set-remain-on-exit [on | off]
 为在这个会话中任何第一次创建的窗口设置remain-on-exit窗口选项。当这个选项为true时，运行程序所在的窗口在程序退出时不会关闭，而是保持打开但是不活动。
 可以使用respawn-window命令来重新激活这个窗口，或者使用kill-window来销毁窗口。
 
 如果tsl和fslterminfo实体存在的话，会尝试用其来设置客户终端的标题。 如果终端显示为一个xterm的话tmux自动将其设置为\e]2;...\007序列。这个选项默认为off。注意elinks只会在设置了STY环境变量时才尝试设置窗口标题。
 
-set-titles-string string
+####set-titles-string string
 如果set-titles为on，那么字符串string就会用来设置窗口标题。 格式被扩展，参考FORMATS部分。
 
-status [on | off]
+####status [on | off]
 显示或隐藏状态行。
 
-status-interval interval
+####status-interval interval
 在每个间隔时间段更新状态栏。 默认时没15秒更新。如果为0会让时间间隔重绘状态失效。
 
-status-justify [left | centre | right]
+####status-justify [left | centre | right]
 设置状态行窗口列表组件的位置：left，center,或者right对齐。
 
-status-keys [vi | emacs]
+####status-keys [vi | emacs]
 在状态栏使用vi或者emacs-样式的键绑定，例如在命令提示时。默认为emacs, 除非VISUAL
 或者EDITOR环境变量被设置并且包含字符串'vi'。
 
-status-left string
+####status-left string
 将字符串（默认为会话名称）显示在状态栏的左边。字符串会通过strftime传递并且格式会被扩展，也可能会包含下面特殊字符序列的任意字符：
 
     字符对          替换为
@@ -976,96 +943,93 @@ shell命令的执行会带有tmux的全局变量集合（参考 ENVIRONMENT部�
 默认字符串中的UTF-8不会被解释，需要使用status-utf8选项来开启UTF-8。
 默认值为'[#s]'。
 
-status-left-length length
+####status-left-length length
 设置状态栏左边组件的最大长度，默认为10。
 
-status-left-style style
+####status-left-style style
 设置状态行左边部分的样式，参考message-style-style选项来指定样式。
 
-status-position [top | bottom]
+####status-position [top | bottom]
 设置状态行的位置。
 
-status-right string
+####status-right string
 显示字符串在状态栏的右边，默认为带双引号的当前窗口标题以及日期时间会被显示。与status-left类似，字符串也会传递给strftime,字符对会被替换而且UTF-8也依赖于status-utf8选项。
 
-status-right-length length
+####status-right-length length
 设置状态栏右边组件的最大长度，默认为10。
 
-status-right-style style
+####status-right-style style
 设置状态行右边部分的样式，参考message-command-style选项设置样式。
 
-status-style style
+####status-style style
 设置状态行样式，参考message-command-style选项设置样式。
 
-status-utf8 [on | off]
+####status-utf8 [on | off]
 指示tmux将status-left和status-right中的字符串中的top-bit-set当作UTF-8处理;值得注意的时，这对于宽字符很重要。默认为off。
 
-update-environment variables
+####update-environment variables
 设置一个包含由空格分开的环境变量列表字符串--这些环境变量会在新会话创建时或一个已存在的会话被附着时复制到会话环境中。任何在源环境中不存在的变量会从会话环境中设置为移除（类似于将-r传递给set-environment命令）。 默认值为"DISPLAY SSH_ASKPASS SSH_AUTH_SOCK SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY"。
 
-visual-activity [on | off]
+####visual-activity [on | off]
 如果为on, 当活动出现在一个由monitor-activity窗口选项生效的窗口中时显示一个状态行。
 
-visual-bell [on | off]
+####visual-bell [on | off]
 如果为on,响铃时会显示一个消息而不是将其传递到终端（会产生一个声音）。可以参考bell-action选项。
 
-visual-silence [on | off]
+####visual-silence [on | off]
 如果monitor-silence生效的话，那么当时间间隔在一个指定窗口中过期时会打印一个消息。
 
-word-separators string
+####word-separators string
 设置会话关于单词分隔符字符的概念，主要是为了复制模式中的下一个或前一个单词命令的目的。默认为'-_@'。
 
-set-window-option [-agoqu] [-t target-window] option value
-(别名：setw)
+####set-window-option [-agoqu] [-t target-window] option value
+####(别名：setw)
 Set a window option. The -a, -g, -o, -q and -u flags work similarly to the set-option command.
 
-Supported window options are:
+###窗口选项
 支持的窗口选项有:
-aggressive-resize [on | off]
-Aggressively resize the chosen window. This means that tmux will resize the window to the size of the smallest session for which it is the current window, rather than the smallest session to which it is attached. The window may resize when the current window is changed on another sessions; this option is good for full-screen programs which support SIGWINCH and poor for interactive programs such as shells.
+
+####aggressive-resize [on | off]
 积极地重新调整所选窗口大小。意味着tmux会重新调整窗口的尺寸为当前窗口的最小会话尺寸，而不是其附着的最小的会话。当当前窗口改变为另外一个会话时窗口会重新调整大小;这个选项对于支持SIGWINCH的全屏程序有好处而对于交互式程序如shell不是太好。
 
-allow-rename [on | off]
-Allow programs to change the window name using a terminal escape sequence (\033k...\033\\). The default is on.
+####allow-rename [on | off]
 允许程序通过终端转义序列(\033k...\033\\)改变窗口名称。默认为on。
 
-alternate-screen [on | off]
-This option configures whether programs running inside tmux may use the terminal alternate screen feature, which allows the smcup and rmcup terminfo(5) capabilities. The alternate screen feature preserves the contents of the window when an interactive application starts and restores it on exit, so that any output visible before the application starts reappears unchanged after it exits. The default is on.
+####alternate-screen [on | off]
 这个选项用来配置运行在tmux中的程序是否可以使用终端的被用屏幕特性-允许terminfo的smcup和rmcup能力。被用屏幕特性在一个交互式程序开启并且在从退出后恢复之后可以保留窗口的内容，
 这样任何程序开始之前的可视输出会在程序退出之后重新出现。默认为on。
 
-automatic-rename [on | off]
-Control automatic window renaming. When this setting is enabled, tmux will rename the window automatically using the format specified by automatic-rename-format. This flag is automatically disabled for an individual window when a name is specified at creation with new-window or new-session, or later with rename-window, or with a terminal escape sequence. It may be switched off globally with:
+####automatic-rename [on | off]
 控制自动化窗口命名。当开启这个设置时，tmux会使用由automatic-rename-format指定的格式来自动地重命名窗口。对于由new-window和new-session在创建时，或者之后通过rename-window或者使用终端转义序列指定的窗口名称, 这个标识会自动失效。可以通过以下方式来将其在全局范围内关闭：
 
     set-window-option -g automatic-rename off
 
-automatic-rename-format format
+
+####automatic-rename-format format
 The format (see FORMATS) used when the automatic-rename option is enabled.
 在automatic-rename选项生效时会使用这个格式（参考FORMATS）。
 
-c0-change-interval interval
-c0-change-trigger trigger
+####c0-change-interval interval
+####c0-change-trigger trigger
 These two options configure a simple form of rate limiting for a pane. If tmux sees more than trigger C0 sequences that modify the screen (for example, carriage returns, linefeeds or backspaces) in one millisecond, it will stop updating the pane immediately and instead redraw it entirely every interval milliseconds. This helps to prevent fast output (such as yes(1)) overwhelming the terminal. The default is a trigger of 250 and an interval of 100. A trigger of zero disables the rate limiting.
 
 
-clock-mode-colour colour
-Set clock colour.
+####clock-mode-colour colour
 设置时钟颜色。
 
-clock-mode-style [12 | 24]
-Set clock hour format.
+####clock-mode-style [12 | 24]
 设置时钟小时格式
 
-force-height height
-force-width width
+####force-height height
+####force-width width
 Prevent tmux from resizing a window to greater than width or height. A value of zero restores the default unlimited setting.
 组织tmux将窗口的大小值超过width或height, 0值会恢复默认无限制设置。
 
-main-pane-height height
-main-pane-width width
+####main-pane-height height
+####main-pane-width width
 Set the width or height of the main (left or top) pane in the main-horizontal or main-vertical layouts.
 在
+
 mode-keys [vi | emacs]
 Use vi or emacs-style key bindings in copy and choice modes. As with the status-keys option, the default is emacs, unless VISUAL or EDITOR contains ‘vi’.
 mode-style style
@@ -1120,7 +1084,9 @@ Show the window options (or a single window option if given) with -w (equivalent
 show-window-options [-gv] [-t target-window] [option]
 (alias: showw)
 List the window options or a single option for target-window, or the global window options if -g is used. -v shows only the option value, not the name.
+
 MOUSE SUPPORT
+##鼠标支持
 If the mouse option is on (the default is off), tmux allows mouse events to be bound as keys. The name of each key is made up of a mouse event (such as ‘MouseUp1’) and a location suffix (one of ‘Pane’ for the contents of a pane, ‘Border’ for a pane border or ‘Status’ for the status line). The following mouse events are available:
 
     MouseDown1	MouseUp1	MouseDrag1
