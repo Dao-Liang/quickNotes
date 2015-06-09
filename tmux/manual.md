@@ -167,7 +167,8 @@ target-window specifies a window in the form session:window. session follows the
     4. 一个精确的窗口名称，例如'mysession:mywindow'。
     5. 一个窗口名称的开始部分，例如'mysession:mywin'。
     6. 一个于窗口名称相匹配的fnmatch模式。
-    7. 一个空窗口名称制定了下一个未使用的索引如果合适的话（例如new-window或link-window命令），否则会话中的当前窗口就被选择。
+    7. 一个空窗口名称制定了下一个未使用的索引如果合适的话（例如new-window或link-window命令），
+       否则会话中的当前窗口就被选择。
 
 下面的特殊标记可用来指定一个特定的窗口。每个都具有一个可选的单字符格式。
 
