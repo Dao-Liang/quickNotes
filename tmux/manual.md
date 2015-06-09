@@ -931,15 +931,13 @@ variants(如果支持的话,会有:brightred,breightgreen，等)。
     status-left string
 将字符串（默认为会话名称）显示在状态栏的左边。字符串会通过strftime传递并且格式会被扩展，也可能会包含下面特殊字符序列的任意字符：
 
-    字符对          替换为
-    #(shell-command)	First line of the command's output
-    #(shell-command)	命令输出的首行。
-    #[attributes]	Colour or attribute change
-    #[attributes]	颜色或属性改变
-    ##	A literal ‘#’
-    ##	一个'#'字面量值。
+    字符对                 | 替换值
+---------------------------|---------------------------------
+    #(shell-command)	   | 命令输出的首行。
+    #[attributes]	       | 颜色或属性改变
+    ##	                   | 一个'#'字面量值。
 
-\#(shell-command)形式执行'shell-command'然后插入其输出的首行。
+'\#(shell-command)'形式执行'shell-command'然后插入其输出的首行。
 注意shell命令只会在由status-interval选项指定的时间间隔内执行一次：如果同时重绘状态的话，会使用之前输出结果。
 shell命令的执行会带有tmux的全局变量集合（参考 ENVIRONMENT部分）。
 对于如何设置名字和标题的细节可以参考NAMES AND TITLES 部分。 对于允许设定的属性可以参考message-command-style选项。
