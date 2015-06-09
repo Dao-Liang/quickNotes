@@ -379,55 +379,56 @@ shell-command只有在使用-t选项时合法。
 这个模式时使用 copy-mode命令来进入的，默认绑定到'\['上。也会在一个命令产生输出时进入，例如通过键绑定执行的list-keys。
 可用的键依赖于是选择emacs还是vi模式（参考 mode-keys 选项）。 下面的键对于不同的模式具有合适的支持。
 
-    函数                        vi模式      emacs模式
-    Append selection	        A	
-    Back to indentation	        ^	        M-m
-    Bottom of history	        G	        M-<
-    Clear selection	Escape	    C-g
-    Copy selection	Enter	    M-w
-    Copy to named buffer    	"   	
-    Cursor down	                j       	Down
-    Cursor left	                h	        Left
-    Cursor right	            l	        Right
-    Cursor to bottom line	    L	
-    Cursor to middle line	    M	        M-r
-    Cursor to top line	        H	        M-R
-    Cursor up	                k	        Up
-    Delete entire line	        d	        C-u
-    Delete/Copy to end of line	D	        C-k
-    End of line	                $	        C-e
-    Go to line              	:           g
-    Half page down	            C-d	        M-Down
-    Half page up	            C-u	        M-Up
-    Jump again	                ;	        ;
-    Jump again in reverse   	,	        ,
-    Jump backward	            F	        F
-    Jump forward	            f       	f
-    Jump to backward	        T	
-    Jump to forward	            t	
-    Next page	                C-f	        Page down
-    Next space	                W	
-    Next space, end of word	    E	
-    Next word	                w	
-    Next word end	            e	        M-f
-    Other end of selection	    o	
-    Paste buffer	            p	        C-y
-    Previous page	            C-b	        Page up
-    Previous space	            B	
-    Previous word	            b	        M-b
-    Quit mode	                q	        Escape
-    Rectangle toggle	        v	        R
-    Scroll down	                C-Down/C-e	C-Down
-    Scroll up	                C-Up/C-y	C-Up
-    Search again	            n	        n
-    Search again in reverse	    N	        N
-    Search backward	            ?	        C-r
-    Search forward	            /	        C-s
-    Select line	                V	
-    Start of line	            0	        C-a
-    Start selection	            Space	    C-Space
-    Top of history	            g	        M->
-    Transpose characters		C-t
+    函数                       |vi模式     |emacs模式
+-------------------------------|-----------|----------------
+    Append selection	       |A          |	
+    Back to indentation	       |^	       |M-m
+    Bottom of history	       |G	       |M-<
+    Clear selection	Escape	   |C-g        |
+    Copy selection	Enter	   |M-w        |
+    Copy to named buffer       |"   	   |
+    Cursor down	               |j          |Down
+    Cursor left	               |h	       |Left
+    Cursor right	           |l	       |Right
+    Cursor to bottom line	   |L	       |
+    Cursor to middle line	   |M	       |M-r
+    Cursor to top line	       |H	       |M-R
+    Cursor up	               |k	       |Up
+    Delete entire line	       |d	       |C-u
+    Delete/Copy to end of line |D	       |C-k
+    End of line	               |$	       |C-e
+    Go to line                 |:          |g
+    Half page down	           |C-d	       |M-Down
+    Half page up	           |C-u	       |M-Up
+    Jump again	               |;	       |;
+    Jump again in reverse      |,	       |,
+    Jump backward	           |F	       |F
+    Jump forward	           |f          |f
+    Jump to backward	       |T	       |
+    Jump to forward	           |t	       |
+    Next page	               |C-f	       |Page down
+    Next space	               |W	       |
+    Next space, end of word	   |E	       |
+    Next word	               |w	       |
+    Next word end	           |e	       |M-f
+    Other end of selection	   |o	       |
+    Paste buffer	           |p	       |C-y
+    Previous page	           |C-b	       |Page up
+    Previous space	           |B	       |
+    Previous word	           |b	       |M-b
+    Quit mode	               |q	       |Escape
+    Rectangle toggle	       |v	       |R
+    Scroll down	               |C-Down/C-e |C-Down
+    Scroll up	               |C-Up/C-y   |C-Up
+    Search again	           |n	       |n
+    Search again in reverse	   |N	       |N
+    Search backward	           |?	       |C-r
+    Search forward	           |/	       |C-s
+    Select line	               |V          |	
+    Start of line	           |0	       |C-a
+    Start selection	           |Space	   |C-Space
+    Top of history	           |g	       |M->
+    Transpose characters	   |C-t        |
 
 下一个和上一个单词简默认使用空格和'-','_'以及'@'字符作为单词分隔符，但是可以通过设置会话的word-separators选项进行调整。下一个单词会移动到下一个单词的开始位置，下一个单词的末尾会移动到下一个单词的末尾位置，
 前一个单词移动到前一个单词的开始位置。 三个下一个和前一个空格键具有相似的作用但是单独使用一个空国作为单词分隔符。
