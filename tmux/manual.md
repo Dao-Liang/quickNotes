@@ -544,13 +544,13 @@ tmux自动地调整当前窗口大小中的布局大小。 注意，一个布局
 将一个窗口置于客户端选择模式，允许从一个列表中交互地选择一个客户端。
 在一个客户端被选择之后'%%'会由模板中的客户端pty路径替换，之后的结果会作为一个命令被执行。
 如果模板没有给定，会使用"detach-client -t '%%'"。 
-对于-F标记，可以参考FORMATS部分。 这个命令只有在至少一个客户端被附着之后才工作。
+对于-F标记，可以参考[FORMATS](#格式)部分。 这个命令只有在至少一个客户端被附着之后才工作。
 
     choose-session [-F format] [-t target-window] [template]
 将一个窗口置于会话选择模式中，可以从一个列表中交互式地选择一个会话。
 当一个会话被选择时，'%%'会由模板中的会话名称替换，之后的结果会作为一个命令被执行。
 如果模板没有给定，会使用"switch-client -t '%%'"。
-对于-F标记，可以参考FORMATS部分。这个命令只有在至少有一个客户端附着时工作。
+对于-F标记，可以参考[FORMATS](#格式)部分。这个命令只有在至少有一个客户端附着时工作。
 
     choose-tree [-suw] [-b session-template] [-c window-template] [-S format] [-W format] [-t target-window]
 将窗口置于一个树选择模式，其中的会话或窗口可能是从一个列表中交互地选择的。
@@ -562,14 +562,14 @@ tmux自动地调整当前窗口大小中的布局大小。 注意，一个布局
 '%%'"。 如果给定-c，会重载默认的窗口命令，与-b类似，'%%'可以被使用而且会被会话名与窗口索引替换。
 当一个窗口从列表中被选择时，会话命令会在窗口命令运行之前运行。
 如果给定-S，会显示指定的格式而不是默认的会话格式。如果给定-W，会显示指定的格式而不是默认的窗口格式。
-对于-s和-w选项的含义可以参考FORMATS部分。
+对于-s和-w选项的含义可以参考[FORMATS](#格式)部分。
 这个命令只有当至少有一个客户端附着时工作。
 
     choose-window [-F format] [-t target-window] [template]
 将一个窗口置于一个选择模式，其中的窗口可以从一个列表中交互地选择。
 当选择一个窗口之后，'%%'会被模板中的会话名称和窗括索引替换，之后的结果作为一个命令被执行。
 如果没有给定模板，"select-window -t '%%'"被使用。 
-对于-F的含义可以参考FORMATS部分。 这个命令只有在至少一个客户端附着之后才会工作。
+对于-F的含义可以参考[FORMATS](#格式)部分。 这个命令只有在至少一个客户端附着之后才会工作。
 
     display-panes [-t target-client]
     (别名：displayp)
@@ -581,7 +581,7 @@ display-panes-active-colour会话选项。由于指示器在屏幕上，一个�
 在窗口名称，标题和可见的内容中搜索fnmatch模式的匹配字符串。标记被用来控制匹配行为： -C只匹配可见窗口内容，
 -N只匹配窗口名称，-T匹配窗口标题。
 默认为-CNT。如果只有一个窗口匹配，就会被自动选择，否则就会显示一个选项列表。
-对于-F标记可以参考FORMATS部分。这个命令只有在至少一个客户端被附着时会工作。
+对于-F标记可以参考[FORMATS](#格式)部分。这个命令只有在至少一个客户端被附着时会工作。
 
     join-pane [-bdhv] [-l size | -p percentage] [-s src-pane] [-t dst-pane]
     (别名：joinp)
@@ -612,11 +612,11 @@ display-panes-active-colour会话选项。由于指示器在屏幕上，一个�
     list-panes [-as] [-F format] [-t target]
     (别名：lsp)
 如果给定-a, 会湖绿target并且会列出服务器上的所有面板。
-如果给定-s，target就是一个会话（或者当前会话）。如果都没有指定，target就是一个窗口（或者当前窗口）。对于-F标记可以参考FORMATS部分。
+如果给定-s，target就是一个会话（或者当前会话）。如果都没有指定，target就是一个窗口（或者当前窗口）。对于-F标记可以参考[FORMATS](#格式)部分。
 
     list-windows [-a] [-F format] [-t target-session]
     (别名：lsw)
-如果给定-a,会列出服务器上的所有窗口。 否则会列出当前会话或target-session中的窗口。对于-F标记可以参考FORMATS部分。
+如果给定-a,会列出服务器上的所有窗口。 否则会列出当前会话或target-session中的窗口。对于-F标记可以参考[FORMATS](#格式)部分。
 
     move-pane [-bdhv] [-l size | -p percentage] [-s src-pane] [-t dst-pane]
     (别名：movep)
@@ -983,7 +983,7 @@ variants(如果支持的话,会有:brightred,breightgreen，等)。
 这个选项默认为off。注意elinks只会在设置了STY环境变量时才尝试设置窗口标题。
 
     set-titles-string string
-如果set-titles为on，那么字符串string就会用来设置窗口标题。 格式被扩展，参考FORMATS部分。
+如果set-titles为on，那么字符串string就会用来设置窗口标题。 格式被扩展，参考[FORMATS](#格式)部分。
 
     status [on | off]
 显示或隐藏状态行。
@@ -1091,7 +1091,8 @@ Set a window option. The -a, -g, -o, -q and -u flags work similarly to the set-o
 
 
     automatic-rename-format format
-在automatic-rename选项生效时会使用这个格式（参考FORMATS）。
+
+在automatic-rename选项生效时会使用这个格式--参考 [FORMATS](#格式) 。
 
     c0-change-interval interval
     c0-change-trigger trigger
@@ -1445,7 +1446,7 @@ tmux维护了一个命名的粘贴缓冲区集合，每个可能显式地或自�
     choose-buffer [-F format] [-t target-window] [template]
 将窗口置于缓冲区选择模式，一个缓冲区可以从一个列表中交互地选择。
 在选择一个缓冲区之后,'%%'会被template中的缓冲区名称替换，之后的结果会作为一个命令被执行。
-如果没有给定template，会使用"paste-buffer -b '%%'"来替换。 对于-F标记参考FORMATS部分。
+如果没有给定template，会使用"paste-buffer -b '%%'"来替换。 对于-F标记参考[FORMATS](#格式)部分。
 这个命令只有在至少有一个客户端附着时工作。
 
     clear-history [-t target-pane]
@@ -1458,7 +1459,7 @@ tmux维护了一个命名的粘贴缓冲区集合，每个可能显式地或自�
 
     list-buffers [-F format]
     (别名:lsb)
-列出全局缓冲区，对于-F可以参考FORMATS部分。
+列出全局缓冲区，对于-F可以参考[FORMATS](#格式)部分。
 
     load-buffer [-b buffer-name] path
     (别名:loadb)
@@ -1493,7 +1494,7 @@ tmux维护了一个命名的粘贴缓冲区集合，每个可能显式地或自�
     if-shell [-bF] [-t target-pane] shell-command command [command]
     (别名：if)
 如果shell-command返回成功的话执行第一个命令，否则执行第二个命令。
-在执行之前，shell-command会使用FORMATS部分指定的规则进行扩展，包括相关的target-pane。-b指示shell-command在后台运行。
+在执行之前，shell-command会使用[FORMATS](#格式)部分指定的规则进行扩展，包括相关的target-pane。-b指示shell-command在后台运行。
 如果给定-F,shell-command不会被执行而是认为时成功的（如果既不是空的也不是0的话-在格式扩展之后）。
 
     lock-server
@@ -1503,7 +1504,7 @@ tmux维护了一个命名的粘贴缓冲区集合，每个可能显式地或自�
     run-shell [-b] [-t target-pane] shell-command
     （别名:run）
 在不创建一个窗口的前提下在后台中运行一个shell-command。
-执行之前，shell-command使用FORMATS部分指定的规则进行扩展。
+执行之前，shell-command使用[FORMATS](#格式)部分指定的规则进行扩展。
 -b指示在后台运行。
 在完成之后，任何到标准输出的输出会在copy模式中显示（在由-t指定的pane或当前pane-如果缺省的话）。
 如果命令没有成功返回，退出状态也会被显示。
