@@ -321,7 +321,7 @@ tmux服务器管理客户端，会话，窗口和面板。客户端是附着在�
     list-sessions [-F format]
     (别名： ls)
 
-列出服务器管理的所有会话，对于-F标记，参考 FORMATS部分。
+列出服务器管理的所有会话，对于-F标记，参考 [FORMATS](#格式)部分。
 
     lock-client [-t target-client]
     (别名: lockc)
@@ -352,7 +352,8 @@ shell-command只有在使用-t选项时合法。
     refresh-client [-S] [-t target-client]
     (别名:refresh)
 
-如果绑定了一个键的话会刷新当前客户端，如果使用-t指定了一个客户端的话会刷新单独的客户端。如果指定-S，只会更新客户端的状态条。
+如果绑定了一个键的话会刷新当前客户端，如果使用-t指定了一个客户端的话会刷新单独的客户端。
+-S 只会更新客户端的状态条。
 
     rename-session [-t target-session] new-name
     (别名：rename)
@@ -362,7 +363,9 @@ shell-command只有在使用-t选项时合法。
     show-messages [-IJT] [-t target-client]
     (别名：showmsgs)
 
-显示客户端消息或服务器信息。所有显示在状态行的消息都存储在一个客户端独立的消息日志中，具有一个由message-limit选项设置的最大限制。使用-t会显示目标客户端的日志。
+显示客户端消息或服务器信息。
+所有显示在状态行的消息都存储在一个客户端独立的消息日志中，具有一个由message-limit选项设置的最大限制。
+-t 显示目标客户端的日志。
 -I，-J 和-T分别显示运行服务器，任务和终端的调试信息。
 
     source-file path
@@ -383,9 +386,13 @@ shell-command只有在使用-t选项时合法。
     switch-client [-lnpr] [-c target-client] [-t target-session] [-T key-table]
     (别名：switchc)
 
-将目标客户端所在的当前会话切换到目标会话中， 如果-l, -n或者-p被使用的话，客户端会被分别移动到最后，下一个或上一个会话中。-r 转换一个客户端的只读（可以参考attach-session命令）
+将目标客户端所在的当前会话切换到目标会话中， 
+如果-l, -n或者-p被使用的话，客户端会被分别移动到最后，下一个或上一个会话中。
+-r 转换一个客户端的只读（可以参考attach-session命令）
+-T 设置客户端的键表；来自客户端的下一个键会被解释为来自键表。
+这可能会被用在配置多个前缀键时或者绑定命令到一序列键值时使用。
 
--T 设置客户端的简表；来自客户端的下一个键会被解释为来自键表。这可能会被用在配置多个前缀键时或者绑定命令到一序列键值时使用。例如，让键入'abc'来运行 list-keys命令：
+例如，让键入'abc'来运行 list-keys命令：
 
     bind-key -Ttable2 c list-keys 
     bind-key -Ttable1 b switch-client -Ttable2 
