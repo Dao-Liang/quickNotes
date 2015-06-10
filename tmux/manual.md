@@ -1092,7 +1092,7 @@ Set a window option. The -a, -g, -o, -q and -u flags work similarly to the set-o
 
     automatic-rename-format format
 
-在automatic-rename选项生效时会使用这个格式--参考 [FORMATS](#格式) 。
+在automatic-rename选项生效时会使用这个格式, 参考 [FORMATS](#格式) 。
 
     c0-change-interval interval
     c0-change-trigger trigger
@@ -1231,6 +1231,7 @@ window-status-bell-style style
 
 
 ##格式
+
 有些命令接受由-F标记附带的格式参数。这个参数是一个控制命令输出格式的字符串。
 可替换的变量被包含在'#{'和'}'之间，例如'#{session_name}'。
 可用的变量在下表中列出，或者tmux选项的名称可以一个选项的值。
