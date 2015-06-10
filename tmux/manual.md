@@ -1053,18 +1053,30 @@ Prevent tmux from resizing a window to greater than width or height. A value of 
     main-pane-height height
     main-pane-width width
 Set the width or height of the main (left or top) pane in the main-horizontal or main-vertical layouts.
-在
+设置main-horizontal 或 main-vertical布局中的主面板的长和宽。
+
 
 mode-keys [vi | emacs]
-Use vi or emacs-style key bindings in copy and choice modes. As with the status-keys option, the default is emacs, unless VISUAL or EDITOR contains ‘vi’.
+在复制或选择模式中使用vi/emacs键绑定。与status-keys选项一样默认为emacs, 除非VISUAL或EDITOR包含了vi。
+
 mode-style style
 Set window modes style. For how to specify style, see the message-command-style option.
+设置窗口模式样式， 参考message-command-style选项指定样式。
+
 monitor-activity [on | off]
 Monitor for activity in the window. Windows with activity are highlighted in the status line.
+监视窗口中的活动。具有活动事件的窗口在状态栏上高亮显示。
+
 monitor-silence [interval]
 Monitor for silence (no activity) in the window within interval seconds. Windows that have been silent for the interval are highlighted in the status line. An interval of zero disables the monitoring.
+在一段时间间隔内对非活动窗口进行监控。时间间隔内沉默的窗口在状态栏高亮。
+0间隔值让其监控失效。
+
+
 other-pane-height height
 Set the height of the other panes (not the main pane) in the main-horizontal layout. If this option is set to 0 (the default), it will have no effect. If both the main-pane-height and other-pane-height options are set, the main pane will grow taller to make the other panes the specified height, but will never shrink to do so.
+设置main-horizontal布局中主面板之外的面板高度。默认为0-没有任何作用。
+
 other-pane-width width
 Like other-pane-height, but set the width of other panes in the main-vertical layout.
 pane-active-border-style style
