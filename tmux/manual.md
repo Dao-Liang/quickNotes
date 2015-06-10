@@ -33,8 +33,10 @@ tmux — terminal multiplexer
 tmux	[-2lCuv] [-c shell-command] [-f file] [-L socket-name] [-S socket-path] [command [flags]]
 
 ##描述
-tmux是一个终端复用器：它可以在单个屏幕中创建、访问以及控制多个终端。tmux也可以从窗口中脱离并且继续在后台运行，以便在之后再回到会话。
-当开启tmux之后，它会创建带有一个单独窗口的会话并且在屏幕中进行显示。在屏幕底部的状态行显示当前会话的信息并且用来进入交互式命令。
+tmux是一个终端复用器：它可以在单个屏幕中创建、访问以及控制多个终端。
+tmux也可以从窗口中脱离并且继续在后台运行，以便在之后再回到会话。
+当开启tmux之后，它会创建带有一个单独窗口的会话并且在屏幕中进行显示。
+在屏幕底部的状态行显示当前会话的信息并且用来进入交互式命令。
 一个会话是一个在tmux管理下的伪终端集合，每个会话具有一个或多个窗口与其链接。
 一个窗口占用了整个屏幕，并且可以被分割成长方形的面板，每个面板分别为一个伪终端。
 多个tmux实例可能连接到同一个会话，并且任何的窗口可能在一个会话中表示。
@@ -174,9 +176,9 @@ ttyp1。如果没有指定客户端，tmux会尝试当前使用的客户端;
 会话名称的开始部分，例如“mysess”会匹配一个名为"mysession"的会话。
 一个与会话名称匹配的fnmatch 模式
 
-如果找到了一个单独的会话，就会将其作为目标会话；如果匹配多个会话就会产生错误。如果忽略一个会话的话，那么就会使用当前的会话-如果可用的话；如果当前会话不可用，那么最近使用的会话就会被选择。
+如果找到了一个单独的会话，就会将其作为目标会话；如果匹配多个会话就会产生错误。
+如果忽略一个会话的话，那么就会使用当前的会话-如果可用的话；如果当前会话不可用，那么最近使用的会话就会被选择。
 
-target-window specifies a window in the form session:window. session follows the same rules as for target-session, and window is looked for in order as:
 目标窗口通过session:window的格式来指定一个窗口。 会话按照target-session的规则，而窗口会按照以下的顺序来查找：
 
     1. 一个下面列表中的特殊标记。
@@ -226,7 +228,10 @@ target-window specifies a window in the form session:window. session follows the
     select-window -t:+2
 
 会话，窗口和面板都通过一个唯一的ID来进行数字编码；
-会话ID带有一个'$'前缀，窗口ID带有一个'@'前缀，面板ID带有一个'%'前缀。这些在tmux服务器中的会话，窗口或面板生命周期中都是唯一不变的。面板ID通过TMUX_PANE环境变量传递给面板的子进程，ID可能使用'session_id','window_id'或'pane_id'何display-message,list-sesions,list-windows或list-panes命令的格式进行显示。
+会话ID带有一个'$'前缀，窗口ID带有一个'@'前缀，面板ID带有一个'%'前缀。
+这些在tmux服务器中的会话，窗口或面板生命周期中都是唯一不变的。
+面板ID通过TMUX_PANE环境变量传递给面板的子进程，
+ID可能使用'session_id','window_id'或'pane_id'何display-message,list-sesions,list-windows或list-panes命令的格式进行显示。
 
 shell-command 参数时sh命令，这可能是一个传递给shell的单个参数，例如：
 
@@ -250,8 +255,10 @@ shell-command 参数时sh命令，这可能是一个传递给shell的单个参�
 
     $ tmux bind-key F1 set-window-option force-width 81
 
-多个命令可以作为命令序列的一部分一起指定，每个命令需要使用空格和分号来分隔；命令按照从左至右的顺序执行，并且以反斜线结束的行会继续到下一行，除非被另外一个反斜线转义。
+多个命令可以作为命令序列的一部分一起指定，每个命令需要使用空格和分号来分隔；
+命令按照从左至右的顺序执行，并且以反斜线结束的行会继续到下一行，除非被另外一个反斜线转义。
 一个字面量分号可以通过一个反斜线进行转义包含进来（例如，当需要制定一个命令行序列给键绑定时）
+
 tmux命令包含样例：
 
     refresh-client -t/dev/ttyp2 
@@ -269,10 +276,11 @@ tmux命令包含样例：
 
 ##客户端和会话：
 
-tmux服务器管理客户端，会话，窗口和面板。客户端是附着在会话上来与他们交互的，不论他们是通过new-session命令或者之后的attach-session命令创建的。
+tmux服务器管理客户端，会话，窗口和面板。
+客户端是附着在会话上来与他们交互的，不论他们是通过new-session命令或者之后的attach-session命令创建的。
 每个会话具有一个或多个窗口与其链接。
 窗口可以连接到多个会话上，窗口又是有一个或多个面板组成的，每个面板包含了一个伪终端。
-对于创建、链接或其他窗口操作的命令会在WINDOWS AND PANES部分详解。
+对于创建、链接或其他窗口操作的命令会在 [窗口和面板](#窗口和面板)部分详解。
 
 下面的命令可以用来管理客户端和会话：
 
@@ -310,7 +318,7 @@ tmux服务器管理客户端，会话，窗口和面板。客户端是附着在�
     list-clients [-F format] [-t target-session]
     (别名： lsc)
 
-列出附着在服务器上的所有客户端。 对于-F标记，可以参考 FORMATS 部分。
+列出附着在服务器上的所有客户端。 对于-F标记，可以参考 [FORMATS](#格式)部分。
 如果给定了目标会话的话，只列出连接到该会话上的客户端。  
 
     list-commands
@@ -914,7 +922,8 @@ current表示除了当前窗口之外的窗口中的响铃将会被忽略。
 设置窗口历史持有的最大行数，这个设置只会应用在新窗口上--退出时窗口历史不会重写大小并且会保留在其创建时段的限制。
 
     lock-after-time number
-在number秒时间不活动后会锁定会话（与lock-session命令类似），如果lock-server选项被设置的话，那么整个服务器（所有会话）都会被锁定。默认为不锁定（number为0)。
+在number秒时间不活动后会锁定会话（与lock-session命令类似），如果lock-server选项被设置的话，
+那么整个服务器（所有会话）都会被锁定。默认为不锁定（number为0)。
 
     lock-command shell-command
 锁定每个客户端时运行的命令，默认为lock -np 命令。
@@ -929,10 +938,9 @@ current表示除了当前窗口之外的窗口中的响铃将会被忽略。
 
 颜色值可以为这些颜色中的一个：black,red,green, yellow, blue, magenta,cyan,white,aixterm bright
 variants(如果支持的话,会有:brightred,breightgreen，等)。
-
 256-colour集合中从colour0到colour255为默认值，或者一个十六进制的RGB字符串，例如'#ffffff'-会从默认的256-colour集合中选择最匹配的颜色。
-
-属性既可以为none或者一个逗号分割一个或多个包含(bright(或bold),dim，underscore,blink,reverse, hidden或者italics)的列表来开启属性，或者带有'no'前缀的属性来关闭属性。
+属性既可以为none或者一个逗号分割一个或多个包含(bright(或bold),dim，underscore,blink,reverse, hidden或者italics)的列表来开启属性，
+或者带有'no'前缀的属性来关闭属性。
 
 样例:
 
@@ -957,18 +965,22 @@ variants(如果支持的话,会有:brightred,breightgreen，等)。
 设置接收到的键作为二级前导键。
 
     renumber-windows [on | off]
-如果为on,
-当一个窗口在会话中关闭时，自动地将其他窗口按照数字顺序重新编序。这回参考base-index选项如果设置了这个选项的话。如果为off,不会对窗口进行重新排序。
+如果为on, 当一个窗口在会话中关闭时，自动地将其他窗口按照数字顺序重新编序。
+这回参考base-index选项如果设置了这个选项的话。如果为off,不会对窗口进行重新排序。
 
     repeat-time time
-允许指定的时间内（默认为500毫秒）在不重新输入前导键时输入多个命令。一个键是否可以重复可以在使用bind-key命令结合时使用-r选项进行设置。
+允许指定的时间内（默认为500毫秒）在不重新输入前导键时输入多个命令。
+一个键是否可以重复可以在使用bind-key命令结合时使用-r选项进行设置。
 对于与resize-pane命令结合的默认键的重复是开启的。
 
     set-remain-on-exit [on | off]
-为在这个会话中任何第一次创建的窗口设置remain-on-exit窗口选项。当这个选项为true时，运行程序所在的窗口在程序退出时不会关闭，而是保持打开但是不活动。
+为在这个会话中任何第一次创建的窗口设置remain-on-exit窗口选项。
+当这个选项为true时，运行程序所在的窗口在程序退出时不会关闭，而是保持打开但是不活动。
 可以使用respawn-window命令来重新激活这个窗口，或者使用kill-window来销毁窗口。
 
-如果tsl和fslterminfo实体存在的话，会尝试用其来设置客户终端的标题。 如果终端显示为一个xterm的话tmux自动将其设置为\e]2;...\007序列。这个选项默认为off。注意elinks只会在设置了STY环境变量时才尝试设置窗口标题。
+如果tsl和fslterminfo实体存在的话，会尝试用其来设置客户终端的标题。 
+如果终端显示为一个xterm的话tmux自动将其设置为\e]2;...\007序列。
+这个选项默认为off。注意elinks只会在设置了STY环境变量时才尝试设置窗口标题。
 
     set-titles-string string
 如果set-titles为on，那么字符串string就会用来设置窗口标题。 格式被扩展，参考FORMATS部分。
@@ -1018,7 +1030,8 @@ shell命令的执行会带有tmux的全局变量集合（参考 ENVIRONMENT部�
 设置状态行的位置。
 
     status-right string
-显示字符串在状态栏的右边，默认为带双引号的当前窗口标题以及日期时间会被显示。与status-left类似，字符串也会传递给strftime,字符对会被替换而且UTF-8也依赖于status-utf8选项。
+显示字符串在状态栏的右边，默认为带双引号的当前窗口标题以及日期时间会被显示。
+与status-left类似，字符串也会传递给strftime,字符对会被替换而且UTF-8也依赖于status-utf8选项。
 
     status-right-length length
 设置状态栏右边组件的最大长度，默认为10。
@@ -1033,7 +1046,9 @@ shell命令的执行会带有tmux的全局变量集合（参考 ENVIRONMENT部�
 指示tmux将status-left和status-right中的字符串中的top-bit-set当作UTF-8处理;值得注意的时，这对于宽字符很重要。默认为off。
 
     update-environment variables
-设置一个包含由空格分开的环境变量列表字符串--这些环境变量会在新会话创建时或一个已存在的会话被附着时复制到会话环境中。任何在源环境中不存在的变量会从会话环境中设置为移除（类似于将-r传递给set-environment命令）。 默认值为"DISPLAY SSH_ASKPASS SSH_AUTH_SOCK SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY"。
+设置一个包含由空格分开的环境变量列表字符串--这些环境变量会在新会话创建时或一个已存在的会话被附着时复制到会话环境中。
+任何在源环境中不存在的变量会从会话环境中设置为移除（类似于将-r传递给set-environment命令）。 
+默认值为"DISPLAY SSH_ASKPASS SSH_AUTH_SOCK SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY"。
 
     visual-activity [on | off]
 如果为on, 当活动出现在一个由monitor-activity窗口选项生效的窗口中时显示一个状态行。
@@ -1055,17 +1070,22 @@ Set a window option. The -a, -g, -o, -q and -u flags work similarly to the set-o
 支持的窗口选项有:
 
     aggressive-resize [on | off]
-积极地重新调整所选窗口大小。意味着tmux会重新调整窗口的尺寸为当前窗口的最小会话尺寸，而不是其附着的最小的会话。当当前窗口改变为另外一个会话时窗口会重新调整大小;这个选项对于支持SIGWINCH的全屏程序有好处而对于交互式程序如shell不是太好。
+积极地重新调整所选窗口大小。意味着tmux会重新调整窗口的尺寸为当前窗口的最小会话尺寸，而不是其附着的最小的会话。
+在当前窗口改变为另外一个会话时窗口会重新调整大小;这个选项对于支持SIGWINCH的全屏程序有好处而对于交互式程序如shell不是太好。
 
     allow-rename [on | off]
 允许程序通过终端转义序列(\033k...\033\\)改变窗口名称。默认为on。
 
     alternate-screen [on | off]
-这个选项用来配置运行在tmux中的程序是否可以使用终端的被用屏幕特性-允许terminfo的smcup和rmcup能力。被用屏幕特性在一个交互式程序开启并且在从退出后恢复之后可以保留窗口的内容，
+这个选项用来配置运行在tmux中的程序是否可以使用终端的被用屏幕特性-允许terminfo的smcup和rmcup能力。
+被用屏幕特性在一个交互式程序开启并且在从退出后恢复之后可以保留窗口的内容，
 这样任何程序开始之前的可视输出会在程序退出之后重新出现。默认为on。
 
     automatic-rename [on | off]
-控制自动化窗口命名。当开启这个设置时，tmux会使用由automatic-rename-format指定的格式来自动地重命名窗口。对于由new-window和new-session在创建时，或者之后通过rename-window或者使用终端转义序列指定的窗口名称, 这个标识会自动失效。可以通过以下方式来将其在全局范围内关闭：
+控制自动化窗口命名。当开启这个设置时，tmux会使用由automatic-rename-format指定的格式来自动地重命名窗口。
+对于由new-window和new-session在创建时，或者之后通过rename-window或者使用终端转义序列指定的窗口名称, 这个标识会自动失效。
+
+可以通过以下方式来将其在全局范围内关闭：
 
     set-window-option -g automatic-rename off
 
@@ -1211,7 +1231,8 @@ window-status-bell-style style
 
 ##格式
 有些命令接受由-F标记附带的格式参数。这个参数是一个控制命令输出格式的字符串。
-可替换的变量被包含在'#{'和'}'之间，例如'#{session_name}'。可用的变量在下表中列出，或者tmux选项的名称可以一个选项的值。
+可替换的变量被包含在'#{'和'}'之间，例如'#{session_name}'。
+可用的变量在下表中列出，或者tmux选项的名称可以一个选项的值。
 有些变量具有一个简短的别名，例如'#s', 而'##'会使用一个单独的'#'来替换。
 
 
@@ -1315,9 +1336,11 @@ window-status-bell-style style
 
 ##名称和标题
 
-tmux区分名称和标题，窗口和会话具有名称用来作为目标标识，并且在状态行和不同的列表中显示：名称是tmux对于一个窗口或会话的标识符。
+tmux区分名称和标题，窗口和会话具有名称用来作为目标标识，并且在状态行和不同的列表中显示：
+名称是tmux对于一个窗口或会话的标识符。
 只有pane面板有标题，面板的标题是由在其中运行的程序设置的并且不能由tmux改变。 
-与X窗口管理器中的xterm窗口标题的设置所使用的机制相同。窗口本身没有标题-一个窗口的标题就是其活动面板的标题。
+与X窗口管理器中的xterm窗口标题的设置所使用的机制相同。
+窗口本身没有标题----一个窗口的标题就是其活动面板的标题。
 tmux本身会设置客户端所在终端的标题，参考set-title选项。
 
 A session's name is set with the new-session and rename-session commands. A window's name is set with one of:
@@ -1354,13 +1377,16 @@ tmux也会使用一些内部信息来初始化TMUX变量以便允许命令在内
 
 ##状态行
 tmux包含了一个可选的状态行会显示在每个终端的底端行。
-默认状态行时有效的（可以通过status会话选项失效）并且被包含的，从左到右分别有：包含在方括号中的当前会话名称;窗口列表;双引号包含的活动面板;以及时间和日期。
+默认状态行时有效的（可以通过status会话选项失效）并且被包含的，从左到右分别有：
+包含在方括号中的当前会话名称;窗口列表;双引号包含的活动面板;以及时间和日期。
 
 状态行由三部分组成：
-可配置的左边和右边部分（可以包含shell命令输出的动态的内容，例如时间和日期，参考status-left,status-left-length,status-right,status-right-length选项），
-以及中间的窗口列表。
+可配置的左边和右边部分（可以包含shell命令输出的动态的内容，例如时间和日期，
+参考status-left,status-left-length,status-right,status-right-length选项）， 以及中间的窗口列表。
 默认窗口列表显示当前会话中按照数字升序排列窗口的索引，名称和标记（如果存在的话）。 
-可以通过window-status-format和window-status-current-format选项客制化。 附加在窗口名称后面的标记可以是以下符号之一：
+可以通过window-status-format和window-status-current-format选项客制化。 
+
+附加在窗口名称后面的标记可以是以下符号之一：
 
     符号 |  含义
 ---------|-----------
@@ -1382,11 +1408,12 @@ tmux包含了一个可选的状态行会显示在每个终端的底端行。
     command-prompt [-I inputs] [-p prompts] [-t target-client] [template]
 在客户端打开一个命令提示，可以在tmux内用用来执行交互式命令。
 
-如果指定了template的话，其会被作为命令使用。-I是每个提示初始化文本列表-由逗号分割的。
-如果指定-p，那么提示是一个按照顺序显示的逗号分割的提示列表;否则只显示一个单独的构造于template（如果提供了的话）提示，否则使用':'。
+如果指定了template的话，其会被作为命令使用。
+-I是每个提示初始化文本列表-由逗号分割的。
+-p 提示是一个按照顺序显示的逗号分割的提示列表;否则只显示一个单独的构造于template（如果提供了的话）提示，否则使用':'。
 inputs和prompts都可能包含由status-left选项支持的特殊字符序列。
-在命令被执行之前，第一个出现的字符串'%%'和出现的所有'%1'都会被第一个提示的响应替换，第二个'%%'和所有的'%2'会被第二个提示的响应替换，以此类推。
-直到第九个提示可以被替换。
+在命令被执行之前，第一个出现的字符串'%%'和出现的所有'%1'都会被第一个提示的响应替换，
+第二个'%%'和所有的'%2'会被第二个提示的响应替换，以此类推, 直到第九个提示可以被替换。
 
     confirm-before [-p prompt] [-t target-client] command
     (别名：confirm)
@@ -1397,13 +1424,16 @@ inputs和prompts都可能包含由status-left选项支持的特殊字符序列�
     display-message [-p] [-c target-client] [-t target-pane] [message]
     (别名：display)
 显示一个消息， 如果没有给定-p,
-那么输出会被打印到标准输出中，否则会显示在target-client的状态行上。消息的格式在FORMTS部分描述。
+那么输出会被打印到标准输出中，否则会显示在target-client的状态行上。
+消息的格式在[FORMTS](#格式)部分描述。
 如果给第-t就会从target-pane中获取信息，否则就会从附着在target-client的会话中的活动窗口中获取。
 
 ##缓冲区
-tmux维护了一个命名的粘贴缓冲区集合，每个可能显式地或自动地命名。显式地命名的缓冲区实在通过set-buffer或load-buffer命令创建时命名的，
+tmux维护了一个命名的粘贴缓冲区集合，每个可能显式地或自动地命名。
+显式地命名的缓冲区是在通过set-buffer或load-buffer命令创建时命名的，
 或者是通过set-buffer -n 来重命名一个自动命名的缓冲区。
-自动命名的缓冲区的名称会类似于'buffer0001','buffer0002'等。当达到buffer-limit选项的限制时，最旧的自动命名的缓冲区被删除。
+自动命名的缓冲区的名称会类似于'buffer0001','buffer0002'等。
+当达到buffer-limit选项的限制时，最旧的自动命名的缓冲区被删除。
 显示命名的缓冲区不会收到buffer-limit的限制，可以通过delete-buffer命令删除。
 
 缓冲区可以使用copy-mode或set-buffer以及load-buffer命令来添加，并且通过paste-buffer命令来将其粘贴到一个窗口。
@@ -1437,8 +1467,10 @@ tmux维护了一个命名的粘贴缓冲区集合，每个可能显式地或自�
     paste-buffer [-dpr] [-b buffer-name] [-s separator] [-t target-pane]
     (别名:pasteb)
 将一个粘贴缓冲却中的内容插入到一个指定的pane中。如果没有指定target-pane，会被粘贴到当前的一个。
-指定-d时也会删除粘贴缓冲区。当输出时，任何粘贴缓冲区中的换行符会使用一个分隔符替换（默认为回车符）。
-可以通过-s指定客制化分隔符。-r标记意味着不做换行符的替换。 指定-p时，当应用程序请求大括号粘贴模式的话，粘贴的大括号控制代码会被插入到缓冲区中。
+-d 同时也会删除粘贴缓冲区。当输出时，任何粘贴缓冲区中的换行符会使用一个分隔符替换（默认为回车符）。
+-s 指定客制化分隔符。
+-r 标记意味着不做换行符的替换。 
+-p 当应用程序请求大括号粘贴模式的话，粘贴的大括号控制代码会被插入到缓冲区中。
 
     save-buffer [-a] [-b buffer-name] path
     (别名：saveb)
@@ -1470,7 +1502,11 @@ tmux维护了一个命名的粘贴缓冲区集合，每个可能显式地或自�
 
     run-shell [-b] [-t target-pane] shell-command
     （别名:run）
-再不创建一个窗口的前提下在后台中运行一个shell-command。执行之前，shell-command使用FORMATS部分指定的规则进行扩展。-b指示在后台运行。在完成之后，任何到标准输出的输出会在copy模式中显示（在由-t指定的pane或当前pane-如果缺省的话）。如果命令没有成功返回，退出状态也会被显示。
+在不创建一个窗口的前提下在后台中运行一个shell-command。
+执行之前，shell-command使用FORMATS部分指定的规则进行扩展。
+-b指示在后台运行。
+在完成之后，任何到标准输出的输出会在copy模式中显示（在由-t指定的pane或当前pane-如果缺省的话）。
+如果命令没有成功返回，退出状态也会被显示。
 
     wait-for [-L | -S | -U] channel
     (别名:wait)
@@ -1481,7 +1517,8 @@ tmux维护了一个命名的粘贴缓冲区集合，每个可能显式地或自�
 
 tmux可以理解terminfo的一些扩展：
 Cs, Cr
-设置光标颜色，第一个使用一个单个字符串参数来设置颜色;第二个没有参数来恢复默认的光标颜色。如果设置的话一系列这样的值会被用来在tmux中改变光标颜色：
+设置光标颜色，第一个使用一个单个字符串参数来设置颜色;第二个没有参数来恢复默认的光标颜色。
+如果设置的话一系列这样的值会被用来在tmux中改变光标颜色：
 
     $ printf '\033]12;red\033\\'
 
@@ -1498,8 +1535,11 @@ Ms
 ##控制模式
 tmux提供了一个成为control（控制）模式的文本界面。这使得应用程序可以通过一个简单的文本协议与tmux进行交流。
 
-在控制模式中，一个客户端发送tmux命令或以新行结束的命令序列到标准输入中。每个命令将会在标准输出中产生一个输出块。一个输出块包含了一个%begin行与跟随的输出（可能为空）。
-输出块会以一个%end或%error作为结尾。%begin和匹配的%end/%error具有两个参数：一个整数时间和命令编号，例如：
+在控制模式中，一个客户端发送tmux命令或以新行结束的命令序列到标准输入中。
+每个命令将会在标准输出中产生一个输出块。
+一个输出块包含了一个%begin行与跟随的输出（可能为空）。
+输出块会以一个%end或%error作为结尾。
+%begin和匹配的%end/%error具有两个参数：一个整数时间和命令编号，例如：
 
     %begin 1363006971 2 
     0: ksh* (1 panes) [80x24] [layout b25f,80x24,0,0,2] @2 (active) 
@@ -1600,5 +1640,3 @@ o
 作者: Nicholas Marriott <nicm@users.sourceforge.net>
 
 译者: Liang Guisheng <https://github.com/theo-l>
-格式
-The default key bindings allow the mouse to be used to select and resize panes, to copy text and to change window using the status line. These take effect if the mouse option is turned on.
