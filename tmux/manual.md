@@ -1031,12 +1031,15 @@ Set a window option. The -a, -g, -o, -q and -u flags work similarly to the set-o
 
 
     automatic-rename-format format
-The format (see FORMATS) used when the automatic-rename option is enabled.
 在automatic-rename选项生效时会使用这个格式（参考FORMATS）。
 
     c0-change-interval interval
     c0-change-trigger trigger
-These two options configure a simple form of rate limiting for a pane. If tmux sees more than trigger C0 sequences that modify the screen (for example, carriage returns, linefeeds or backspaces) in one millisecond, it will stop updating the pane immediately and instead redraw it entirely every interval milliseconds. This helps to prevent fast output (such as yes(1)) overwhelming the terminal. The default is a trigger of 250 and an interval of 100. A trigger of zero disables the rate limiting.
+这两个选项配置面板改变时间间隔的一个简单格式。如果tmux在1毫秒内查看到除C0序列之外的触发器（例如回车，换行或删除）
+修改屏幕，会立即停止更新面板。否则会在每个时间间隔内重绘整个面板。
+这个可以帮助来阻止快速输出（例如yes）覆盖整个终端。默认为触发器250, 时间间隔100。
+0触发器用来失效速率限制。
+
 
 
     clock-mode-colour colour
@@ -1047,12 +1050,10 @@ These two options configure a simple form of rate limiting for a pane. If tmux s
 
     force-height height
     force-width width
-Prevent tmux from resizing a window to greater than width or height. A value of zero restores the default unlimited setting.
-组织tmux将窗口的大小值超过width或height, 0值会恢复默认无限制设置。
+阻止tmux将窗口的大小值超过width或height, 0值会恢复默认无限制设置。
 
     main-pane-height height
     main-pane-width width
-Set the width or height of the main (left or top) pane in the main-horizontal or main-vertical layouts.
 设置main-horizontal 或 main-vertical布局中的主面板的长和宽。
 
 
@@ -1060,67 +1061,91 @@ mode-keys [vi | emacs]
 在复制或选择模式中使用vi/emacs键绑定。与status-keys选项一样默认为emacs, 除非VISUAL或EDITOR包含了vi。
 
 mode-style style
-Set window modes style. For how to specify style, see the message-command-style option.
 设置窗口模式样式， 参考message-command-style选项指定样式。
 
 monitor-activity [on | off]
-Monitor for activity in the window. Windows with activity are highlighted in the status line.
 监视窗口中的活动。具有活动事件的窗口在状态栏上高亮显示。
 
 monitor-silence [interval]
-Monitor for silence (no activity) in the window within interval seconds. Windows that have been silent for the interval are highlighted in the status line. An interval of zero disables the monitoring.
 在一段时间间隔内对非活动窗口进行监控。时间间隔内沉默的窗口在状态栏高亮。
 0间隔值让其监控失效。
 
 
 other-pane-height height
-Set the height of the other panes (not the main pane) in the main-horizontal layout. If this option is set to 0 (the default), it will have no effect. If both the main-pane-height and other-pane-height options are set, the main pane will grow taller to make the other panes the specified height, but will never shrink to do so.
 设置main-horizontal布局中主面板之外的面板高度。默认为0-没有任何作用。
+如果main-pane-height和other-pane-height选项同时设置，主面板会变得来使得
+其他面板达到指定高度，但是不会反过来作用。
 
 other-pane-width width
-Like other-pane-height, but set the width of other panes in the main-vertical layout.
+与other-pane-height类似，只是用来设置 main-vertical布局中的其他面板的宽度。
+
 pane-active-border-style style
-Set the pane border style for the currently active pane. For how to specify style, see the message-command-style option. Attributes are ignored.
+设置当前活动面板的边框样式。 参考 message-command-style选项来指定样式，属性被忽视。
+
 pane-base-index index
-Like base-index, but set the starting index for pane numbers.
+与 base-index类似，只是用来设置面板的开始数字。
+
 pane-border-style style
-Set the pane border style for panes aside from the active pane. For how to specify style, see the message-command-style option. Attributes are ignored.
+设置活动面板周围面板的样式。 参考 message-command-style选项来指定样式，属性被忽视。
+
 remain-on-exit [on | off]
-A window with this flag set is not destroyed when the program running in it exits. The window may be reactivated with the respawn-window command.
+带有该标识设置的窗口在其中程序退出时不会被销毁。 
+窗口可能使用respawn-window命令重新激活。
+
 synchronize-panes [on | off]
-Duplicate input to any pane to all other panes in the same window (only for panes that are not in any special mode).
+将到任意面板的输入复制到相同窗口中的所有其他面板（没有在特殊模式中的面板）。
+
 utf8 [on | off]
-Instructs tmux to expect UTF-8 sequences to appear in this window.
+指示tmux期待在窗口中出现 UTF-8序列。
+
 window-active-style style
-Set the style for the window's active pane. For how to specify style, see the message-command-style option.
+设置窗口的活动面板的样式。参考 message-command-style选项来指定样式。
+
 window-status-activity-style style
-Set status line style for windows with an activity alert. For how to specify style, see the message-command-style option.
+设置窗口的状态行样式带有一个活动警告。参考 message-command-style选项来指定样式。
+
 window-status-bell-style style
-Set status line style for windows with a bell alert. For how to specify style, see the message-command-style option.
-window-status-current-format string
-Like window-status-format, but is the format used when the window is the current window.
-window-status-current-style style
-Set status line style for the currently active window. For how to specify style, see the message-command-style option.
-window-status-format string
-Set the format in which the window is displayed in the status line window list. See the status-left option for details of special character sequences available. The default is ‘#I:#W#F’.
-window-status-last-style style
-Set status line style for the last active window. For how to specify style, see the message-command-style option.
-window-status-separator string
-Sets the separator drawn between windows in the status line. The default is a single space character.
-window-status-style style
-Set status line style for a single window. For how to specify style, see the message-command-style option.
-window-style style
-Set the default window style. For how to specify style, see the message-command-style option.
-xterm-keys [on | off]
-If this option is set, tmux will generate xterm(1) -style function key sequences; these have a number included to indicate modifiers such as Shift, Alt or Ctrl. The default is off.
-wrap-search [on | off]
-If this option is set, searches will wrap around the end of the pane contents. The default is on.
-show-options [-gqsvw] [-t target-session | target-window] [option]
-(alias: show)
-Show the window options (or a single window option if given) with -w (equivalent to show-window-options), the server options with -s, otherwise the session options for target session. Global session or window options are listed if -g is used. -v shows only the option value, not the name. If -q is set, no error will be returned if option is unset.
-show-window-options [-gv] [-t target-window] [option]
-(alias: showw)
-List the window options or a single option for target-window, or the global window options if -g is used. -v shows only the option value, not the name.
+设置窗口的状态行样式带有一个响铃警告。参考 message-command-style选项来指定样式。
+
+    window-status-current-format string
+与 window-status-format类似，只是这个格式在窗口为当前窗口时使用。
+
+    window-status-current-style style
+为当前的活动窗口设置状态行样式。 参考 message-command-style选项来指定样式。
+
+    window-status-format string
+设置状态行列表中显示窗口的格式。 参考 status-left选项关于可用的特殊字符序列信息。默认值为'#I:#W#F'。
+
+    window-status-last-style style
+为最后一个活动窗口设置状态行样式。参考 message-command-style选项来指定样式。
+
+    window-status-separator string
+设置状态行中窗口之间的分隔符，默认为单个空格符。
+
+    window-status-style style
+为单个窗口设置状态行样式。参考 message-command-style选项来指定样式。
+
+    window-style style
+设置默认窗口样式。参考 message-command-style选项来指定样式。
+
+    xterm-keys [on | off]
+设置该选项会使tmux生成xterm-style功能键序列; 这些包含了一个数字来指定修饰符如Shift，Alt或Ctrl。默认为off。
+
+    wrap-search [on | off]
+设置这个选项会使得搜索动作包含面板内容的末尾。 默认为on。
+
+    show-options [-gqsvw] [-t target-session | target-window] [option]
+(别名：show)
+使用-w来显示窗口选项（可以指定单个窗口），使用-s显示服务器选项，否则显示target-session的会话选项。
+-g用来显示全局会话或窗口选项。
+-v只显示选项值，不包含名称。
+-q指示重置选项不会返回错误。
+
+    show-window-options [-gv] [-t target-window] [option]
+(别名：showw)
+列出窗口选项或者target-window指定的单个窗口选项。
+-g用来显示全局窗口选项。
+-v显示选项值，忽略选项名。
 
 ##鼠标支持
 如果鼠标选项开启（默认为关闭），tmux允许将鼠标时间作为键来结合。
