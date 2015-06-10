@@ -1110,25 +1110,29 @@ show-window-options [-gv] [-t target-window] [option]
 (alias: showw)
 List the window options or a single option for target-window, or the global window options if -g is used. -v shows only the option value, not the name.
 
-MOUSE SUPPORT
 ##鼠标支持
-If the mouse option is on (the default is off), tmux allows mouse events to be bound as keys. The name of each key is made up of a mouse event (such as ‘MouseUp1’) and a location suffix (one of ‘Pane’ for the contents of a pane, ‘Border’ for a pane border or ‘Status’ for the status line). The following mouse events are available:
+如果鼠标选项开启（默认为关闭），tmux允许将鼠标时间作为键来结合。
+每个键的名称是由鼠标事件（例如'MouseUp1'）和一个位置后缀（'Pane'表示面板内容，'Border'面板边界
+或者'Status'状态行）组成的。可以使用以下的鼠标事件：
 
     MouseDown1	MouseUp1	MouseDrag1
     MouseDown2	MouseUp2	MouseDrag2
     MouseDown3	MouseUp3	MouseDrag3
     WheelUp	WheelDown	
 
-Each should be suffixed with a location, for example ‘MouseDown1Status’.
 每个都需要带有一个位置后缀，例如'MouseDown1Status'
 
-The special token ‘{mouse}’ or ‘=’ may be used as target-window or target-pane in commands bound to mouse key bindings. It resolves to the window or pane over which the mouse event took place (for example, the window in the status line over which button 1 was released for a ‘MouseUp1Status’ binding, or the pane over which the wheel was scrolled for a ‘WheelDownPane’ binding).
-The send-keys -M flag may be used to forward a mouse event to a pane.
-The default key bindings allow the mouse to be used to select and resize panes, to copy text and to change window using the status line. These take effect if the mouse option is turned on.
+特殊标记'{mouse}'或'='可能在命令中作为target-window或target-pane与鼠标键绑定进行结合。
+会在鼠标事件发生的位置解析为窗口或面板（例如，对于一个'MouseUp1Status'绑定在在状态行上的窗口，
+或者对于'WheelDownPane'绑定面板上的鼠标滚动）。
+
+'send-key -M'标记可以用来将一个鼠标时间转发到一个面板上。
+
+默认的键绑定允许鼠标用来选择和改变面板大小，复制文本或者使用状态行来改变窗口。
+这些动作在开启鼠标选项时发生作用。
 
 
 ##格式
-
 有些命令接受由-F标记附带的格式参数。这个参数是一个控制命令输出格式的字符串。
 可替换的变量被包含在'#{'和'}'之间，例如'#{session_name}'。可用的变量在下表中列出，或者tmux选项的名称可以一个选项的值。
 有些变量具有一个简短的别名，例如'#s', 而'##'会使用一个单独的'#'来替换。
@@ -1519,3 +1523,5 @@ o
 作者: Nicholas Marriott <nicm@users.sourceforge.net>
 
 译者: Liang Guisheng <https://github.com/theo-l>
+格式
+The default key bindings allow the mouse to be used to select and resize panes, to copy text and to change window using the status line. These take effect if the mouse option is turned on.
