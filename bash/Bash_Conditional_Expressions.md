@@ -37,7 +37,7 @@ Bash条件表达式
     string1 != string2如果字符串不相等返回true
     string1 < string2如果字符串1在字符串2前面返回true（按照辞典排序）
     string1 > string2如果字符串1在字符串2后面返回true（按照辞典排序）
-    
+   
     arg1 OP arg2
     此处的arg1和arg2应该是整数。
     OP is one of ‘-eq’, ‘-ne’, ‘-lt’, ‘-le’, ‘-gt’, or ‘-ge’. These arithmetic binary operators return true if arg1 is equal to, not equal to, less than, less than or equal to, greater than, or greater than or equal to arg2, respectively. Arg1 and arg2 may be positive or negative integers.
