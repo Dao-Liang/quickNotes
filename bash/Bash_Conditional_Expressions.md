@@ -40,4 +40,6 @@ Bash条件表达式
    
     arg1 OP arg2
     此处的arg1和arg2应该是整数。
-    OP is one of ‘-eq’, ‘-ne’, ‘-lt’, ‘-le’, ‘-gt’, or ‘-ge’. These arithmetic binary operators return true if arg1 is equal to, not equal to, less than, less than or equal to, greater than, or greater than or equal to arg2, respectively. Arg1 and arg2 may be positive or negative integers.
+    OP 是以下操作符之一:‘-eq’, ‘-ne’, ‘-lt’, ‘-le’, ‘-gt’, or ‘-ge’. 
+    这些算术二元操作符返回True，如果arg1==, <,<=, >,>= arg2.
+    arg1和arg2可以为正负整数。
