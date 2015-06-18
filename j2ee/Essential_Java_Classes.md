@@ -26,6 +26,11 @@
         - [Finding Files](#Finding Files)
         - [Watching a Directory for changes](#Watching a Directory for changes)
         - [Other useful Methods](#Other useful Methods)
+            - [Determining MIME  Type](#Determining MIME  Type)
+            - [Default FileSystem](#Default FileSystem)
+            - [Path String Separator](#Path String Separator)
+            - [FileSystem's File Stores](#FileSystem's File Stores)
+
         - [Legacy File I/O code](#Legacy File I/O code)
 
 - [Concurrency](#Concurrency)
