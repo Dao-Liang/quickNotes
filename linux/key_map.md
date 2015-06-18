@@ -1,6 +1,6 @@
   
- KeyMapping in Linux
- ================================
+KeyMapping in Linux
+===================
 
     ctrl:nocaps          Caps Lock as Ctrl
     ctrl:lctrl_meta      Left Ctrl as Meta
