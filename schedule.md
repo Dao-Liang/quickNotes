@@ -11,7 +11,8 @@
     jvm, j2se, j2ee, jsf, jboss, seam, ant(6,7), css(6,7,8), javascript(9,10), mysql(7,8,9,10)
 
 ### 工作日 ###
-jvm,mysql,zsh,css(6,7,8),javascript(9,10)
+
+jvm,mysql(7,8,9,10),zsh,css(6,7,8),javascript(9,10)
 
     时间    |   星期一          |  星期二   | 星期三    |星期四     |星期五
 ------------|-------------------|-----------|-----------|-----------|-------
