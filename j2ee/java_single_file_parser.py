@@ -13,17 +13,18 @@ keywords=[
         ]
 
 tokenType=[
-       "MODIFIER",
-       "JAVATYPE",
-       "IDENTIFIER",
-       "STRING",
-       "NUMBER",
-       "OPERATOR",
-       "IFBLOCK",
-       "WHILEBLOCK",
-       "TRYBLOCK",
-       "SWITCHBLOCK",
-       "FORBLOCK",
+        "MODIFIER",
+        "JAVATYPE",
+        "IDENTIFIER",
+        "STRING",
+        "NUMBER",
+        "OPERATOR",
+        "IFBLOCK",
+        "WHILEBLOCK",
+        "TRYBLOCK",
+        "SWITCHBLOCK",
+        "FORBLOCK",
+        "METHODINVOCATION"
         ]
 replaceChars=[
         "(", ")", "{", "}", ";", ":", ",", "\""      
@@ -34,9 +35,13 @@ print len(keywords)
 java_file=open("./ClientPortfolioManagerBean.java","r")
 
 for line in java_file:
-    for char in replaceChars:
-        line.replace(char," "+char+" ")
 
-    for token in line.split(" "):
-        print token,"\n"
+    print line,"\n"
+
+    for char in replaceChars:
+        line.replace(char, r" "+char+" ")
+
+    print line,"\n"
+#    for token in line.split(" "):
+#        print token,"\n"
 
