@@ -36,12 +36,10 @@ java_file=open("./ClientPortfolioManagerBean.java","r")
 
 for line in java_file:
 
-    print line,"\n"
-
     for char in replaceChars:
-        line.replace(char, r" "+char+" ")
+        line=line.replace(char, " "+char+" ")
 
-    print line,"\n"
-#    for token in line.split(" "):
-#        print token,"\n"
+    for token in line.split(" "):
+        print token,"\n"
 
+    
