@@ -53,10 +53,6 @@ public class JavaStatement {
 	public static final Pattern methodDeclarationP = Pattern
 			.compile("((public|private|protected)?\\s*(static)?\\s*([\\w\\d_<>,\\[\\]]+)\\s+([\\w\\d_<>,]+)\\s*\\((.*)\\)\\s*(throws)?(.*?)\\{)");
 
-	// match method declaration before {
-	public static final Pattern shortMethodDeclarationP = Pattern
-			.compile("(^(public|private|protected)?\\s*(static)?\\s*([\\w\\d<>\\s,\\[\\]]+)\\s*([\\w\\d_]+)\\s*\\()");
-
 	public static final Pattern unaryP = Pattern
 			.compile("(([\\w\\d_]+)\\+\\+|([\\w\\d_]+)--|\\+\\+([\\w\\d_]+)|--([\\w\\d_]+))");
 
@@ -151,7 +147,27 @@ public class JavaStatement {
 		case DO_WHILE_STATEMENT:
 			doWhileStatementParse();
 			break;
+		case ANNOTATION_STATEMENT:
+			annotationStatementParse();
+			break;
+		case SIMPLE_STATEMENT:
+			simpleStatementParse();
+			break;
 		}
+	}
+
+	public void simpleStatementParse() {
+
+// System.err.println("------Simple Statement: " + String.join(" ",
+// statementContent));
+
+	}
+
+	public void annotationStatementParse() {
+// System.err
+// .println("------Annotation Statement: " + String.join(" ",
+// statementContent));
+
 	}
 
 	public void packageStatementParse() {
@@ -177,7 +193,6 @@ public class JavaStatement {
 	public void methodAnnotationStatementParse() {
 
 	}
-
 
 	public void methodInvocationStatementParse() {
 
@@ -214,20 +229,6 @@ public class JavaStatement {
 	public void doWhileStatementParse() {
 
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	/**
 	 * parse the statement string content to return which type it is
@@ -273,7 +274,6 @@ public class JavaStatement {
 	public void setStatementType(JavaStatementType statementType) {
 		this.statementType = statementType;
 	}
-
 
 	public List<JavaExpression> getExpressions() {
 		return expressions;

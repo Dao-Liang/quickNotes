@@ -17,10 +17,7 @@ package br.com.riskoffice.ejb3dao;
 public enum JavaBlockType {
 
 	// interface, class, enum [extends/implements [super classes]]{j
-	MAIN_TYPE_BLOCK,
-
-	// type type define inside a main type block
-	NESTED_TYPE_BLOCK,
+	TYPE_BLOCK,
 
 	// static {...}
 	STATIC_BLOCK,
@@ -39,6 +36,8 @@ public enum JavaBlockType {
 
 	// while(){} / do{} while();
 	DO_WHILE_BLOCK,
+
+	WHILE_BLOCK,
 
 	// switch(){case}
 	SWITCH_BLOCK,
@@ -63,6 +62,10 @@ enum JavaStatementType {
 	PARAMETER_ANNOTATION_STATEMENT,
 
 	METHOD_ANNOTATION_STATEMENT,
+
+	ANNOTATION_STATEMENT,
+
+	SIMPLE_STATEMENT,
 
 	// type variable=value;
 	// variable=value;

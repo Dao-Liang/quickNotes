@@ -333,6 +333,8 @@ public class ClassContentParser {
 		String nextToken;
 		int level = 1;
 
+		boolean foundTargetAnnotationForType = false;
+
 		// use index to iterate elements in tokens
 		for (int i = 0; i < tokens.length; i++) {
 
@@ -374,8 +376,6 @@ public class ClassContentParser {
 			else if (isInImportStatement && isOutsideTypeBlock())
 
 			{
-
-
 
 				if (currentToken.equals(STATEMENT_END)) {
 					isInImportStatement = false;
@@ -433,8 +433,10 @@ public class ClassContentParser {
 				if (annotationParenthesesCount == 0) {
 
 					if (sb.toString().contains(targetAnnotation)) {
-						System.err
-								.println("----Target Annotation Statement: " + sb.toString());
+
+						// set target annotation for type definition
+						foundTargetAnnotationForType = true;
+
 					}
 
 					isInAnnotatioinStatement = false;
@@ -461,7 +463,6 @@ public class ClassContentParser {
 			 * continue type define statement process
 			 */
 			else if (isInTypeStatement) {
-
 
 				if (currentToken.equals("{")) {
 					typeBracketCount++;
@@ -498,14 +499,14 @@ public class ClassContentParser {
 					typeBracketCount--;
 				}
 
-
 				if (typeBracketCount == 0) {
 
 					isInMainTypeBlock = false;
 					isInTypeBlock = false;
 
-					mainTypeBlock = new JavaBlock(JavaBlockType.MAIN_TYPE_BLOCK, sb.toString()
-							.split("\\s+"));
+					mainTypeBlock = new JavaBlock(JavaBlockType.TYPE_BLOCK, sb.toString()
+							.split("\\s+"), foundTargetAnnotationForType);
+					foundTargetAnnotationForType = false;
 
 					sb = new StringBuilder();
 					continue;
@@ -535,8 +536,8 @@ public class ClassContentParser {
 
 				if (typeBracketCount == 0) {
 					isInTypeBlock = false;
-					JavaBlock sibType = new JavaBlock(JavaBlockType.NESTED_TYPE_BLOCK, sb
-							.toString().split("\\s+"));
+					JavaBlock sibType = new JavaBlock(JavaBlockType.TYPE_BLOCK, sb.toString()
+							.split("\\s+"), foundTargetAnnotationForType);
 					mainTypeBlock.addSiblingBlock(sibType);
 
 					sb = new StringBuilder();
@@ -547,12 +548,10 @@ public class ClassContentParser {
 
 			}
 
-
 			/*
 			 * 
 			 * in sibling type declarations
 			 */
-
 
 			/*
 			 * main type statement
