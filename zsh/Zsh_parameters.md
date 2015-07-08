@@ -106,3 +106,8 @@ Zsh Parameters
 
 
 ####Parameter Expansion Rules ####
+
+1. Nested subsitution
+2. Internal parameter flags
+3. Parameter subscripting
+
