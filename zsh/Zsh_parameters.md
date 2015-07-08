@@ -2,10 +2,60 @@ Zsh Parameters
 =================
 
 ###Patermeter Expansion ###
+    ${ǹame}
+
+    ${+name}
+    
+    ${name-word}
+    ${name:-word}
+
+
+    ${name+word}
+    ${name:+word}
+
+    ${name=word}
+    ${name:=word}
+    ${name::=word}
+
+
+    ${name?word}
+    ${name:?word}
+
+
+    ${name#pattern}
+    ${name##pattern}
+
+    ${name%pattern}
+    ${name%%pattern}
+
+    ${name:#pattern}
+
+
+    ${name:|arrayname}
+    
+
+    ${name:*arrayname}
+
+    ${name:^arrayname}
+    ${name:^^arrayname}
+
+
+    ${name:offset}
+    ${name:offset:length}
+
+    ${name/pattern/repl}
+    ${name//pattern/repl}
+    
+    ${#spec}
+    ${^spec}
+    ${=spec}
+    ${~spec}
+
+
 ####Parameter Expansion Flags ####
 **Usage: ${(flags)parameter-expanssion-expression}**
 
-    #
+    #  
     %
     @
     A
